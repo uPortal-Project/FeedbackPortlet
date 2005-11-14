@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host"><value>your.smtp.smart.host</value></property>
+		<property name="port"><value>25</value></property>
+	</bean>
+  
+  	<bean id="messageFormatter" class="edu.wisc.my.portlets.feedback.dao.ClarifyFeedbackMessageFormatterImpl">
+  		<property name="targetEmail"><value>recipient@your.mail.system</value></property>
+  		<property name="fromAddress"><value>desiredFromAddress@your.mail.system</value></property>
+  	</bean>
+  	
+</beans>

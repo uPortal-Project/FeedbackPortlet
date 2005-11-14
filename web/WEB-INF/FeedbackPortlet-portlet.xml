@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+	<!-- configure the viewResolver and define where the JSP files are -->
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="cache"><value>false</value></property>
+		<property name="viewClass"><value>org.springframework.web.servlet.view.JstlView</value></property>
+		<property name="prefix"><value>/WEB-INF/jsp/</value></property>
+		<property name="suffix"><value>.jsp</value></property>
+	</bean>
+	
+	<!-- handler directs requests for portlet mode "VIEW" to "feedbackFormController" -->
+	<bean id="handlerMapping" class="org.springframework.web.portlet.handler.PortletModeHandlerMapping">
+		<property name="portletModeMap">
+			<map>
+				<entry key="view"><ref bean="feedbackFormController"/></entry>
+			</map>
+		</property>
+	</bean>
+	
+	<!-- exceptionResolver will direct any uncaught exceptions to the error view 
+	     (so the end-user doesn't get nasty error messages) -->
+	<bean id="exceptionResolver" class="org.springframework.web.portlet.handler.SimpleMappingExceptionResolver">
+		<property name="defaultErrorView"><value>feedback_error</value></property>
+	</bean>
+	
+	<!-- the feedbackFormController and its dependencies
+	     (mailSender and messageFormatter are defined in applicationContext.xml) -->
+	<bean id="feedbackFormController" class="edu.wisc.my.portlets.feedback.web.FeedbackFormController">
+  		<property name="sessionForm"><value>false</value></property>
+  		<property name="commandClass"><value>edu.wisc.my.portlets.feedback.beans.Feedback</value></property>
+  		<property name="formView"><value>feedback_form</value></property>
+  		<property name="successView"><value>feedback_success</value></property>
+  		
+  		<property name="validator">
+			<bean class="edu.wisc.my.portlets.feedback.beans.FeedbackValidator"/>
+		</property>
+
+  		<property name="mailSender"><ref bean="mailSender"/></property>
+  		<property name="messageFormatter"><ref bean="messageFormatter"/></property>
+  		
+  	</bean>
+  	
+</beans>
