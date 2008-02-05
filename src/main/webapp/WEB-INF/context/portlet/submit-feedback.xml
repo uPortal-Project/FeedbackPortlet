@@ -4,6 +4,7 @@
     
     <!-- Controllers -->
     
+    <!-- User feedback submission controller -->
     <bean id="submitFeedbackController"
         class="org.jasig.portlets.FeedbackPortlet.web.SubmitFeedbackFormController">
         <property name="feedbackStore" ref="feedbackStore"/>
@@ -19,6 +20,12 @@
         <property name="userPropertiesResolver" ref="userPropertiesResolver"/>
         <property name="feedbackSubmissionListeners">
             <list>
+                <!-- 
+                    Uncomment the following line to forward all feedback to 
+                    an email address.  Feedback will still be saved in the
+                    portlet's database.  You will also need to configure the
+                    email options below.
+                -->
                 <!--
                 <ref bean="emailForwardingListener"/>
                 -->
@@ -30,10 +37,20 @@
         <property name="idKey" value="user.login.id"/>
         <property name="nameKey" value="displayName"/>
         <property name="emailKey" value="mail"/>
+        <!-- 
+            To make the feedback portlet role-aware, uncomment this line and set the roleKey to match
+            the appropriate user attribute key
+        -->
         <!--
         <property name="roleKey" value="contentGroup"/>
         -->
     </bean>
+
+    <!-- EMAIL OPTIONS -->
+    <!-- 
+        After enabling the email forwarding listener in the controller above, set the SMTP server
+        and TO address for email messages.
+    -->
 
     <bean id="emailForwardingListener" class="org.jasig.portlets.FeedbackPortlet.service.EmailForwardingListener">
         <property name="mailSender" ref="mailSender"/>
@@ -41,12 +58,12 @@
     </bean>
 
     <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-        <property name="host" value="mail.yale.edu"/>
+        <property name="host" value="smtp.school.edu"/>
     </bean>
 
     <bean id="mailMessage" class="org.springframework.mail.SimpleMailMessage">
         <property name="to">
-            <value>jennifer.bourey@yale.edu</value>
+            <value>name@school.edu</value>
         </property>
         <property name="subject">
             <value>Portal Feedback</value>
