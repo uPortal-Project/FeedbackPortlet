@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-lazy="false" default-cascade="all-delete-orphan">
+
+    <class name="org.jasig.portlets.FeedbackPortlet.FeedbackItem" table="FEEDBACK_STORE">
+        <id name="id" type="long" unsaved-value="-1">
+            <column name="ITEM_ID" not-null="true"/>
+            <generator class="native"/>
+        </id>
+
+        <property name="userid" type="string">
+            <column name="USER_ID" length="50"/>
+        </property>
+        <property name="username" type="string">
+            <column name="USER_NAME" length="200"/>
+        </property>
+        <property name="useremail" type="string">
+            <column name="USER_EMAIL" length="100"/>
+        </property>
+        <property name="useragent" type="string">
+            <column name="USER_AGENT" length="300"/>
+        </property>
+        <property name="userrole" type="string">
+            <column name="USER_ROLE" length="100"/>
+        </property>
+        <property name="submissiontime" type="java.util.Date">
+            <column name="SUBMISSION_TIME" not-null="true"/>
+        </property>
+        <property name="feedbacktype" type="string">
+            <column name="FEEDBACK_TYPE" length="50"/>
+        </property>
+        <property name="feedback" type="string">
+            <column name="FEEDBACK" length="4000"/>
+        </property>
+        <property name="tabname" type="string">
+            <column name="TAB_NAME" length="100"/>
+        </property>
+
+    </class>
+
+</hibernate-mapping>

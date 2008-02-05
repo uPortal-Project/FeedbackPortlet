@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "../../dtd/spring-beans.dtd">
+<beans>
+
+    <!-- Controllers -->
+
+    <bean id="viewFeedbackController"
+        class="org.jasig.portlets.FeedbackPortlet.web.ViewFeedbackFormController">
+        <property name="feedbackStore" ref="feedbackStore"/>
+        <property name="formView">
+            <value>viewFeedback</value>
+        </property>
+        <property name="successView">
+            <value>viewFeedback</value>
+        </property>
+        <property name="sessionForm">
+            <value>true</value>
+        </property>
+    </bean>
+
+    <!-- Handler Mapping -->
+
+    <bean id="parameterMappingInterceptor"
+        class="org.springframework.web.portlet.handler.ParameterMappingInterceptor"/>
+
+    <bean id="portletModeParameterHandlerMapping"
+        class="org.springframework.web.portlet.handler.PortletModeParameterHandlerMapping">
+        <property name="order" value="1"/>
+        <property name="interceptors">
+            <list>
+                <ref bean="parameterMappingInterceptor"/>
+            </list>
+        </property>
+        <property name="portletModeParameterMap">
+            <map>
+                <entry key="view">
+                    <map>
+                        <entry key="adminView" value-ref="viewFeedbackController"/>
+                    </map>
+                </entry>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="portletModeHandlerMapping"
+        class="org.springframework.web.portlet.handler.PortletModeHandlerMapping">
+        <property name="order" value="2"/>
+        <property name="portletModeMap">
+            <map>
+                <entry key="view" value-ref="viewFeedbackController"/>
+            </map>
+        </property>
+    </bean>
+
+</beans>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "../../dtd/spring-beans.dtd">
+<beans>
+    
+    <!-- Controllers -->
+    
+    <bean id="submitFeedbackController"
+        class="org.jasig.portlets.FeedbackPortlet.web.SubmitFeedbackFormController">
+        <property name="feedbackStore" ref="feedbackStore"/>
+        <property name="formView">
+            <value>submitFeedback</value>
+        </property>
+        <property name="successView">
+            <value>submitFeedback</value>
+        </property>
+        <property name="sessionForm">
+            <value>false</value>
+        </property>
+        <property name="userPropertiesResolver" ref="userPropertiesResolver"/>
+        <property name="feedbackSubmissionListeners">
+            <list>
+                <!--
+                <ref bean="emailForwardingListener"/>
+                -->
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="userPropertiesResolver" class="org.jasig.portlets.FeedbackPortlet.PortletUserPropertiesResolver">
+        <property name="idKey" value="user.login.id"/>
+        <property name="nameKey" value="displayName"/>
+        <property name="emailKey" value="mail"/>
+        <!--
+        <property name="roleKey" value="contentGroup"/>
+        -->
+    </bean>
+
+    <bean id="emailForwardingListener" class="org.jasig.portlets.FeedbackPortlet.service.EmailForwardingListener">
+        <property name="mailSender" ref="mailSender"/>
+        <property name="mailMessage" ref="mailMessage"/>
+    </bean>
+
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="mail.yale.edu"/>
+    </bean>
+
+    <bean id="mailMessage" class="org.springframework.mail.SimpleMailMessage">
+        <property name="to">
+            <value>jennifer.bourey@yale.edu</value>
+        </property>
+        <property name="subject">
+            <value>Portal Feedback</value>
+        </property>
+        <property name="text">
+            <value><![CDATA[User name: %USERNAME%
+Role: %USERROLE%
+Browser: %USERAGENT%
+Page name: %TABNAME%
+
+Feedback type: %FEEDBACKTYPE%
+%FEEDBACK%]]></value>
+        </property>
+    </bean>
+
+    <!-- Handler Mapping -->
+    
+    <bean id="parameterMappingInterceptor"
+        class="org.springframework.web.portlet.handler.ParameterMappingInterceptor"/>
+    
+    <bean id="portletModeParameterHandlerMapping"
+        class="org.springframework.web.portlet.handler.PortletModeParameterHandlerMapping">
+        <property name="order" value="1"/>
+        <property name="interceptors">
+            <list>
+                <ref bean="parameterMappingInterceptor"/>
+            </list>
+        </property>
+        <property name="portletModeParameterMap">
+            <map>
+                <entry key="view">
+                    <map>
+                        <entry key="submit" value-ref="submitFeedbackController"/>
+                    </map>
+                </entry>
+            </map>
+        </property>
+    </bean>
+    
+    <bean id="portletModeHandlerMapping"
+        class="org.springframework.web.portlet.handler.PortletModeHandlerMapping">
+        <property name="order" value="2"/>
+        <property name="portletModeMap">
+            <map>
+                <entry key="view" value-ref="submitFeedbackController"/>
+            </map>
+        </property>
+    </bean>
+    
+</beans>
