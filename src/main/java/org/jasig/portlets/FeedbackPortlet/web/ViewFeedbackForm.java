@@ -7,26 +7,68 @@
  */
 package org.jasig.portlets.FeedbackPortlet.web;
 
+/**
+ * ViewFeedbackForm represents the form data for the administrative view.
+ *
+ * @author Jen Bourey
+ */
 public class ViewFeedbackForm {
 	
 	private int items = 50;
 	private String userrole;
 	private String feedbacktype;
+
+	
+	/**
+	 * Get the number of items to be returned.
+	 * 
+	 * @return
+	 */
 	public int getItems() {
 		return items;
 	}
+	
+	/**
+	 * Set the number of items to be returned.
+	 * 
+	 * @param items
+	 */
 	public void setItems(int items) {
 		this.items = items;
 	}
+	
+	/**
+	 * Get the role of the items to be returned.
+	 * 
+	 * @return
+	 */
 	public String getUserrole() {
 		return userrole;
 	}
+	
+	/**
+	 * Set the role of the items to be returned.
+	 * 
+	 * @param userrole
+	 */
 	public void setUserrole(String userrole) {
 		this.userrole = userrole;
 	}
+	
+	/**
+	 * Get the feedback type of the items to be returned.
+	 * 
+	 * @return
+	 */
 	public String getFeedbacktype() {
 		return feedbacktype;
 	}
+	
+	/**
+	 * Set the feedback type of the items to be returned.
+	 * 
+	 * @param feedbacktype
+	 */
 	public void setFeedbacktype(String feedbacktype) {
 		this.feedbacktype = feedbacktype;
 	}

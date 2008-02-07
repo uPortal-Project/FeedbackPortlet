@@ -25,15 +25,25 @@ import org.jasig.portlets.FeedbackPortlet.OverallFeedbackStats;
 import org.jasig.portlets.FeedbackPortlet.dao.FeedbackStore;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
+/**
+ * HibernateFeedbackStore is a hibernate implementation of the FeedbackStore interface.
+ * 
+ * @author Jen Bourey
+ */
 public class HibernateFeedbackStore extends HibernateDaoSupport implements
 		FeedbackStore {
+
 	private static Log log = LogFactory.getLog(HibernateFeedbackStore.class);
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.jasig.portlets.FeedbackPortlet.dao.FeedbackStore#storeFeedback(org.jasig.portlets.FeedbackPortlet.FeedbackItem)
+	 */
 	public void storeFeedback(FeedbackItem feedback) {
 		try {
 			final Session session = this.getSession(false);
 
-			// If the BookmarkSet is new it must be saved first
+			// If the FeedbackItem is new it must be saved first
 			if (feedback.getId() == -1) {
 				session.save(feedback);
 			}
@@ -45,6 +55,10 @@ public class HibernateFeedbackStore extends HibernateDaoSupport implements
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.jasig.portlets.FeedbackPortlet.dao.FeedbackStore#getFeedback()
+	 */
 	public List<FeedbackItem> getFeedback() {
 		List<FeedbackItem> results;
 		try {
@@ -59,6 +73,10 @@ public class HibernateFeedbackStore extends HibernateDaoSupport implements
 		return results;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.jasig.portlets.FeedbackPortlet.dao.FeedbackStore#getFeedback(int, int)
+	 */
 	public List<FeedbackItem> getFeedback(int start, int items) {
 		List<FeedbackItem> results;
 		try {
@@ -74,8 +92,13 @@ public class HibernateFeedbackStore extends HibernateDaoSupport implements
 		}
 		return results;
 	}
-	
-	public List<FeedbackItem> getFeedback(int start, int items, String role, String feedbacktype) {
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.jasig.portlets.FeedbackPortlet.dao.FeedbackStore#getFeedback(int, int, java.lang.String, java.lang.String)
+	 */
+	public List<FeedbackItem> getFeedback(int start, int items, String role,
+			String feedbacktype) {
 		List<FeedbackItem> results;
 		try {
 			final Session session = this.getSession(false);
@@ -93,10 +116,13 @@ public class HibernateFeedbackStore extends HibernateDaoSupport implements
 			throw convertHibernateAccessException(ex);
 		}
 		return results;
-		
+
 	}
 
-	
+	/*
+	 * (non-Javadoc)
+	 * @see org.jasig.portlets.FeedbackPortlet.dao.FeedbackStore#getFeedbackTotal(java.lang.String, java.lang.String)
+	 */
 	public long getFeedbackTotal(String role, String feedbacktype) {
 		try {
 			final Session session = this.getSession(false);
@@ -123,6 +149,10 @@ public class HibernateFeedbackStore extends HibernateDaoSupport implements
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.jasig.portlets.FeedbackPortlet.dao.FeedbackStore#getStats()
+	 */
 	public OverallFeedbackStats getStats() {
 		OverallFeedbackStats stats = new OverallFeedbackStats();
 		try {
@@ -131,12 +161,14 @@ public class HibernateFeedbackStore extends HibernateDaoSupport implements
 			stats
 					.setUniqueUsers((Long) session
 							.createQuery(
-									"select count(distinct item.userid) from FeedbackItem item")
+									"select count(distinct item.userid) " +
+									"from FeedbackItem item")
 							.uniqueResult());
 
 			Iterator i = session
 					.createQuery(
-							"select item.feedbacktype, count(item) from FeedbackItem item group by item.feedbacktype")
+							"select item.feedbacktype, count(item) from " +
+							"FeedbackItem item group by item.feedbacktype")
 					.list().iterator();
 			while (i.hasNext()) {
 				Object[] row = (Object[]) i.next();
@@ -156,6 +188,10 @@ public class HibernateFeedbackStore extends HibernateDaoSupport implements
 		return stats;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.jasig.portlets.FeedbackPortlet.dao.FeedbackStore#getStatsByRole()
+	 */
 	public Map<String, OverallFeedbackStats> getStatsByRole() {
 		OverallFeedbackStats stats = new OverallFeedbackStats();
 		Map<String, OverallFeedbackStats> statsMap = new HashMap<String, OverallFeedbackStats>();
@@ -164,7 +200,8 @@ public class HibernateFeedbackStore extends HibernateDaoSupport implements
 
 			Iterator i = session
 					.createQuery(
-							"select item.userrole, count(distinct item.userid) from FeedbackItem item group by item.userrole")
+							"select item.userrole, count(distinct item.userid) " +
+							"from FeedbackItem item group by item.userrole")
 					.list().iterator();
 			while (i.hasNext()) {
 				Object[] row = (Object[]) i.next();
@@ -177,7 +214,9 @@ public class HibernateFeedbackStore extends HibernateDaoSupport implements
 
 			i = session
 					.createQuery(
-							"select item.userrole, item.feedbacktype, count(item) from FeedbackItem item group by item.userrole, item.feedbacktype")
+							"select item.userrole, item.feedbacktype, count(item) " +
+							"from FeedbackItem item group by item.userrole, " +
+							"item.feedbacktype")
 					.list().iterator();
 			while (i.hasNext()) {
 				Object[] row = (Object[]) i.next();
@@ -201,7 +240,6 @@ public class HibernateFeedbackStore extends HibernateDaoSupport implements
 	}
 
 }
-
 
 /*
  * HibernateFeedbackStore.java

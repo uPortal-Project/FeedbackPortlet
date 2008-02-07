@@ -11,31 +11,53 @@ import java.util.Map;
 
 import javax.portlet.PortletRequest;
 
+/**
+ * PortletUserPropertiesResolver get the properties for a user from the 
+ * portlet's userinfo map. Keys are defined for each user property that allow
+ * the default userinfo property name to be overridden.  If the key value is
+ * null for any given property, that property won't be retrieved or recorded.
+ * 
+ * @author Jen Bourey
+ */
 public class PortletUserPropertiesResolver {
 
+	private String nameKey = "user.name.full";
+	private String roleKey = "contentGroup";
+	private String idKey = "user.login.id";
+	private String emailKey = "mail";
+
+	/**
+	 * Retrieve the properties for the user.
+	 * 
+	 * @param request
+	 * @return
+	 */
 	public UserProperties getProperties(PortletRequest request) {
 
+		// get the userinfo map from the portlet request
 		Map userinfo = (Map) request.getAttribute("javax.portlet.userinfo");
+		
+		// construct a new properties object
 		UserProperties props = new UserProperties();
+		
+		// get the user's role
 		if (roleKey != null)
 			props.setUserrole((String) userinfo.get(roleKey));
 
+		// get the user's full name
 		if (nameKey != null)
 			props.setUsername((String) userinfo.get(nameKey));
 
+		// get the user's unique id
 		if (idKey != null)
 			props.setUserid((String) userinfo.get(idKey));
 
+		// get the user's email address
 		if (emailKey != null)
 			props.setUseremail((String) userinfo.get(emailKey));
 
 		return props;
 	}
-
-	private String nameKey;
-	private String roleKey;
-	private String idKey;
-	private String emailKey;
 
 	public void setNameKey(String nameKey) {
 		this.nameKey = nameKey;

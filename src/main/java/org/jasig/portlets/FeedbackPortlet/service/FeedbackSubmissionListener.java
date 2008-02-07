@@ -9,8 +9,19 @@ package org.jasig.portlets.FeedbackPortlet.service;
 
 import org.jasig.portlets.FeedbackPortlet.FeedbackItem;
 
+/**
+ * FeedbackSubmissionListener defines an interface for actions to be taken
+ * whenever feedback is submitted.
+ * 
+ * @author Jen Bourey
+ */
 public interface FeedbackSubmissionListener {
 	
+	/**
+	 * Perform some action on a just-submitted feedback item.
+	 * 
+	 * @param item
+	 */
 	public void performAction(FeedbackItem item);
 
 }

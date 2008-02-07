@@ -19,23 +19,30 @@ import org.jasig.portlets.FeedbackPortlet.dao.FeedbackStore;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 
+/**
+ * ExcelFeedbackController returns a Microsoft Excel spreadsheet export view
+ * of all the feedback items in the data store.
+ * 
+ * @author Jen Bourey
+ */
 public class ExcelFeedbackController extends AbstractController {
 
-
 	private static Log log = LogFactory.getLog(ExcelFeedbackController.class);
-	private FeedbackStore feedbackStore;
 
 	@Override
 	protected ModelAndView handleRequestInternal(HttpServletRequest arg0,
 			HttpServletResponse arg1) throws Exception {
 
+		// put all the feedback items in the model
 		Map<String, Object> model = new HashMap<String, Object>();
 		model.put("feedback", feedbackStore.getFeedback());
 		
+		// return an excel export view of the feedback data
 		return new ModelAndView("viewExcelFeedback", "model", model);
 
 	}
 
+	private FeedbackStore feedbackStore;
 	public void setFeedbackStore(FeedbackStore feedbackStore) {
 		this.feedbackStore = feedbackStore;
 	}

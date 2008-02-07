@@ -13,20 +13,76 @@ import java.util.Map;
 import org.jasig.portlets.FeedbackPortlet.FeedbackItem;
 import org.jasig.portlets.FeedbackPortlet.OverallFeedbackStats;
 
+/**
+ * FeedbackStore defines an interface for saving feedback data.
+ * 
+ * @author Jen Bourey
+ */
 public interface FeedbackStore {
 
+	/**
+	 * Store a feedback item.
+	 * 
+	 * @param feedback
+	 */
     public void storeFeedback(FeedbackItem feedback);
     
+    /**
+     * Retrieve all feedback in the data store.
+     * 
+     * @return list of all feedback items
+     */
     public List<FeedbackItem> getFeedback();
 
+    /**
+     * Retrieve a specific number of feedback items, starting with the
+     * given item.  This method is designed for paging.
+     * 
+     * @param start index of the first item to be retrieved
+     * @param items number of items to be retrieved
+     * @return List of feedback items
+     */
     public List<FeedbackItem> getFeedback(int start, int items);
 
+    /**
+     * Retrieve a specific number of feedback items, starting with the
+     * given item, that match the given role and feedback type.  This 
+     * method is designed for paging.  If the role or feedback type
+     * parameters are left blank, the method will return items with any
+     * role or feedback type.
+     * 
+     * @param start index of the first item to be retrieved
+     * @param items number of items to be retrieved
+     * @param role user role of the desired items
+     * @param feedbacktype feedback type of the desired items
+     * @return List of feedback items.
+     */
 	public List<FeedbackItem> getFeedback(int start, int items, String role, String feedbacktype);
 
+	/**
+	 * Get statistics on the feedback data.
+	 * 
+	 * @return feedback statistics
+	 */
     public OverallFeedbackStats getStats();
     
+    /**
+     * Get statistics on the feedback data separated by user role.
+     * 
+     * @return Map of feedback statistics, separated by user role
+     */
     public Map<String, OverallFeedbackStats> getStatsByRole();
 
+    /**
+     * Get the total number of feedback items for a given role and 
+     * feedback type.  If the role or feedback type are left null, the 
+     * method will include items with any role or feedback type, respectively.
+     * 
+     * @param role desired role, or <code>null</code> for all roles
+     * @param feedbacktype feedback type of the desired items, or 
+     * 				<code>null</code> for all items
+     * @return number of matching feedback items
+     */
 	public long getFeedbackTotal(String role, String feedbacktype);
 	
 }

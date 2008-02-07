@@ -7,6 +7,12 @@
  */
 package org.jasig.portlets.FeedbackPortlet;
 
+/**
+ * OverallFeedbackStats represents summary statistics about the feedback
+ * in some collection of feedback items.
+ * 
+ * @author Jen Bourey
+ */
 public class OverallFeedbackStats {
 
 	private long positiveResponses = 0;
@@ -14,8 +20,19 @@ public class OverallFeedbackStats {
 	private long undecidedResponses = 0;
 	private long uniqueUsers = 0;
 	
+	/**
+	 * Default constructor.
+	 */
 	public OverallFeedbackStats() { }
 	
+	/**
+	 * Construct a new feedback statistics object.
+	 * 
+	 * @param pos number of positive responses
+	 * @param neg number of negative responses
+	 * @param un number of undecided responses
+	 * @param unique number of unique users
+	 */
 	public OverallFeedbackStats(long pos, long neg, long un, long unique) {
 		this.positiveResponses = pos;
 		this.negativeResponses = neg;
@@ -23,38 +40,83 @@ public class OverallFeedbackStats {
 		this.uniqueUsers = unique;
 	}
 	
+	/**
+	 * Get the number of total responses in the data set.
+	 * 
+	 * @return
+	 */
 	public long getTotalResponses() {
 		return positiveResponses + negativeResponses + undecidedResponses;
 	}
 
+	/**
+	 * Get the number of unique users in the data set.
+	 * 
+	 * @return
+	 */
 	public long getUniqueUsers() {
 		return uniqueUsers;
 	}
 
+	/**
+	 * Get the number of positive responses in the data set.
+	 * 
+	 * @return
+	 */
 	public long getPositiveResponses() {
 		return positiveResponses;
 	}
 
+	/**
+	 * Get the number of negative responses in the data set.
+	 * 
+	 * @return
+	 */
 	public long getNegativeResponses() {
 		return negativeResponses;
 	}
 
+	/**
+	 * Get the number of undecided responses in the data set.
+	 * 
+	 * @return
+	 */
 	public long getUndecidedResponses() {
 		return undecidedResponses;
 	}
 
+	/**
+	 * Set the number of positive responses in the data set.
+	 * 
+	 * @param positiveResponses
+	 */
 	public void setPositiveResponses(long positiveResponses) {
 		this.positiveResponses = positiveResponses;
 	}
 
+	/**
+	 * Set the number of negative responses in the data set.
+	 * 
+	 * @param negativeResponses
+	 */
 	public void setNegativeResponses(long negativeResponses) {
 		this.negativeResponses = negativeResponses;
 	}
 
+	/**
+	 * Set the number of undecided responses in the data set.
+	 * 
+	 * @param undecidedResponses
+	 */
 	public void setUndecidedResponses(long undecidedResponses) {
 		this.undecidedResponses = undecidedResponses;
 	}
 
+	/**
+	 * Set the number of unique users in the data set.
+	 * 
+	 * @param uniqueUsers
+	 */
 	public void setUniqueUsers(long uniqueUsers) {
 		this.uniqueUsers = uniqueUsers;
 	}	

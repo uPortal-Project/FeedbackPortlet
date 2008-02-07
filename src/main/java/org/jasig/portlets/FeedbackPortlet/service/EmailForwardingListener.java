@@ -12,6 +12,12 @@ import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.util.StringUtils;
 
+/**
+ * EmailForwardingListener sends a summary email to a central address
+ * for each feedback submission.
+ * 
+ * @author Jen Bourey
+ */
 public class EmailForwardingListener implements FeedbackSubmissionListener {
 
 	public void performAction(FeedbackItem item) {
@@ -51,15 +57,17 @@ public class EmailForwardingListener implements FeedbackSubmissionListener {
 		text = StringUtils.replace(text, "%FEEDBACK%", item.getFeedback());
 		message.setText(text);
 
+		// send the message
 		mailSender.send(message);
 	
 	}
 	
 	private SimpleMailMessage mailMessage;
-	private MailSender mailSender;
 	public void setMailMessage(SimpleMailMessage mailMessage) {
 		this.mailMessage = mailMessage;
 	}
+
+	private MailSender mailSender;
 	public void setMailSender(MailSender mailSender) {
 		this.mailSender = mailSender;
 	}

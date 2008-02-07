@@ -7,6 +7,14 @@
  */
 package org.jasig.portlets.FeedbackPortlet;
 
+/**
+ * UserProperties represents descriptive information about a user.  This 
+ * information is saved with a user's feedback in order to provide user 
+ * contact information, as well as provide an opportunity to correlate
+ * user response with user characteristics.
+ * 
+ * @author Jen Bourey
+ */
 public class UserProperties {
 
 	private String userid;
@@ -14,27 +22,74 @@ public class UserProperties {
 	private String userrole;
 	private String useremail;
 	
+	/**
+	 * Get the user's unique ID (also generally the login id).
+	 * 
+	 * @return
+	 */
 	public String getUserid() {
 		return userid;
 	}
+	
+	/**
+	 * Set the user's unique ID (also generally the login id).
+	 * 
+	 * @param userid
+	 */
 	public void setUserid(String userid) {
 		this.userid = userid;
 	}
+	
+	/**
+	 * Get the user's full name.
+	 * 
+	 * @return
+	 */
 	public String getUsername() {
 		return username;
 	}
+	
+	/**
+	 * Set the user's full name.
+	 * 
+	 * @param username
+	 */
 	public void setUsername(String username) {
 		this.username = username;
 	}
+	
+	/**
+	 * Get the user's role.
+	 * 
+	 * @return
+	 */
 	public String getUserrole() {
 		return userrole;
 	}
+	
+	/**
+	 * Set the user's role.
+	 * 
+	 * @param userrole
+	 */
 	public void setUserrole(String userrole) {
 		this.userrole = userrole;
 	}
+	
+	/**
+	 * Get the user's email address.
+	 * 
+	 * @return
+	 */
 	public String getUseremail() {
 		return useremail;
 	}
+	
+	/**
+	 * Set the user's email address.
+	 * 
+	 * @param useremail
+	 */
 	public void setUseremail(String useremail) {
 		this.useremail = useremail;
 	}

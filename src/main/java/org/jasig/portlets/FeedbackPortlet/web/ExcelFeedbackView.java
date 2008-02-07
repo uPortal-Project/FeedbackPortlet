@@ -22,6 +22,13 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.jasig.portlets.FeedbackPortlet.FeedbackItem;
 import org.springframework.web.servlet.view.document.AbstractExcelView;
 
+/**
+ * ExcelFeedbackView produces a Microsoft Excel spreadsheet view 
+ * of feedback data.  All feedback attributes are simply transformed into
+ * spreadsheet columns.
+ * 
+ * @author Jen Bourey
+ */
 public class ExcelFeedbackView extends AbstractExcelView {
 
 	@Override
@@ -32,7 +39,7 @@ public class ExcelFeedbackView extends AbstractExcelView {
         model = (HashMap) model.get("model");
         int rowCount = 0;
 
-        // set up the sheet and default column widths
+        // set up the sheet
         HSSFSheet sheet = wb.createSheet("uPortal Feedback");
         sheet.setGridsPrinted(true);
 

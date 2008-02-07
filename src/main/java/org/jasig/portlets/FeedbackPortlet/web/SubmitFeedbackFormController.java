@@ -22,6 +22,12 @@ import org.jasig.portlets.FeedbackPortlet.service.FeedbackSubmissionListener;
 import org.springframework.validation.BindException;
 import org.springframework.web.portlet.mvc.SimpleFormController;
 
+/**
+ * SubmitFeedbackFormController allows a user to submit feedback via a portlet
+ * form.
+ * 
+ * @author Jen Bourey
+ */
 public class SubmitFeedbackFormController extends SimpleFormController {
 
 	private static Log log = LogFactory.getLog(SubmitFeedbackFormController.class);
@@ -38,7 +44,7 @@ public class SubmitFeedbackFormController extends SimpleFormController {
 		// get the form data
 		SubmitFeedbackForm form = (SubmitFeedbackForm) command;
 		
-		// put the form data into a new feedback object
+		// construct a new feedback object from the form data
 		FeedbackItem feedback = new FeedbackItem();
 		feedback.setFeedback(form.getFeedback());
 		feedback.setUseragent(form.getUseragent());
@@ -55,13 +61,16 @@ public class SubmitFeedbackFormController extends SimpleFormController {
 				feedback.setUseremail(user.getUseremail());
 			}
 		}
+		
+		if (log.isDebugEnabled())
+			log.debug("User submitted new feedback item " + feedback.toString());
+		
+		// perform any requested listener actions
 		for (FeedbackSubmissionListener listener : feedbackSubmissionListeners) {
 			listener.performAction(feedback);
 		}
 		
-		if (log.isDebugEnabled())
-			log.debug("created new feedback item " + feedback.toString());
-		
+		// save the feedback to the data store
 		feedbackStore.storeFeedback(feedback);
 		
 	}
