@@ -1,0 +1,24 @@
+table.feedback-list {
+    width: 100%;
+}
+
+table.feedback-list tr th{ 
+    background-color: #2758B3; color: #fff; text-align: left;  padding:3px;
+    border: none;
+}
+
+.feedback-list tr td {
+    padding:6px;
+}
+
+.feedback-list tr.main td {
+    background-color: #fff;
+}
+
+.feedback-list tr.alt td {
+    background-color: #E6EEFB; 
+}
+
+.feedback-list tr.bottom td {
+    border-bottom: thin solid #999;
+}

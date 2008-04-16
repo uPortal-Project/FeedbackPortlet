@@ -35,7 +35,7 @@ public class PortletUserPropertiesResolver {
 	public UserProperties getProperties(PortletRequest request) {
 
 		// get the userinfo map from the portlet request
-		Map userinfo = (Map) request.getAttribute("javax.portlet.userinfo");
+		Map<String, String> userinfo = (Map<String, String>) request.getAttribute("javax.portlet.userinfo");
 		
 		// construct a new properties object
 		UserProperties props = new UserProperties();
