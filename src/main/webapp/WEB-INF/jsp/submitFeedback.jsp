@@ -36,8 +36,12 @@
  	<script type="text/javascript">
  		document.getElementById('<portlet:namespace/>useragentstring').value = navigator.userAgent;
  		
+ 		// check to see if a tab name parameter was submitted
+ 		var tabname = '${ requestScope.tabName }';
+ 		if ('${ requestScope.tabName }' != null && '${ requestScope.tabName }' != '') {
+            document.getElementById('<portlet:namespace/>feedbacktabname').value = '${requestScope.tabName }'; 
  		// uPortal 2 tab name
- 		if (document.getElementById('tabName') != null) {
+ 		} else if (document.getElementById('tabName') != null) {
       		document.getElementById('<portlet:namespace/>feedbacktabname').value = document.getElementById('tabName').innerHTML;
         // uPortal 3 tab name
 	  	} else if (document.getElementById('portalPageBodyTitle') != null) {

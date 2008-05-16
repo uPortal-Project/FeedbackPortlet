@@ -7,10 +7,13 @@
  */
 package org.jasig.portlets.FeedbackPortlet.web;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -20,6 +23,7 @@ import org.jasig.portlets.FeedbackPortlet.UserProperties;
 import org.jasig.portlets.FeedbackPortlet.dao.FeedbackStore;
 import org.jasig.portlets.FeedbackPortlet.service.FeedbackSubmissionListener;
 import org.springframework.validation.BindException;
+import org.springframework.validation.Errors;
 import org.springframework.web.portlet.mvc.SimpleFormController;
 
 /**
@@ -73,6 +77,19 @@ public class SubmitFeedbackFormController extends SimpleFormController {
 		// save the feedback to the data store
 		feedbackStore.storeFeedback(feedback);
 		
+	}
+
+	@Override
+	protected Map referenceData(PortletRequest request, Object command,
+			Errors errors) throws Exception {
+		Map map = super.referenceData(request, command, errors);
+		if (map == null) {
+			map = new HashMap();
+		}
+		if (request.getParameter("feedbackTabName") != null) {
+			map.put("tabName", request.getParameter("feedbackTabName"));
+		}
+		return map;
 	}
 
 	public void setFeedbackStore(FeedbackStore feedbackStore) {
