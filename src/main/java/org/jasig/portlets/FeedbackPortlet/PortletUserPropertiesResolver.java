@@ -7,7 +7,11 @@
  */
 package org.jasig.portlets.FeedbackPortlet;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.portlet.PortletRequest;
 
@@ -22,7 +26,7 @@ import javax.portlet.PortletRequest;
 public class PortletUserPropertiesResolver {
 
 	private String nameKey = "user.name.full";
-	private String roleKey = "contentGroup";
+	private List<String> userRoles = new ArrayList<String>();
 	private String idKey = "user.login.id";
 	private String emailKey = "mail";
 
@@ -41,8 +45,12 @@ public class PortletUserPropertiesResolver {
 		UserProperties props = new UserProperties();
 		
 		// get the user's role
-		if (roleKey != null)
-			props.setUserrole((String) userinfo.get(roleKey));
+		for (String role : userRoles) {
+			if (request.isUserInRole(role)) {
+				props.setUserrole(role);
+				break;
+			}
+		}
 
 		// get the user's full name
 		if (nameKey != null)
@@ -62,9 +70,9 @@ public class PortletUserPropertiesResolver {
 	public void setNameKey(String nameKey) {
 		this.nameKey = nameKey;
 	}
-
-	public void setRoleKey(String roleKey) {
-		this.roleKey = roleKey;
+	
+	public void setUserRoles(List<String> roles) {
+		this.userRoles = roles;
 	}
 
 	public void setIdKey(String idKey) {

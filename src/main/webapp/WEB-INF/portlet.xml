@@ -40,6 +40,20 @@
         </portlet-info>
         <portlet-preferences>
         </portlet-preferences>
+
+        <security-role-ref>
+            <role-name>student</role-name>
+            <role-link>local.34</role-link>
+        </security-role-ref>
+        <security-role-ref>
+            <role-name>faculty</role-name>
+            <role-link>local.23</role-link>
+        </security-role-ref>
+        <security-role-ref>
+            <role-name>staff</role-name>
+            <role-link>local.33</role-link>
+        </security-role-ref>
+        
     </portlet>
     
     <user-attribute>
