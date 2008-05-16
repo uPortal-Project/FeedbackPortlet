@@ -12,7 +12,7 @@
             <value>submitFeedback</value>
         </property>
         <property name="successView">
-            <value>submitFeedback</value>
+            <value>feedbackSuccess</value>
         </property>
         <property name="sessionForm">
             <value>false</value>
@@ -41,9 +41,13 @@
             To make the feedback portlet role-aware, uncomment this line and set the roleKey to match
             the appropriate user attribute key
         -->
-        <!--
-        <property name="roleKey" value="contentGroup"/>
-        -->
+        <property name="userRoles">
+            <list>
+                <value>student</value>
+                <value>faculty</value>
+                <value>staff</value>
+            </list>
+        </property>
     </bean>
 
     <!-- EMAIL OPTIONS -->
