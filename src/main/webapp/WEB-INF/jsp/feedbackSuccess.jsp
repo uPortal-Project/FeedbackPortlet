@@ -2,11 +2,10 @@
 
     <link href="<c:url value="/css/feedback.css"/>" type="text/css" rel="stylesheet"/>
     
-   	<h1>Thanks!</h1>
+   	<h1><spring:message code="feedback.success.title"/></h1>
    	
-   	<p>Thank you for your feedback about uPortal.  Your comments have
-   	been recorded successfully.</p>
+   	<p><spring:message code="feedback.success.message"/></p>
    	
-   	<p><a href="<portlet:renderURL/>">Submit more feedback</a></p>
+   	<p><a href="<portlet:renderURL/>"><spring:message code="feedback.success.more"/></a></p>
 
 </html>

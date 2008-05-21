@@ -2,17 +2,17 @@
 
  	<portlet:actionURL var="postUrl"/>
 
-    <h1>Do you like uPortal?</h1>
+    <h1><spring:message code="feedback.form.question"/></h1>
 
     <form:form commandName="prefs" action="${postUrl}">
 
      	<p>
 	      	<form:radiobutton path="like" value="YES"/>
-	      	<label class="portlet-form-field-label">Yes</label>
+	      	<label class="portlet-form-field-label"><spring:message code="feedback.answer.yes"/></label>
 	      	<form:radiobutton path="like" value="NO"/>
-	      	<label class="portlet-form-field-label">No</label>
+	      	<label class="portlet-form-field-label"><spring:message code="feedback.answer.no"/></label>
 	      	<form:radiobutton path="like" value="MAYBE"/>
-	      	<label class="portlet-form-field-label">Maybe</label>
+	      	<label class="portlet-form-field-label"><spring:message code="feedback.answer.maybe"/></label>
      	</p>
 
      	<p>
@@ -21,14 +21,14 @@
 
      	<p>
 	        <form:checkbox path="anonymous" value="true"/>
-			<label class="portlet-form-field-label">make me anonymous</label>
+			<label class="portlet-form-field-label"><spring:message code="feedback.form.anonymous"/></label>
     	</p>
 
      	<input id="<portlet:namespace/>useragentstring" type="hidden" name="useragent"/>
      	<input id="<portlet:namespace/>feedbacktabname" type="hidden" name="tabname"/>
 
         <p>
-           <button type="submit" class="portlet-form-button">Submit</button>
+           <button type="submit" class="portlet-form-button"><spring:message code="feedback.form.submit"/></button>
         </p>
 
     </form:form>
