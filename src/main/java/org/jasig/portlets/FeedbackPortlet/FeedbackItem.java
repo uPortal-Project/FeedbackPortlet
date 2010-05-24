@@ -217,15 +217,24 @@ public class FeedbackItem implements Serializable {
 		return feedbacktype;
 	}
 	
-	/**
-	 * Set the type of this feedback (positive, negative,
-	 * or undecided).
-	 * 
-	 * @param feedbacktype
-	 */
-	public void setFeedbacktype(String feedbacktype) {
-		this.feedbacktype = feedbacktype;
-	}
+    /**
+     * Set the type of this feedback (positive, negative,
+     * or undecided).  <code>null</code> and/or nonsense values count as 
+     * undecided.
+     * 
+     * @param feedbacktype
+     */
+    public void setFeedbacktype(String feedbacktype) {
+        // Must be certain it's a value we can process...
+        if (YES.equalsIgnoreCase(feedbacktype)) {
+            this.feedbacktype = YES;
+        } else if (NO.equalsIgnoreCase(feedbacktype)) {
+            this.feedbacktype = NO;
+        } else {
+            // Anything else counts as MAYBE
+            this.feedbacktype = MAYBE;
+        }
+    }
 	
 	/**
 	 * Get the comments submitted by the user.
