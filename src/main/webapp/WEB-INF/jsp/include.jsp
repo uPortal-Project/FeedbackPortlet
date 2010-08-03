@@ -9,5 +9,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <%@ taglib prefix="html" tagdir="/WEB-INF/tags/html" %>
+<%@ taglib prefix="rs" uri="http://www.jasig.org/resource-server" %>
 
 <portlet:defineObjects/>

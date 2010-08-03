@@ -31,6 +31,9 @@
                 -->
             </list>
         </property>
+        <property name="feedbackRows" value="${feedback.rows}"/>
+        <property name="feedbackCols" value="${feedback.cols}"/>
+        <property name="feedbackMaxChars" value="${feedback.max_chars}"/>
     </bean>
     
     <bean id="userPropertiesResolver" class="org.jasig.portlets.FeedbackPortlet.PortletUserPropertiesResolver">
@@ -117,4 +120,8 @@ Feedback type: %FEEDBACKTYPE%
         </property>
     </bean>
     
+    <bean id="placeholderConfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="classpath:/feedback.properties"/>
+    </bean>
+
 </beans>

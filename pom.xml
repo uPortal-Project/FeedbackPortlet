@@ -18,6 +18,10 @@
     <name>Feedback Portlet</name>
     <description>Feedback Portlet.</description>
     
+    <properties>
+        <resource-server.version>1.0.9</resource-server.version>
+    </properties>
+
     <repositories>
         <repository>
             <id>jasig-repository</id>
@@ -97,6 +101,12 @@
             <version>3.2.3.ga</version>
             <type>jar</type>
             <scope>compile</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>net.sf.ehcache</groupId>
+                    <artifactId>ehcache</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         
         <dependency>
@@ -115,6 +125,31 @@
             <scope>compile</scope>
         </dependency>
         
+        <dependency>
+            <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache</artifactId>
+            <version>2.2.0</version>
+            <type>pom</type>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jasig.resourceserver</groupId>
+            <artifactId>resource-server-content</artifactId>
+            <version>${resource-server.version}</version>
+            <type>war</type>
+        </dependency>
+        <dependency>
+            <groupId>org.jasig.resourceserver</groupId>
+            <artifactId>resource-server-utils</artifactId>
+            <version>${resource-server.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-web</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
@@ -304,6 +339,15 @@
                 <configuration>
                     <warName>FeedbackPortlet</warName>
                     <webXml>${basedir}/target/jspweb.xml</webXml>
+                    <overlays>
+                        <overlay>
+                            <groupId>org.jasig.resourceserver</groupId>
+                            <artifactId>resource-server-content</artifactId>
+                            <includes>
+                                <include>rs/jquery/1.4.2/jquery-1.4.2.min.js</include>
+                            </includes>
+                        </overlay>
+                    </overlays>
                 </configuration>
             </plugin>
         </plugins>

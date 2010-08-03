@@ -37,10 +37,26 @@ public class SubmitFeedbackFormController extends SimpleFormController {
 	private static Log log = LogFactory.getLog(SubmitFeedbackFormController.class);
 	private FeedbackStore feedbackStore;
 	
+	private int feedbackRows = 3;
+	private int feedbackCols = 20;
+	private int feedbackMaxChars = 500;
+
 	public SubmitFeedbackFormController() {
 		setCommandName("prefs");
 		setCommandClass(SubmitFeedbackForm.class);
 	}
+	
+    public void setFeedbackRows(int feedbackRows) {
+        this.feedbackRows = feedbackRows;
+    }
+
+    public void setFeedbackCols(int feedbackCols) {
+        this.feedbackCols = feedbackCols;
+    }
+
+    public void setFeedbackMaxChars(int feedbackMaxChars) {
+        this.feedbackMaxChars = feedbackMaxChars;
+    }
 
 	protected void processFormSubmission(ActionRequest request,
 			ActionResponse response, Object command, BindException errors) {
@@ -50,7 +66,11 @@ public class SubmitFeedbackFormController extends SimpleFormController {
 		
 		// construct a new feedback object from the form data
 		FeedbackItem feedback = new FeedbackItem();
-		feedback.setFeedback(form.getFeedback());
+		String text = form.getFeedback().trim();
+		if (text.length() > feedbackMaxChars) {
+		    text = text.substring(0, feedbackMaxChars);
+		}
+		feedback.setFeedback(text);
 		feedback.setUseragent(form.getUseragent());
 		feedback.setFeedbacktype(form.getLike());
 		feedback.setTabname(form.getTabname());
@@ -79,18 +99,28 @@ public class SubmitFeedbackFormController extends SimpleFormController {
 		
 	}
 
-	@Override
-	protected Map referenceData(PortletRequest request, Object command,
-			Errors errors) throws Exception {
-		Map map = super.referenceData(request, command, errors);
-		if (map == null) {
-			map = new HashMap();
-		}
-		if (request.getParameter("feedbackTabName") != null) {
-			map.put("tabName", request.getParameter("feedbackTabName"));
-		}
-		return map;
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    protected Map referenceData(PortletRequest request, Object command,
+            Errors errors) throws Exception {
+
+        Map<String,Object> map = super.referenceData(request, command, errors);
+        if (map == null) {
+            map = new HashMap<String,Object>();
+        }
+        
+        // Add settings from feedback.properties
+        map.put("feedbackRows", feedbackRows);
+        map.put("feedbackCols", feedbackCols);
+        map.put("feedbackMaxChars", feedbackMaxChars);
+        
+        if (request.getParameter("feedbackTabName") != null) {
+            map.put("tabName", request.getParameter("feedbackTabName"));
+        }
+
+        return map;
+
+    }
 
 	public void setFeedbackStore(FeedbackStore feedbackStore) {
 		this.feedbackStore = feedbackStore;
