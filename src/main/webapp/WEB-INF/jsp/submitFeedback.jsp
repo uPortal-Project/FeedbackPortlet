@@ -48,6 +48,7 @@
 
         var $ = ${n}.jQuery;
         $('#${n}feedback').twitLimit({
+            limit: ${feedbackMaxChars},
             message: 'You have %1 characters remaining', 
             counterElem: '#${n}limit', 
             allowNegative: false
