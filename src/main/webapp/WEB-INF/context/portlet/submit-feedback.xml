@@ -32,7 +32,7 @@
             </list>
         </property>
         <property name="feedbackRows" value="${feedback.rows}"/>
-        <property name="feedbackCols" value="${feedback.cols}"/>
+        <property name="feedbackWidth" value="${feedback.width}"/>
         <property name="feedbackMaxChars" value="${feedback.max_chars}"/>
     </bean>
     

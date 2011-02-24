@@ -21,7 +21,7 @@
  	</p>
 
  	<p>
- 		<textarea id="${n}feedback" name="feedback" rows="${feedbackRows}" cols="${feedbackCols}"></textarea>
+ 		<textarea id="${n}feedback" name="feedback" rows="${feedbackRows}" style="width:${feedbackWidth}"></textarea>
  	</p>
  	<div id="${n}limit" style="margin-bottom: 12px;"></div>
 
@@ -60,11 +60,12 @@
         if ('${ requestScope.tabName }' != null && '${ requestScope.tabName }' != '') {
             document.getElementById('<portlet:namespace/>feedbacktabname').value = '${requestScope.tabName }'; 
         // uPortal 2 tab name
-        } else if (document.getElementById('tabName') != null) {
-            document.getElementById('<portlet:namespace/>feedbacktabname').value = document.getElementById('tabName').innerHTML;
+        }
+        else if (document.getElementById('tabName') != null) {
+            document.getElementById('<portlet:namespace/>feedbacktabname').value = $("#tabName").text();
         // uPortal 3 tab name
         } else if (document.getElementById('portalPageBodyTitle') != null) {
-            document.getElementById('<portlet:namespace/>feedbacktabname').value = document.getElementById('portalPageBodyTitle').innerHTML;
+            document.getElementById('<portlet:namespace/>feedbacktabname').value = $("#portalPageBodyTitle").text();
         }
 
     });

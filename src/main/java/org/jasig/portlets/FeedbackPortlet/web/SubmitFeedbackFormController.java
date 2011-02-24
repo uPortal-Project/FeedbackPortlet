@@ -38,7 +38,7 @@ public class SubmitFeedbackFormController extends SimpleFormController {
 	private FeedbackStore feedbackStore;
 	
 	private int feedbackRows = 3;
-	private int feedbackCols = 20;
+	private String feedbackWidth = "95%";
 	private int feedbackMaxChars = 500;
 
 	public SubmitFeedbackFormController() {
@@ -50,8 +50,8 @@ public class SubmitFeedbackFormController extends SimpleFormController {
         this.feedbackRows = feedbackRows;
     }
 
-    public void setFeedbackCols(int feedbackCols) {
-        this.feedbackCols = feedbackCols;
+    public void setFeedbackWidth(String feedbackWidth) {
+        this.feedbackWidth = feedbackWidth;
     }
 
     public void setFeedbackMaxChars(int feedbackMaxChars) {
@@ -111,7 +111,7 @@ public class SubmitFeedbackFormController extends SimpleFormController {
         
         // Add settings from feedback.properties
         map.put("feedbackRows", feedbackRows);
-        map.put("feedbackCols", feedbackCols);
+        map.put("feedbackWidth", feedbackWidth);
         map.put("feedbackMaxChars", feedbackMaxChars);
         
         if (request.getParameter("feedbackTabName") != null) {
