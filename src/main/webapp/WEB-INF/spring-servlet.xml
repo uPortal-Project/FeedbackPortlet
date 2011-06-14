@@ -7,25 +7,15 @@
         http://www.springmodules.org/schema/ehcache
         http://www.springmodules.org/schema/cache/springmodules-ehcache.xsd">
     
-    <bean id="viewResolver"
-        class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix">
-            <value>/WEB-INF/jsp/</value>
-        </property>
-        <property name="suffix">
-            <value>.jsp</value>
-        </property>
-    </bean>
     
-    <bean id="beanNameViewResolver"
+    <bean id="viewResolver"
         class="org.springframework.web.servlet.view.BeanNameViewResolver">
     </bean>
     
-    <bean name="/excelFeedback"
+    <bean name="/excelFeedback" 
         class="org.jasig.portlets.FeedbackPortlet.web.ExcelFeedbackController">
         <property name="feedbackStore" ref="feedbackStore"/>
     </bean>
     
-    <bean id="viewExcelFeedback" class="org.jasig.portlets.FeedbackPortlet.web.ExcelFeedbackView"/>
-    
+    <bean id="viewExcelFeedback" class="org.jasig.portlets.FeedbackPortlet.web.ExcelFeedbackView"/>    
 </beans>

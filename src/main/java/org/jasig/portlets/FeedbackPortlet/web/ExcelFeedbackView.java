@@ -33,11 +33,12 @@ public class ExcelFeedbackView extends AbstractExcelView {
 
 	@Override
 	protected void buildExcelDocument(Map model, HSSFWorkbook wb,
-			HttpServletRequest arg2, HttpServletResponse arg3) throws Exception {
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
 		
         model = (HashMap) model.get("model");
         int rowCount = 0;
+        response.setHeader("Content-Disposition", "attachment; filename=\"feedback.xls\""); // this encourages it to default as a 'feedback.xls' file name
 
         // set up the sheet
         HSSFSheet sheet = wb.createSheet("uPortal Feedback");
