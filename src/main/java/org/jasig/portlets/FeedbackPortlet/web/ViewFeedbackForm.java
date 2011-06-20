@@ -7,6 +7,8 @@
  */
 package org.jasig.portlets.FeedbackPortlet.web;
 
+import java.util.Date;
+
 /**
  * ViewFeedbackForm represents the form data for the administrative view.
  *
@@ -17,6 +19,8 @@ public class ViewFeedbackForm {
 	private int items = 50;
 	private String userrole;
 	private String feedbacktype;
+	private String startDisplayDate;
+	private String endDisplayDate;
 
 	
 	/**
@@ -72,6 +76,29 @@ public class ViewFeedbackForm {
 	public void setFeedbacktype(String feedbacktype) {
 		this.feedbacktype = feedbacktype;
 	}
+	
+	/**
+     * Set the feedback type of the items to be returned.
+     * 
+     * @param startDisplayDate
+     */
+    public void setStartDisplayDate(String startDisplayDate) {
+        this.startDisplayDate = startDisplayDate;
+    }
+
+    public String getStartDisplayDate() {
+        return startDisplayDate;
+    }
+
+    public void setEndDisplayDate(String endDisplayDate) {
+        this.endDisplayDate = endDisplayDate;
+    }
+
+    public String getEndDisplayDate() {
+        return endDisplayDate;
+    }
+	
+	
 	
 }
 

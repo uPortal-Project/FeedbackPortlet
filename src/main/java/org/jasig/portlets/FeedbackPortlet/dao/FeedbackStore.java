@@ -7,6 +7,7 @@
  */
 package org.jasig.portlets.FeedbackPortlet.dao;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -58,6 +59,18 @@ public interface FeedbackStore {
      * @return List of feedback items.
      */
 	public List<FeedbackItem> getFeedback(int start, int items, String role, String feedbacktype);
+	
+	/**
+	 * 
+	 * @param start  -- starting point
+	 * @param items  -- number of items displayed
+	 * @param role
+	 * @param feedbacktype
+	 * @param date1
+	 * @param date2
+	 * @return
+	 */
+	public List<FeedbackItem> getFeedback(int start, int items, String role, String feedbacktype, Date date1, Date date2);
 
 	/**
 	 * Get statistics on the feedback data.
@@ -84,6 +97,20 @@ public interface FeedbackStore {
      * @return number of matching feedback items
      */
 	public long getFeedbackTotal(String role, String feedbacktype);
+	
+    /**
+     * Get the total number of feedback items for a given role and 
+     * feedback type.  If the role or feedback type are left null, the 
+     * method will include items with any role or feedback type, respectively.
+     * 
+     * @param role desired role, or <code>null</code> for all roles
+     * @param feedbacktype feedback type of the desired items, or 
+     *              <code>null</code> for all items
+     * @param endDisplayDate 
+     * @param startDisplayDate 
+     * @return number of matching feedback items
+     */
+    public long getFeedbackTotal(String role, String feedbacktype, Date startDisplayDate, Date endDisplayDate);
 	
 }
 
