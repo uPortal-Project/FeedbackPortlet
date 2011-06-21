@@ -14,6 +14,8 @@
         <property name="successView">
             <value>feedbackSuccess</value>
         </property>
+        <property name="validator" ref="feedbackValidator" />        
+        <property name="commandClass" value="org.jasig.portlets.FeedbackPortlet.web.SubmitFeedbackForm"/>
         <property name="sessionForm">
             <value>false</value>
         </property>
@@ -123,5 +125,10 @@ Feedback type: %FEEDBACKTYPE%
     <bean id="placeholderConfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="location" value="classpath:/feedback.properties"/>
     </bean>
-
+    
+    <bean id="feedbackValidator" 
+		class="org.jasig.portlets.FeedbackPortlet.web.FeedbackValidator">
+		<property name="feedbackMaxChars" value="${feedback.max_chars}" />
+	</bean>
+		
 </beans>

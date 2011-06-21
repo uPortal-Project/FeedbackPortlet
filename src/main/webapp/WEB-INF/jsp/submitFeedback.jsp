@@ -3,25 +3,35 @@
 <script src="<rs:resourceURL value="/rs/jquery/1.4.2/jquery-1.4.2.min.js"/>" type="text/javascript"></script>
 <script src="<c:url value="/js/twitlimit-0.2.0.compressed.js"/>" type="text/javascript"></script>
 
+<link href="<c:url value="/css/feedback.css"/>" type="text/css" rel="stylesheet"/>
+
 <c:set var="n"><portlet:namespace/></c:set>
 
 <portlet:actionURL var="postUrl"/>
 
 <h1><spring:message code="feedback.form.question"/></h1>
 
-<form:form commandName="prefs" action="${postUrl}">
-
- 	<p>
-      	<form:radiobutton path="like" value="YES"/>
+<form:form commandName="prefs" action="${postUrl}">       
+    <spring:bind path="prefs.*">
+    	<c:if test="${status.error}">
+    	<div id="${n}error-message" class="error-message portlet-msg-error portlet-msg error" role="alert" style="display:none">
+   	 	<p><form:errors path="feedback"/></p>
+		</div>
+	    </c:if>
+	</spring:bind>
+	<br>
+	<p>
+      	<form:radiobutton id="yes" path="like" value="YES"/>
       	<label class="portlet-form-field-label"><spring:message code="feedback.answer.yes"/></label>
-      	<form:radiobutton path="like" value="NO"/>
+      	<form:radiobutton id="no" path="like" value="NO"/>
       	<label class="portlet-form-field-label"><spring:message code="feedback.answer.no"/></label>
-      	<form:radiobutton path="like" value="MAYBE"/>
+      	<form:radiobutton id="maybe" path="like" value="MAYBE"/>
       	<label class="portlet-form-field-label"><spring:message code="feedback.answer.maybe"/></label>
- 	</p>
+    </p>
 
- 	<p>
- 		<textarea id="${n}feedback" name="feedback" rows="${feedbackRows}" style="width:${feedbackWidth}"></textarea>
+ 	<p> 		
+ 		<label class="portlet-form-field-label"><spring:message code="feedback.form.suggestion"/></label>
+ 		<textarea id="${n}feedback" path="feedback" name="feedback" rows="${feedbackRows}" style="width:${feedbackWidth}"></textarea> 		
  	</p>
  	<div id="${n}limit" style="margin-bottom: 12px;"></div>
 
@@ -30,11 +40,11 @@
 		<label class="portlet-form-field-label"><spring:message code="feedback.form.anonymous"/></label>
 	</p>
 
- 	<input id="<portlet:namespace/>useragentstring" type="hidden" name="useragent"/>
- 	<input id="<portlet:namespace/>feedbacktabname" type="hidden" name="tabname"/>
+ 	<input id="${n}useragentstring" type="hidden" name="useragent"/>
+ 	<input id="${n}feedbacktabname" type="hidden" name="tabname"/>
 
     <p>
-       <button type="submit" class="portlet-form-button"><spring:message code="feedback.form.submit"/></button>
+       <button type="submit" id="submit" class="feedback-submit-button" disabled="disabled"><spring:message code="feedback.form.submit"/></button>
     </p>
 
 </form:form>
@@ -54,20 +64,27 @@
             allowNegative: false
         });
                    
-        document.getElementById('<portlet:namespace/>useragentstring').value = navigator.userAgent;
+        document.getElementById('${n}useragentstring').value = navigator.userAgent;
+        
+        $("#${n}error-message").slideDown(500);
+        
+        $('input:radio').click(function (){            
+            $('#submit').removeAttr('disabled');                
+            $('#submit').removeClass('feedback-submit-button');
+            $('#submit').addClass('portlet-form-button');
+        });        
         
         // check to see if a tab name parameter was submitted
         if ('${ requestScope.tabName }' != null && '${ requestScope.tabName }' != '') {
-            document.getElementById('<portlet:namespace/>feedbacktabname').value = '${requestScope.tabName }'; 
+            document.getElementById('${n}feedbacktabname').value = '${requestScope.tabName }'; 
         // uPortal 2 tab name
-        }
-        else if (document.getElementById('tabName') != null) {
-            document.getElementById('<portlet:namespace/>feedbacktabname').value = $("#tabName").text();
+        } else if (document.getElementById('tabName') != null) {
+            document.getElementById('${n}feedbacktabname').value = $("#tabName").text();
         // uPortal 3 tab name
         } else if (document.getElementById('portalPageBodyTitle') != null) {
-            document.getElementById('<portlet:namespace/>feedbacktabname').value = $("#portalPageBodyTitle").text();
-        }
-
+            document.getElementById('${n}feedbacktabname').value = $("#portalPageBodyTitle").text();
+        }          
+        
     });
 
 </script>
