@@ -20,7 +20,7 @@
 	    </c:if>
 	</spring:bind>
 	<br>
-	<p>
+	<p id="${n}answer">
       	<form:radiobutton id="yes" path="like" value="YES"/>
       	<label class="portlet-form-field-label"><spring:message code="feedback.answer.yes"/></label>
       	<form:radiobutton id="no" path="like" value="NO"/>
@@ -68,7 +68,7 @@
         
         $("#${n}error-message").slideDown(500);
         
-        $('input:radio').click(function (){            
+        $('#${n}answer input:radio').click(function (){            
             $('#submit').removeAttr('disabled');                
             $('#submit').removeClass('feedback-submit-button');
             $('#submit').addClass('portlet-form-button');
