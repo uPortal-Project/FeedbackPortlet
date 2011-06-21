@@ -40,7 +40,6 @@ public class SubmitFeedbackFormController extends SimpleFormController {
 	private int feedbackRows = 3;
 	private String feedbackWidth = "95%";
 	private int feedbackMaxChars = 500;
-	private static int minimumFeedbackLength = 1; // can be set to a number admin wants minimum feedback length, e.g. sentence minimum 10 characters long. 
 
 	public SubmitFeedbackFormController() {
 		setCommandName("prefs");
@@ -94,31 +93,10 @@ public class SubmitFeedbackFormController extends SimpleFormController {
 		for (FeedbackSubmissionListener listener : feedbackSubmissionListeners) {
 			listener.performAction(feedback);
 		}
-		if (isValidFeedback(feedback))
-		{
-		    setSuccessView("feedbackSuccess");
-    		// save the feedback to the data store
-    		feedbackStore.storeFeedback(feedback);
-		}
-		else
-		{
-		    setSuccessView("feedbackEmpty");
-		}
-	}
-	
-	private static boolean isValidFeedback(FeedbackItem feedback)
-	{
-	    String feedbackText = feedback.getFeedback();
-	    if (feedbackText.isEmpty() || feedbackText.length() < minimumFeedbackLength)
-	    {
-	        return false;
-	    }
-	    String feedbackType = feedback.getFeedbacktype();
-	    if (feedbackType == null || feedbackType.isEmpty())
-	    {
-	        return false;
-	    }
-	    return true;
+		
+		// save the feedback to the data store
+		feedbackStore.storeFeedback(feedback);
+		
 	}
 
     @SuppressWarnings("unchecked")
