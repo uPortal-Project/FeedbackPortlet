@@ -21,36 +21,17 @@
 -->
 <!-- assigning a variable to the name so it can be called in a non-conflicting way -->      
 <c:set var="n"><portlet:namespace/></c:set>
-<c:set var="context" value="${pageContext.request.contextPath}"/>
-<script src="/ResourceServingWebapp/rs/jquery/1.4.2/jquery-1.4.2.min.js" type="text/javascript"></script>
-<script src="/FeedbackPortlet/date-picker/js/datepicker.js" type="text/javascript"></script>
+<script src="<rs:resourceURL value="/rs/jquery/1.4.2/jquery-1.4.2.min.js"/>" type="text/javascript"></script>
+<script src="<c:url value="/date-picker/js/datepicker.js"/>" type="text/javascript"></script>
         
-        <link href="/FeedbackPortlet/date-picker/css/datepicker.css" rel="stylesheet" type="text/css" />
+<link href="<c:url value="/date-picker/css/datepicker.css"/>" rel="stylesheet" type="text/css" />
         
 <script type="text/javascript">    
 datePickerController.addEvent(window, "load", function() {
-      var opts = {
-
-      };
-      datePickerController.createDatePicker(opts);
+      datePickerController.createDatePicker({});
 });
 </script>
 
-<script type="text/javascript"> 
-    /*var ${n} = ${n} || {}; //create a unique variable to assign our namespace too
-    ${n}.jQuery = jQuery.noConflict(true); //assign jQuery to this namespace
-
-    /*  runs when the document is finished loading.  This prevents things like the 'div' from being fully created */
-    /*${n}.jQuery(document).ready(function () { 
-          var opts = {};
-          datePickerController.createDatePicker(opts);
-    }
-
-    datePickerController.addEvent(window, "load", function() {
-          var opts = {};
-          datePickerController.createDatePicker(opts);
-    });*/
-</script>
 	<h1><spring:message code="feedback.admin.title"/></h1>
 	
 	<table class="feedback-summary" width="100%">
