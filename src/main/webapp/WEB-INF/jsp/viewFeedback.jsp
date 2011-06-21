@@ -1,4 +1,5 @@
 <jsp:directive.include file="/WEB-INF/jsp/include.jsp"/>
+<link href="<c:url value="/css/feedback.css"/>" rel="stylesheet" type="text/css" />
 <!--
 
     Licensed to Jasig under one or more contributor license
@@ -25,12 +26,34 @@
 <script src="<c:url value="/date-picker/js/datepicker.js"/>" type="text/javascript"></script>
         
 <link href="<c:url value="/date-picker/css/datepicker.css"/>" rel="stylesheet" type="text/css" />
-        
-<script type="text/javascript">    
+
+<script type="text/javascript">
+    var ${n} = ${n} || {}; //create a unique variable to assign our namespace too
+    ${n}.jQuery = jQuery.noConflict(true); //assign jQuery to this namespace
+
 datePickerController.addEvent(window, "load", function() {
       datePickerController.createDatePicker({});
 });
+    
+    /*  runs when the document is finished loading.  This prevents things like the 'div' from being fully created */
+    ${n}.jQuery(document).ready(function () { 
+        var $ = ${n}.jQuery; //reassign $ for normal use of jQuery
+        // handle the 'select number of items to display' so that it shows the current setting.
+        $("#${n}itemsShown").val("${model.items}");
+
+        // handle 'filter by user role' so that it shows the current setting
+		$("#${n}userRoleShown").val("${model.userrole}");
+
+        // handle the 'filter by feedback type' to show the current setting. 
+        $("#${n}feedbackTypeShown").val("${model.feedbacktype}");
+
+        // handle the two text boxes associated with filter by date
+        $("#${n}datePicker1").val("${ model.startDisplayDate }"); 
+    	$("#${n}datePicker2").val("${ model.endDisplayDate }");
+    });
+    
 </script>
+
 
 	<h1><spring:message code="feedback.admin.title"/></h1>
 	
@@ -92,72 +115,29 @@ datePickerController.addEvent(window, "load", function() {
 				<form:option value="20"/>
 				<form:option value="50"/>
 			</form:select>
-			<script>
-				if (${model.items} == "10")
-				{
-					$("#${n}itemsShown").get(0).selectedIndex = 0;
-				} else if (${model.items}== "20")
-				{
-					$("#${n}itemsShown").get(0).selectedIndex = 1;
-				}
-				else
-				{
-					$("#${n}itemsShown").get(0).selectedIndex = 2;
-				}
-			</script>
+
 			<spring:message code="feedback.admin.form.role"/>: 
 			<form:select id="${n}userRoleShown" path="userrole">
 				<form:option value="" label="all"/>
-				<form:option value="student"/>
-				<form:option value="staff"/>
-				<form:option value="faculty"/>
+				<form:option value="student"><spring:message code="feedback.admin.type.student"/></form:option>
+				<form:option value="staff"><spring:message code="feedback.admin.type.staff"/></form:option>
+				<form:option value="faculty"><spring:message code="feedback.admin.type.faculty"/></form:option>
 			</form:select>
-			<script>
-				if ("${model.userrole}" == "student")
-				{
-					$("#${n}userRoleShown").get(0).selectedIndex = 1;
-				} else if ("${model.userrole}"== "staff")
-				{
-					$("#${n}userRoleShown").get(0).selectedIndex = 2;
-				}
-				else if ("${model.userrole}"== "faculty")
-				{
-					$("#${n}userRoleShown").get(0).selectedIndex = 3;
-				}
-			</script>
+
 			<spring:message code="feedback.admin.form.type"/>: 
 			<form:select id="${n}feedbackTypeShown" path="feedbacktype">
 				<form:option value="" label="all"/>
-				<form:option value="YES" label="positive"/>
-				<form:option value="NO" label="negative"/>
-				<form:option value="MAYBE" label="undecided"/>
+				<form:option value="YES" ><spring:message code="feedback.admin.stats.answer.yes"/></form:option>
+				<form:option value="NO" label="negative"><spring:message code="feedback.admin.stats.answer.no"/></form:option>
+				<form:option value="MAYBE" label="undecided"><spring:message code="feedback.admin.stats.answer.maybe"/></form:option>
 			</form:select>
-			<script>
-				if ("${model.feedbacktype}" == "YES")
-				{
-					$("#${n}feedbackTypeShown").get(0).selectedIndex = 1;
-				} else if ("${model.feedbacktype}"== "NO")
-				{
-					$("#${n}feedbackTypeShown").get(0).selectedIndex = 2;
-				}
-				else if ("${model.feedbacktype}"== "MAYBE")
-				{
-					$("#${n}feedbackTypeShown").get(0).selectedIndex = 3;
-				}
-			</script>
                 <div id="${n}datePicker">
                 <errorElement id="${n}datePickerError"></errorElement>
                 <spring:message code="feedback.admin.filter.title"/>
               	<label for="${n}datePicker1"><spring:message code="feedback.admin.filter.startdate"/></label> :
               	<form:input cssClass="${ model.datePickerFormat }" path="startDisplayDate" id="${n}datePicker1" />
-                <script> 
-                	$("#${n}datePicker1").get(0).value="${ model.startDisplayDate }"; 
-                </script>
               	<label for="dp-1"><spring:message code="feedback.admin.filter.enddate"/></label> :
               	<form:input cssClass="${ model.datePickerFormat }" path="endDisplayDate" id="${n}datePicker2"/>
-                <script>
-                	$("#${n}datePicker2").get(0).value="${ model.endDisplayDate }";
-                </script>
                 </div>
 			<button type="submit"><spring:message code="feedback.admin.form.submit"/></button>
 			</td>
@@ -173,6 +153,7 @@ datePickerController.addEvent(window, "load", function() {
 					<c:if test="${ model.start + model.items < model.totalItems }">
 						<a href="<portlet:renderURL><portlet:param name="start" value="${ model.start + model.items }"/></portlet:renderURL>"><spring:message code="feedback.admin.form.next"/> &gt;</a>
 					</c:if>
+
     		</td>
 		</tr>
 	</table>
