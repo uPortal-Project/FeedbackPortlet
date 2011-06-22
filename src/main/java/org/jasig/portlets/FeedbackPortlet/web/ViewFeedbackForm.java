@@ -19,6 +19,7 @@ public class ViewFeedbackForm {
 	private int items = 50;
 	private String userrole;
 	private String feedbacktype;
+	private String comments;
 	private String startDisplayDate;
 	private String endDisplayDate;
 
@@ -77,7 +78,15 @@ public class ViewFeedbackForm {
 		this.feedbacktype = feedbacktype;
 	}
 	
-	/**
+    public String getComments() {
+        return comments;
+    }
+    
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
+    /**
      * Set the feedback type of the items to be returned.
      * 
      * @param startDisplayDate

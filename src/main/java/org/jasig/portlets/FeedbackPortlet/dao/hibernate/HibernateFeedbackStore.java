@@ -7,7 +7,6 @@
  */
 package org.jasig.portlets.FeedbackPortlet.dao.hibernate;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -32,16 +31,11 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
  * 
  * @author Jen Bourey
  */
-public class HibernateFeedbackStore extends HibernateDaoSupport implements
-		FeedbackStore {
+public class HibernateFeedbackStore extends HibernateDaoSupport implements FeedbackStore {
 
-	private static Log log = LogFactory.getLog(HibernateFeedbackStore.class);
-	private long millisInADay = (60000L * 60L * 24L); // 60000 millis to a min, 60 min to hour. 24 /day, -1 millisecond to be end of day 
+	private Log log = LogFactory.getLog(getClass());
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.jasig.portlets.FeedbackPortlet.dao.FeedbackStore#storeFeedback(org.jasig.portlets.FeedbackPortlet.FeedbackItem)
-	 */
+	@Override
 	public void storeFeedback(FeedbackItem feedback) {
 		try {
 			final Session session = this.getSession(false);
@@ -58,10 +52,7 @@ public class HibernateFeedbackStore extends HibernateDaoSupport implements
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.jasig.portlets.FeedbackPortlet.dao.FeedbackStore#getFeedback()
-	 */
+    @Override
 	public List<FeedbackItem> getFeedback() {
 		List<FeedbackItem> results;
 		try {
@@ -75,83 +66,33 @@ public class HibernateFeedbackStore extends HibernateDaoSupport implements
 		}
 		return results;
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see org.jasig.portlets.FeedbackPortlet.dao.FeedbackStore#getFeedback(int, int)
-	 */
-	public List<FeedbackItem> getFeedback(int start, int items) {
-		List<FeedbackItem> results;
-		try {
-			final Session session = this.getSession(false);
-			Criteria crit = session.createCriteria(FeedbackItem.class);
-			crit.addOrder(Order.desc("submissiontime"));
-			crit.setFirstResult(start);
-			crit.setMaxResults(items);
-			results = crit.list();
-
-		} catch (HibernateException ex) {
-			throw convertHibernateAccessException(ex);
-		}
-		return results;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see org.jasig.portlets.FeedbackPortlet.dao.FeedbackStore#getFeedback(int, int, java.lang.String, java.lang.String)
-	 */
-	public List<FeedbackItem> getFeedback(int start, int items, String role,
-			String feedbacktype) {
-	    List<FeedbackItem> results;
-		try {
-		    final Session session = this.getSession(false);
-			Criteria crit = session.createCriteria(FeedbackItem.class);
-			crit.addOrder(Order.desc("submissiontime"));
-			crit.setFirstResult(start);
-			if (role != null)
-				crit.add(Expression.eq("userrole", role));
-			if (feedbacktype != null)
-				crit.add(Expression.eq("feedbacktype", feedbacktype));
-			crit.setMaxResults(items);
-			results = crit.list();
-
-		} catch (HibernateException ex) {
-			throw convertHibernateAccessException(ex);
-		}
-		return results;
-
-	}
 	
-	/** 
+    /** 
 	 * Searches the feedback and pulls the results between (inclusively) the dates listed.   One does not actually have to be less than the other
 	 * @param Date1
 	 * @param Date2
 	 * @return list of items
 	 */
-	public List<FeedbackItem> getFeedback(int start, int items, String role, String feedbacktype, Date date1, Date date2)
-	{
-	    // figure out which date comes first, so that they will always have the later be the date checked last
-	    Date startDate = new Date(date1.getTime());
-	    Date endDate = new Date(date2.getTime());
-	    if (date2.before(date1))
-	    {
-	        startDate.setTime(date2.getTime());
-	        endDate.setTime(date1.getTime());
-	    }
-	    endDate.setTime(endDate.getTime()+millisInADay); // sets 24 hours ahead so date = 1st millisecond of following day (inclusive between dates)
+    @Override
+    @SuppressWarnings("unchecked")
+	public List<FeedbackItem> getFeedback(int start, int items, String role, String feedbacktype, String comments, Date startDate, Date endDate) {
 	    
-	    // declare both the entire list and the list of filtered data
         List<FeedbackItem> results;
         
         try {
             final Session session = this.getSession(false);
             Criteria crit = session.createCriteria(FeedbackItem.class);
             crit.addOrder(Order.desc("submissiontime"));
-            //crit.setFirstResult(start);
-            if (role != null)
+            crit.setFirstResult(start);
+            if (role != null) {
                  crit.add(Expression.eq("userrole", role));
-            if (feedbacktype != null)
+            }
+            if (feedbacktype != null) {
                  crit.add(Expression.eq("feedbacktype", feedbacktype));
+            }
+            if (comments != null) {
+                crit.add(Expression.ne("feedback", ""));
+            }
             // Dates are on by default and throws an error if not entered, so they should never be null 
             crit.add(Expression.between("submissiontime", startDate, endDate));
             
@@ -164,80 +105,46 @@ public class HibernateFeedbackStore extends HibernateDaoSupport implements
        
        return results;
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see org.jasig.portlets.FeedbackPortlet.dao.FeedbackStore#getFeedbackTotal(java.lang.String, java.lang.String)
-	 */
-	public long getFeedbackTotal(String role, String feedbacktype) {
-		try {
-			final Session session = this.getSession(false);
-			String sql = "select count(item.id) from FeedbackItem item";
-			if (role != null || feedbacktype != null) {
-				sql = sql.concat(" where");
-			}
-			if (role != null) {
-				sql = sql.concat(" userrole = :userrole");
-			}
-			if (role != null && feedbacktype != null)
-				sql = sql.concat(" and");
-			if (feedbacktype != null) {
-				sql = sql.concat(" feedbacktype = :feedbacktype");
-			}
-			Query query = session.createQuery(sql);
-			if (role != null)
-				query.setString("userrole", role);
-			if (feedbacktype != null)
-				query.setString("feedbacktype", feedbacktype);
-			return (Long) query.uniqueResult();
-		} catch (HibernateException ex) {
-			throw convertHibernateAccessException(ex);
-		}
-	}
 	
-	   /*
-     * (non-Javadoc)
-     * @see org.jasig.portlets.FeedbackPortlet.dao.FeedbackStore#getFeedbackTotal(java.lang.String, java.lang.String)
-     */
-    public long getFeedbackTotal(String role, String feedbacktype, Date date1, Date date2) {
+    @Override
+    public long getFeedbackTotal(String role, String feedbacktype, String comments, Date startDate, Date endDate) {
         try {
             final Session session = this.getSession(false);
             String sql = "select count(item.id) from FeedbackItem item";
-            if (role != null || feedbacktype != null) {
-                sql = sql.concat(" where");
-            }
             if (role != null) {
-                sql = sql.concat(" userrole = :userrole");
+                sql = sql.concat(!sql.contains(" where ") ? " where " : " and ");
+                sql = sql.concat("userrole = :userrole");
             }
-            if (role != null && feedbacktype != null)
-                sql = sql.concat(" and");
             if (feedbacktype != null) {
-                sql = sql.concat(" feedbacktype = :feedbacktype");
+                sql = sql.concat(!sql.contains(" where ") ? " where " : " and ");
+                sql = sql.concat("feedbacktype = :feedbacktype");
             }
-            if (date1 != null && date2 != null)
-            {
-                java.sql.Date startDate = new java.sql.Date(date1.getTime());
-                java.sql.Date endDate = new java.sql.Date(date2.getTime());
-                sql.concat(" and submissiontime BETWEEN ");
-                sql.concat(startDate.toString());
-                sql.concat(" AND ");
-                sql.concat(endDate.toString());
+            if (comments != null) {
+                sql = sql.concat(!sql.contains(" where ") ? " where " : " and ");
+                sql = sql.concat("feedback != ''");
+            }
+            if (startDate != null && endDate != null) {
+                sql = sql.concat(!sql.contains(" where ") ? " where " : " and ");
+                sql = sql.concat("submissiontime BETWEEN :startDate AND :endDate");
             }
             Query query = session.createQuery(sql);
-            if (role != null)
+            if (role != null) {
                 query.setString("userrole", role);
-            if (feedbacktype != null)
+            }
+            if (feedbacktype != null) {
                 query.setString("feedbacktype", feedbacktype);
+            }
+            if (startDate != null && endDate != null) {
+                query.setDate("startDate", startDate);
+                query.setDate("endDate", endDate);
+            }
             return (Long) query.uniqueResult();
         } catch (HibernateException ex) {
             throw convertHibernateAccessException(ex);
         }
     }
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.jasig.portlets.FeedbackPortlet.dao.FeedbackStore#getStats()
-	 */
+    @Override
 	public OverallFeedbackStats getStats() {
 		OverallFeedbackStats stats = new OverallFeedbackStats();
 		try {
@@ -273,10 +180,7 @@ public class HibernateFeedbackStore extends HibernateDaoSupport implements
 		return stats;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.jasig.portlets.FeedbackPortlet.dao.FeedbackStore#getStatsByRole()
-	 */
+    @Override
 	public Map<String, OverallFeedbackStats> getStatsByRole() {
 		OverallFeedbackStats stats = new OverallFeedbackStats();
 		Map<String, OverallFeedbackStats> statsMap = new HashMap<String, OverallFeedbackStats>();

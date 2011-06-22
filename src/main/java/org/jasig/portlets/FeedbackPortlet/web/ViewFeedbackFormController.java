@@ -7,7 +7,6 @@
  */
 package org.jasig.portlets.FeedbackPortlet.web;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -42,7 +41,8 @@ public class ViewFeedbackFormController extends SimpleFormController {
 
     private static Log log = LogFactory.getLog(ViewFeedbackFormController.class);
     
-    long millisIn30Days = (60000L * 60L * 24L * 30L); // 60*1000 millis = 1 min;  60 min = 1 hour; 24 h = 1 day; 30 days
+    private static final long MILLIS_IN_A_DAY = (60000L * 60L * 24L); // 60000 millis to a min, 60 min to hour. 24 /day, -1 millisecond to be end of day 
+    private static final long MILLIS_IN_30_DAYS = (60000L * 60L * 24L * 30L); // 60*1000 millis = 1 min;  60 min = 1 hour; 24 h = 1 day; 30 days
     
     private String datePickerFormat = "dateformat-m-sl-d-sl-Y"; // used for defining date format in javascript date picker
     private String dateFormat = "MM/dd/yyyy";  // used to define the format in the java date formatter (to parse the date picker)
@@ -82,7 +82,8 @@ public class ViewFeedbackFormController extends SimpleFormController {
         
         
         Date endDisplayDate = dateFormatter.parse(form.getEndDisplayDate());
-        if (startDisplayDate != null && !startDisplayDate.equals(""))
+        endDisplayDate.setTime(endDisplayDate.getTime()+MILLIS_IN_A_DAY); // sets 24 hours ahead so date = 1st millisecond of following day (inclusive between dates)
+        if (endDisplayDate != null && !endDisplayDate.equals(""))
         {
             session.setAttribute("endDisplayDate", endDisplayDate);
         }
@@ -109,6 +110,13 @@ public class ViewFeedbackFormController extends SimpleFormController {
         // reset the start index
         session.setAttribute("start", 0);
 
+        // update the requested comments only criteria
+        String comments = form.getComments();
+        if (comments != null && !comments.equals(""))
+            session.setAttribute("comments", comments);
+        else 
+            session.removeAttribute("comments");
+
     }
 
     
@@ -132,8 +140,10 @@ public class ViewFeedbackFormController extends SimpleFormController {
             session.setAttribute("initialized", true);
             session.setAttribute("start", 0);
             session.setAttribute("items", 50);
-            session.setAttribute("startDisplayDate", new Date(System.currentTimeMillis() - millisIn30Days) );// defaults to 30 days ago
-            session.setAttribute("endDisplayDate", new Date(System.currentTimeMillis()) ); 
+            session.setAttribute("startDisplayDate", new Date(System.currentTimeMillis() - MILLIS_IN_30_DAYS) );// defaults to 30 days ago
+            Date endDisplayDate = new Date();
+            endDisplayDate.setTime(endDisplayDate.getTime()+MILLIS_IN_A_DAY); // sets 24 hours ahead so date = 1st millisecond of following day (inclusive between dates)
+            session.setAttribute("endDisplayDate", endDisplayDate); 
             session.setAttribute("datePickerFormat", datePickerFormat);
         }
 
@@ -146,6 +156,7 @@ public class ViewFeedbackFormController extends SimpleFormController {
         Date endDisplayDate = (Date) session.getAttribute("endDisplayDate");
         
         String start = request.getParameter("start");
+        String comments = (String) session.getAttribute("comments");
 
         if (startDisplayDate == null) {
             log.debug("There has been some kind of error causing the display date to be null.  Correcting"); 
@@ -164,7 +175,7 @@ public class ViewFeedbackFormController extends SimpleFormController {
             session.setAttribute("start", startNum);
         }
         
-        List<FeedbackItem> theFeedbackItems = feedbackStore.getFeedback(startNum, itemNum, role, feedback, startDisplayDate, endDisplayDate);
+        List<FeedbackItem> theFeedbackItems = feedbackStore.getFeedback(startNum, itemNum, role, feedback, comments, startDisplayDate, endDisplayDate);
         
         Map<String, Object> model = new HashMap<String, Object>();
         
@@ -173,6 +184,7 @@ public class ViewFeedbackFormController extends SimpleFormController {
         model.put("feedback", theFeedbackItems);
         model.put("userrole", role);
         model.put("feedbacktype", feedback);// 'feedback' is defined by getting 'feedbackType', not to be confused with the feedback itself
+        model.put("comments", comments);
 
         // get the overall statistics for the feedback data
         model.put("stats", feedbackStore.getStats());
@@ -182,7 +194,7 @@ public class ViewFeedbackFormController extends SimpleFormController {
         
         model.put("start", startNum);
         model.put("items", itemNum);
-        model.put("totalItems", feedbackStore.getFeedbackTotal(role, feedback, startDisplayDate, endDisplayDate));
+        model.put("totalItems", feedbackStore.getFeedbackTotal(role, feedback, comments, startDisplayDate, endDisplayDate));
         
         // Date format required to parse user input dates
         SimpleDateFormat dateFormatter = new SimpleDateFormat(dateFormat);
@@ -204,6 +216,7 @@ public class ViewFeedbackFormController extends SimpleFormController {
     }
     
     private FeedbackStore feedbackStore;
+
     public void setFeedbackStore(FeedbackStore feedbackStore) {
         this.feedbackStore = feedbackStore;
     }

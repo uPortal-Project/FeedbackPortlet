@@ -80,6 +80,8 @@ public class FeedbackItem implements Serializable {
 			return "IE";
 		else if (this.useragent.contains("Firefox"))
 			return "FF";
+        else if (this.useragent.contains("Chrome"))
+            return "CR";
 		else if (this.useragent.contains("AppleWebKit"))
 			return "SA";
 		else if (this.useragent.contains("Opera"))

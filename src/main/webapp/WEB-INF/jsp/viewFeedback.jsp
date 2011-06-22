@@ -131,6 +131,8 @@ datePickerController.addEvent(window, "load", function() {
 				<form:option value="NO" label="negative"><spring:message code="feedback.admin.stats.answer.no"/></form:option>
 				<form:option value="MAYBE" label="undecided"><spring:message code="feedback.admin.stats.answer.maybe"/></form:option>
 			</form:select>
+            <spring:message code="feedback.admin.form.comments"/>:
+            <input id="comments" name="comments" type="checkbox" value="yes" <c:if test="${model.comments!=null}"> checked="checked"</c:if> />
                 <div id="${n}datePicker">
                 <errorElement id="${n}datePickerError"></errorElement>
                 <spring:message code="feedback.admin.filter.title"/>
