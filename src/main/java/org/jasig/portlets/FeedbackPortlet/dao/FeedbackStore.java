@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.jasig.portlets.FeedbackPortlet.FeedbackItem;
+import org.jasig.portlets.FeedbackPortlet.FeedbackQueryParameters;
 import org.jasig.portlets.FeedbackPortlet.OverallFeedbackStats;
 
 /**
@@ -45,7 +46,7 @@ public interface FeedbackStore {
 	 * @param date2
 	 * @return
 	 */
-	public List<FeedbackItem> getFeedback(int start, int items, String role, String feedbacktype, String comments, Date startDate, Date endDate);
+	public List<FeedbackItem> getFeedback(FeedbackQueryParameters params);
 
 	/**
 	 * Get statistics on the feedback data.
@@ -73,7 +74,7 @@ public interface FeedbackStore {
      * @param endDate 
      * @return number of matching feedback items
      */
-    public long getFeedbackTotal(String role, String feedbacktype, String comments, Date startDate, Date endDate);
+    public long getFeedbackTotal(FeedbackQueryParameters params);
 	
 }
 

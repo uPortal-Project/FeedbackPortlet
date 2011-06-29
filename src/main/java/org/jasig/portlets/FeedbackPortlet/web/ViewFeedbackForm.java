@@ -19,7 +19,7 @@ public class ViewFeedbackForm {
 	private int items = 50;
 	private String userrole;
 	private String feedbacktype;
-	private String comments;
+	private boolean comments;
 	private String startDisplayDate;
 	private String endDisplayDate;
 
@@ -78,11 +78,11 @@ public class ViewFeedbackForm {
 		this.feedbacktype = feedbacktype;
 	}
 	
-    public String getComments() {
+    public Boolean getComments() {
         return comments;
     }
     
-    public void setComments(String comments) {
+    public void setComments(Boolean comments) {
         this.comments = comments;
     }
 

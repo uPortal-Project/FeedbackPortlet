@@ -50,6 +50,7 @@ datePickerController.addEvent(window, "load", function() {
         // handle the two text boxes associated with filter by date
         $("#${n}datePicker1").val("${ model.startDisplayDate }"); 
     	$("#${n}datePicker2").val("${ model.endDisplayDate }");
+
     });
     
 </script>
@@ -132,7 +133,7 @@ datePickerController.addEvent(window, "load", function() {
 				<form:option value="MAYBE" label="undecided"><spring:message code="feedback.admin.stats.answer.maybe"/></form:option>
 			</form:select>
             <spring:message code="feedback.admin.form.comments"/>:
-            <input id="comments" name="comments" type="checkbox" value="yes" <c:if test="${model.comments!=null}"> checked="checked"</c:if> />
+            <input id="comments" name="comments" type="checkbox" value="yes" <c:if test="${model.comments==true}"> checked="checked"</c:if> />
                 <div id="${n}datePicker">
                 <errorElement id="${n}datePickerError"></errorElement>
                 <spring:message code="feedback.admin.filter.title"/>

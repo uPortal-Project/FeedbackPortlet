@@ -7,6 +7,7 @@
  */
 package org.jasig.portlets.FeedbackPortlet.web;
 
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -20,6 +21,7 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.jasig.portlets.FeedbackPortlet.FeedbackItem;
+import org.jasig.portlets.FeedbackPortlet.FeedbackQueryParameters;
 import org.springframework.web.servlet.view.document.AbstractExcelView;
 
 /**
@@ -58,6 +60,7 @@ public class ExcelFeedbackView extends AbstractExcelView {
         
         // add each feedback item to the sheet
         List<FeedbackItem> feedback = (List<FeedbackItem>) model.get("feedback");
+        SimpleDateFormat dateFormatter = new SimpleDateFormat(FeedbackQueryParameters.DATE_FORMAT);
         for (Iterator<FeedbackItem> iter = feedback.iterator(); iter.hasNext();) {
         	rowCount++;
         	FeedbackItem item = iter.next();
@@ -67,7 +70,7 @@ public class ExcelFeedbackView extends AbstractExcelView {
             row.createCell((short) 2).setCellValue(new HSSFRichTextString(item.getUseremail()));
             row.createCell((short) 3).setCellValue(new HSSFRichTextString(item.getUserrole()));
             row.createCell((short) 4).setCellValue(new HSSFRichTextString(item.getUseragent()));
-            row.createCell((short) 5).setCellValue(item.getSubmissiontime());
+            row.createCell((short) 5).setCellValue(new HSSFRichTextString(dateFormatter.format(item.getSubmissiontime()) ) ); // formats to be readable
             row.createCell((short) 6).setCellValue(new HSSFRichTextString(item.getTabname()));
             row.createCell((short) 7).setCellValue(new HSSFRichTextString(item.getFeedbacktype()));
             row.createCell((short) 8).setCellValue(new HSSFRichTextString(item.getFeedback()));

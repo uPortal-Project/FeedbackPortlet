@@ -7,14 +7,19 @@
  */
 package org.jasig.portlets.FeedbackPortlet.web;
 
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.jasig.portlets.FeedbackPortlet.FeedbackItem;
+import org.jasig.portlets.FeedbackPortlet.FeedbackQueryParameters;
 import org.jasig.portlets.FeedbackPortlet.dao.FeedbackStore;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
@@ -30,12 +35,15 @@ public class ExcelFeedbackController extends AbstractController {
 	private static Log log = LogFactory.getLog(ExcelFeedbackController.class);
 
 	@Override
-	protected ModelAndView handleRequestInternal(HttpServletRequest arg0,
-			HttpServletResponse arg1) throws Exception {
-
+	protected ModelAndView handleRequestInternal(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+	    HttpSession session = request.getSession(); // grabs the session to see what current settings the user has
+	    
+	    FeedbackQueryParameters queryParameters = (FeedbackQueryParameters) session.getAttribute("feedbackQueryParameters");
+	    
 		// put all the feedback items in the model
 		Map<String, Object> model = new HashMap<String, Object>();
-		model.put("feedback", feedbackStore.getFeedback());
+		model.put("feedback", feedbackStore.getFeedback(queryParameters));
 		
 		// return an excel export view of the feedback data
 		return new ModelAndView("viewExcelFeedback", "model", model);

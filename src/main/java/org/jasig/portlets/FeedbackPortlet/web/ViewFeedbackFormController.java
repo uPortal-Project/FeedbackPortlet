@@ -24,6 +24,7 @@ import javax.portlet.RenderResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jasig.portlets.FeedbackPortlet.FeedbackItem;
+import org.jasig.portlets.FeedbackPortlet.FeedbackQueryParameters;
 import org.jasig.portlets.FeedbackPortlet.dao.FeedbackStore;
 import org.springframework.validation.BindException;
 import org.springframework.web.portlet.ModelAndView;
@@ -41,11 +42,12 @@ public class ViewFeedbackFormController extends SimpleFormController {
 
     private static Log log = LogFactory.getLog(ViewFeedbackFormController.class);
     
-    private static final long MILLIS_IN_A_DAY = (60000L * 60L * 24L); // 60000 millis to a min, 60 min to hour. 24 /day, -1 millisecond to be end of day 
+    public static final long MILLIS_IN_A_DAY = (60000L * 60L * 24L); // 60000 millis to a min, 60 min to hour. 24 /day, -1 millisecond to be end of day 
     private static final long MILLIS_IN_30_DAYS = (60000L * 60L * 24L * 30L); // 60*1000 millis = 1 min;  60 min = 1 hour; 24 h = 1 day; 30 days
     
-    private String datePickerFormat = "dateformat-m-sl-d-sl-Y"; // used for defining date format in javascript date picker
-    private String dateFormat = "MM/dd/yyyy";  // used to define the format in the java date formatter (to parse the date picker)
+    private static final String DATEPICKER_FORMAT = "dateformat-m-sl-d-sl-Y"; // used for defining date format in javascript date picker
+    // this format of 'month-slash-day-slash-year' should match the dateFormat "Month/Day/Year" in the FeedbackQueryParameter
+
     
     
     
@@ -60,62 +62,13 @@ public class ViewFeedbackFormController extends SimpleFormController {
             throws Exception {
         
         PortletSession session = request.getPortletSession();
-        ViewFeedbackForm form = (ViewFeedbackForm) command;
+        ViewFeedbackForm form = (ViewFeedbackForm) command; // pulls the form data submitted by the user
+        
+        FeedbackQueryParameters queryParameters = (FeedbackQueryParameters) session.getAttribute("feedbackQueryParameters", session.APPLICATION_SCOPE);
+        // gather the appropriate data from the form
+        queryParameters.updateParametersWithForm(form);
+        session.setAttribute("feedbackQueryParameters", queryParameters, session.APPLICATION_SCOPE);
 
-        // update the requested user role
-        String role = form.getUserrole();
-        if (role != null && !role.equals(""))
-            session.setAttribute("userrole", role);
-        else 
-            session.removeAttribute("userrole");
-        
-        SimpleDateFormat dateFormatter = new SimpleDateFormat(dateFormat);
-        Date startDisplayDate = dateFormatter.parse(form.getStartDisplayDate());
-        if (startDisplayDate != null && !startDisplayDate.equals(""))
-        {
-            session.setAttribute("startDisplayDate", startDisplayDate);
-        }
-        else
-        {
-            session.removeAttribute("startDisplayDate");
-        }
-        
-        
-        Date endDisplayDate = dateFormatter.parse(form.getEndDisplayDate());
-        endDisplayDate.setTime(endDisplayDate.getTime()+MILLIS_IN_A_DAY); // sets 24 hours ahead so date = 1st millisecond of following day (inclusive between dates)
-        if (endDisplayDate != null && !endDisplayDate.equals(""))
-        {
-            session.setAttribute("endDisplayDate", endDisplayDate);
-        }
-        else
-        {
-            session.removeAttribute("endDisplayDate");
-        }
-        
-        
-        // update the requested feedback type
-        String type = form.getFeedbacktype();
-        if (type != null && !type.equals(""))
-            session.setAttribute("feedbacktype", type);
-        else
-            session.removeAttribute("feedbacktype");
-        
-        // update the requested number of items
-        Integer items = form.getItems();
-        if (items > 0)
-            session.setAttribute("items", items);
-        else
-            session.removeAttribute("items");
-        
-        // reset the start index
-        session.setAttribute("start", 0);
-
-        // update the requested comments only criteria
-        String comments = form.getComments();
-        if (comments != null && !comments.equals(""))
-            session.setAttribute("comments", comments);
-        else 
-            session.removeAttribute("comments");
 
     }
 
@@ -135,77 +88,37 @@ public class ViewFeedbackFormController extends SimpleFormController {
 
         PortletSession session = request.getPortletSession();
         
+        
         // if this is the first request, initialize the restriction information
-        if (session.getAttribute("initialized") == null) {
-            session.setAttribute("initialized", true);
-            session.setAttribute("start", 0);
-            session.setAttribute("items", 50);
-            session.setAttribute("startDisplayDate", new Date(System.currentTimeMillis() - MILLIS_IN_30_DAYS) );// defaults to 30 days ago
-            Date endDisplayDate = new Date();
-            endDisplayDate.setTime(endDisplayDate.getTime()+MILLIS_IN_A_DAY); // sets 24 hours ahead so date = 1st millisecond of following day (inclusive between dates)
-            session.setAttribute("endDisplayDate", endDisplayDate); 
-            session.setAttribute("datePickerFormat", datePickerFormat);
+        if (session.getAttribute("feedbackQueryParameters", session.APPLICATION_SCOPE) == null) {
+            session.setAttribute("feedbackQueryParameters", new FeedbackQueryParameters(), session.APPLICATION_SCOPE);
         }
-
-        // get the desired restriction information from the session
-        int startNum = (Integer) session.getAttribute("start");
-        int itemNum = (Integer) session.getAttribute("items");
-        String feedback = (String) session.getAttribute("feedbacktype");
-        String role = (String) session.getAttribute("userrole");
-        Date startDisplayDate = (Date) session.getAttribute("startDisplayDate");  // these are both set in 'parseCurrentDateRange'
-        Date endDisplayDate = (Date) session.getAttribute("endDisplayDate");
         
+        FeedbackQueryParameters queryParameters = (FeedbackQueryParameters) session.getAttribute("feedbackQueryParameters", session.APPLICATION_SCOPE);
+
+        int startNum;
+        // this seems to overwrites whatever attribute is in session with what is in request.
         String start = request.getParameter("start");
-        String comments = (String) session.getAttribute("comments");
-
-        if (startDisplayDate == null) {
-            log.debug("There has been some kind of error causing the display date to be null.  Correcting"); 
-            startDisplayDate = new Date(); 
-        }
-        if (endDisplayDate == null){
-            log.debug("There has been some kind of error causing the display date to be null.  Correcting"); 
-            endDisplayDate = new Date(); 
-        }
-        parseCurrentDateRange(request, startDisplayDate, endDisplayDate); // moved to private method to clean up code
-        
-        
         if (start != null && !start.equals("")) {
             startNum = Integer.parseInt(start);
             if (startNum < 0) { startNum = 0; }
             session.setAttribute("start", startNum);
+            queryParameters.setPagingStart(startNum);
         }
-        
-        List<FeedbackItem> theFeedbackItems = feedbackStore.getFeedback(startNum, itemNum, role, feedback, comments, startDisplayDate, endDisplayDate);
-        
+        List<FeedbackItem> theFeedbackItems = feedbackStore.getFeedback(queryParameters); 
         Map<String, Object> model = new HashMap<String, Object>();
-        
-        // get the feedback items
-        // model.put("feedback", feedbackStore.getFeedback(startNum, itemNum, role, feedback));
-        model.put("feedback", theFeedbackItems);
-        model.put("userrole", role);
-        model.put("feedbacktype", feedback);// 'feedback' is defined by getting 'feedbackType', not to be confused with the feedback itself
-        model.put("comments", comments);
-
+        model.putAll(queryParameters.putIntoModelMap());
+        model.put("totalItems", feedbackStore.getFeedbackTotal(queryParameters));
         // get the overall statistics for the feedback data
         model.put("stats", feedbackStore.getStats());
         
         // get the statistics for the feedback data separated by user role
         model.put("overallstats", feedbackStore.getStatsByRole());
-        
-        model.put("start", startNum);
-        model.put("items", itemNum);
-        model.put("totalItems", feedbackStore.getFeedbackTotal(role, feedback, comments, startDisplayDate, endDisplayDate));
-        
-        // Date format required to parse user input dates
-        SimpleDateFormat dateFormatter = new SimpleDateFormat(dateFormat);
-        model.put("startDisplayDate",dateFormatter.format(startDisplayDate) );
-        model.put("endDisplayDate", dateFormatter.format(endDisplayDate) );
-        model.put("datePickerFormat", datePickerFormat);
-
+        model.put("feedback", theFeedbackItems);
+        model.put("datePickerFormat", DATEPICKER_FORMAT); // puts in the date picker format for use by the date picker.
         request.setAttribute(getCommandName(), new ViewFeedbackForm());
         
         return new ModelAndView("/viewFeedback", "model", model);
-        
     }
     
     @Override
@@ -219,52 +132,6 @@ public class ViewFeedbackFormController extends SimpleFormController {
 
     public void setFeedbackStore(FeedbackStore feedbackStore) {
         this.feedbackStore = feedbackStore;
-    }
-    
-    /*
-     * clean code practices might suggest any noise blocks of code like if-else blocks are best moved to seperate methods
-     * Seperated for ease of reading
-     * 
-     * This attempts to pull the time form the requests given by the user, if it doesn't work it just uses the default
-     */
-    private void parseCurrentDateRange(RenderRequest request, Date startDisplayDate, Date endDisplayDate)
-    {
-        // Date format required to parse user input dates
-        SimpleDateFormat dateFormatter = new SimpleDateFormat(dateFormat);
-        String startDisplay = request.getParameter("startDisplayDate");
-        String endDisplay = request.getParameter("endDisplayDate");
-        if (startDisplay == null) // goes left to right, so if null '.isEmpty()' shouldn't fire
-        {
-            //startDisplayDate.setTime(System.currentTimeMillis() - millisIn30Days);
-            log.debug("the render request failed to return anything for the date filter.  This may be normal");
-        }
-        else if (startDisplay != null && !startDisplay.isEmpty())
-        { 
-            long time;
-            try {
-                time = dateFormatter.parse(startDisplay).getTime();
-            } catch (ParseException e) {
-                e.printStackTrace();
-                time = System.currentTimeMillis();
-            }
-            startDisplayDate.setTime(time);   // I have to set the time this way so it carries out of the method
-        }
-        if (endDisplay == null) 
-        {
-            //endDisplayDate.setTime(System.currentTimeMillis());
-            log.debug("the render request failed to return anything for the date filter.  This may be normal");
-        }
-        else if (endDisplay != null && !endDisplay.isEmpty())
-        {
-            long time;
-            try {
-                time = dateFormatter.parse(endDisplay).getTime();
-            } catch (ParseException e) {
-                e.printStackTrace();
-                time = System.currentTimeMillis();
-            }
-            endDisplayDate.setTime(time);
-        }
     }
     
 }

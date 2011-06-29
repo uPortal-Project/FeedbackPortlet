@@ -22,6 +22,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.Order;
 import org.jasig.portlets.FeedbackPortlet.FeedbackItem;
+import org.jasig.portlets.FeedbackPortlet.FeedbackQueryParameters;
 import org.jasig.portlets.FeedbackPortlet.OverallFeedbackStats;
 import org.jasig.portlets.FeedbackPortlet.dao.FeedbackStore;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
@@ -75,22 +76,29 @@ public class HibernateFeedbackStore extends HibernateDaoSupport implements Feedb
 	 */
     @Override
     @SuppressWarnings("unchecked")
-	public List<FeedbackItem> getFeedback(int start, int items, String role, String feedbacktype, String comments, Date startDate, Date endDate) {
-	    
+	public List<FeedbackItem> getFeedback(FeedbackQueryParameters params) {
         List<FeedbackItem> results;
         
+        int start = params.getInt(params.START_DISPLAY_COUNT);
+        int items = params.getInt(params.ITEMS_DISPLAYED);
+        String role = params.getString(params.USER_ROLE);
+        String feedbacktype = params.getString(params.FEEDBACK_TYPE);
+        boolean comments = params.getBoolean(params.COMMENTS_ONLY_DISPLAYED);
+        Date startDate = params.getDate(params.START_DISPLAY_DATE);
+        Date endDate = params.getEndDate(params.END_DISPLAY_DATE);
         try {
             final Session session = this.getSession(false);
             Criteria crit = session.createCriteria(FeedbackItem.class);
             crit.addOrder(Order.desc("submissiontime"));
             crit.setFirstResult(start);
-            if (role != null) {
+            if (role != null && !role.isEmpty()) {
                  crit.add(Expression.eq("userrole", role));
             }
-            if (feedbacktype != null) {
+            if (feedbacktype != null && !feedbacktype.isEmpty()) {
                  crit.add(Expression.eq("feedbacktype", feedbacktype));
             }
-            if (comments != null) {
+            if (comments == true) {
+                crit.add(Expression.isNotNull("feedback"));
                 crit.add(Expression.ne("feedback", ""));
             }
             // Dates are on by default and throws an error if not entered, so they should never be null 
@@ -102,24 +110,28 @@ public class HibernateFeedbackStore extends HibernateDaoSupport implements Feedb
        } catch (HibernateException ex) {
            throw convertHibernateAccessException(ex);
        }
-       
        return results;
 	}
 	
     @Override
-    public long getFeedbackTotal(String role, String feedbacktype, String comments, Date startDate, Date endDate) {
+    public long getFeedbackTotal(FeedbackQueryParameters params) {
+        String role = params.getString(params.USER_ROLE);
+        String feedbacktype = params.getString(params.FEEDBACK_TYPE);
+        boolean comments = params.getBoolean(params.COMMENTS_ONLY_DISPLAYED);
+        Date startDate = params.getDate(params.START_DISPLAY_DATE);
+        Date endDate = params.getEndDate(params.END_DISPLAY_DATE);
         try {
             final Session session = this.getSession(false);
             String sql = "select count(item.id) from FeedbackItem item";
-            if (role != null) {
+            if (role != null && !role.isEmpty()) {
                 sql = sql.concat(!sql.contains(" where ") ? " where " : " and ");
                 sql = sql.concat("userrole = :userrole");
             }
-            if (feedbacktype != null) {
+            if (feedbacktype != null && !feedbacktype.isEmpty()) {
                 sql = sql.concat(!sql.contains(" where ") ? " where " : " and ");
                 sql = sql.concat("feedbacktype = :feedbacktype");
             }
-            if (comments != null) {
+            if (comments != false) {
                 sql = sql.concat(!sql.contains(" where ") ? " where " : " and ");
                 sql = sql.concat("feedback != ''");
             }
@@ -128,10 +140,10 @@ public class HibernateFeedbackStore extends HibernateDaoSupport implements Feedb
                 sql = sql.concat("submissiontime BETWEEN :startDate AND :endDate");
             }
             Query query = session.createQuery(sql);
-            if (role != null) {
+            if (role != null && !role.isEmpty()) {
                 query.setString("userrole", role);
             }
-            if (feedbacktype != null) {
+            if (feedbacktype != null && !feedbacktype.isEmpty()) {
                 query.setString("feedbacktype", feedbacktype);
             }
             if (startDate != null && endDate != null) {
