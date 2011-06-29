@@ -22,3 +22,13 @@ table.feedback-list tr th{
 .feedback-list tr.bottom td {
     border-bottom: thin solid #999;
 }
+
+.feedback-submit-button {
+   margin:0 5px;
+   padding:0.3em 2em;
+   margin-left:5em
+   background:#C0C0C0 top left repeat-x;
+   border:1px solid #000; color:#000;
+   font-weight:bold;
+   opacity:0.2;
+}
