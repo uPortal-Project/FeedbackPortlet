@@ -99,7 +99,7 @@ public class HibernateFeedbackStore extends HibernateDaoSupport implements Feedb
             }
             if (comments == true) {
                 crit.add(Expression.isNotNull("feedback"));
-                crit.add(Expression.ne("feedback", ""));
+                crit.add(Expression.gt("feedback", ""));
             }
             // Dates are on by default and throws an error if not entered, so they should never be null 
             crit.add(Expression.between("submissiontime", startDate, endDate));
@@ -133,7 +133,7 @@ public class HibernateFeedbackStore extends HibernateDaoSupport implements Feedb
             }
             if (comments != false) {
                 sql = sql.concat(!sql.contains(" where ") ? " where " : " and ");
-                sql = sql.concat("feedback != ''");
+                sql = sql.concat("LENGTH(feedback) > 0");
             }
             if (startDate != null && endDate != null) {
                 sql = sql.concat(!sql.contains(" where ") ? " where " : " and ");
