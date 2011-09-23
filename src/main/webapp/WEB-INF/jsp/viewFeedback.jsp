@@ -39,18 +39,31 @@ datePickerController.addEvent(window, "load", function() {
     ${n}.jQuery(document).ready(function () { 
         var $ = ${n}.jQuery; //reassign $ for normal use of jQuery
         // handle the 'select number of items to display' so that it shows the current setting.
-        $("#${n}itemsShown").val("${model.items}");
+        $("#${n}itemsShown").val("${items}");
 
         // handle 'filter by user role' so that it shows the current setting
-		$("#${n}userRoleShown").val("${model.userrole}");
+		$("#${n}userRoleShown").val("${userrole}");
 
         // handle the 'filter by feedback type' to show the current setting. 
-        $("#${n}feedbackTypeShown").val("${model.feedbacktype}");
+        $("#${n}feedbackTypeShown").val("${feedbacktype}");
 
         // handle the two text boxes associated with filter by date
-        $("#${n}datePicker1").val("${ model.startDisplayDate }"); 
-    	$("#${n}datePicker2").val("${ model.endDisplayDate }");
+        $("#${n}datePicker1").val("${ startDisplayDate }"); 
+    	$("#${n}datePicker2").val("${ endDisplayDate }");
 
+        $("#${n}pagingGoButton").click(function() {
+            var pageInt = parseInt("0" + $("#${n}pagingBox").get(0).value);
+            pageInt = pageInt-1;
+            if (pageInt < 1)
+            {
+                pageInt = 1;
+            } else if (pageInt > ${ totalItems })
+            {
+                pageInt = ${ totalItems };
+            }
+            var portletParam = "<portlet:renderURL><portlet:param name="start" value="03171879"/></portlet:renderURL>"; // value decided because it inlikely to be randomly generated and easily replaced
+            window.location=(portletParam.replace("start=03171879", "start=" + pageInt.toString()));
+         } );
     });
     
 </script>
@@ -61,7 +74,7 @@ datePickerController.addEvent(window, "load", function() {
 	<table class="feedback-summary" width="100%">
 	   <tr>
        <td style="width:120px">	
-           <c:set var="stats" value="${model.stats}"/>
+           <c:set var="stats" value="${stats}"/>
     	   <img src="http://chart.apis.google.com/chart?cht=p&chd=t:${stats.positiveResponses * 100 / stats.totalResponses },${stats.undecidedResponses * 100 / stats.totalResponses },${stats.negativeResponses * 100 / stats.totalResponses }&chco=4C794D,999999,792230&chs=100x100"/>
 	   </td>
 	   <td class="">
@@ -75,25 +88,25 @@ datePickerController.addEvent(window, "load", function() {
 	   		<table class="feedback-list" cellspacing="0">
 	   			<tr>
 	   				<td></td>
-	   				<c:forEach items="${ model.overallstats }" var="entry">
+	   				<c:forEach items="${ overallstats }" var="entry">
 	   					<td><span style="text-transform:capitalize">${ entry.key }</span> (${ entry.value.uniqueUsers })</td>
 	   				</c:forEach>
 	   			</tr>
 	   			<tr class="alt">
 	   				<td><spring:message code="feedback.answer.yes"/></td>
-	   				<c:forEach items="${ model.overallstats }" var="entry">
+	   				<c:forEach items="${ overallstats }" var="entry">
 	   					<td><fmt:formatNumber value="${ entry.value.positiveResponses / entry.value.totalResponses }" type="percent"/></td>
 	   				</c:forEach>
 	   			</tr>
 	   			<tr class="main">
 	   				<td><spring:message code="feedback.answer.no"/></td>
-	   				<c:forEach items="${ model.overallstats }" var="entry">
+	   				<c:forEach items="${ overallstats }" var="entry">
 	   					<td><fmt:formatNumber value="${ entry.value.negativeResponses / entry.value.totalResponses }" type="percent"/></td>
 	   				</c:forEach>
 	   			</tr>
 	   			<tr class="alt">
 	   				<td><spring:message code="feedback.answer.maybe"/></td>
-	   				<c:forEach items="${ model.overallstats }" var="entry">
+	   				<c:forEach items="${ overallstats }" var="entry">
 	   					<td><fmt:formatNumber value="${ entry.value.undecidedResponses / entry.value.totalResponses }" type="percent"/></td>
 	   				</c:forEach>
 	   			</tr>
@@ -106,7 +119,7 @@ datePickerController.addEvent(window, "load", function() {
 	   <br/>
 	
     <portlet:actionURL var="postUrl"></portlet:actionURL>
-	<form:form commandName="viewFeedbackForm" action="${ postUrl }" method="post">
+	<form:form action="${ postUrl }" modelAttribute="viewFeedbackForm">
 	      <table style="padding:0; margin:5px 0px; border:none; width:100%">
 	      	<tr>
 		<td>
@@ -133,30 +146,34 @@ datePickerController.addEvent(window, "load", function() {
 				<form:option value="MAYBE" label="undecided"><spring:message code="feedback.admin.stats.answer.maybe"/></form:option>
 			</form:select>
             <spring:message code="feedback.admin.form.comments"/>:
-            <input id="comments" name="comments" type="checkbox" value="yes" <c:if test="${model.comments==true}"> checked="checked"</c:if> />
+            <input id="comments" name="comments" type="checkbox" value="yes" <c:if test="${comments==true}"> checked="checked"</c:if> />
                 <div id="${n}datePicker">
                 <errorElement id="${n}datePickerError"></errorElement>
                 <spring:message code="feedback.admin.filter.title"/>
+                <br>
               	<label for="${n}datePicker1"><spring:message code="feedback.admin.filter.startdate"/></label> :
-              	<form:input cssClass="${ model.datePickerFormat }" path="startDisplayDate" id="${n}datePicker1" />
+              	<form:input cssClass="${ datePickerFormat }" path="startDisplayDate" id="${n}datePicker1" />
+                <br>
               	<label for="dp-1"><spring:message code="feedback.admin.filter.enddate"/></label> :
-              	<form:input cssClass="${ model.datePickerFormat }" path="endDisplayDate" id="${n}datePicker2"/>
+              	<form:input cssClass="${ datePickerFormat }" path="endDisplayDate" id="${n}datePicker2"/>
                 </div>
 			<button type="submit"><spring:message code="feedback.admin.form.submit"/></button>
 			</td>
 			<td style="text-align: right" style="white-space: nowrap">
 					<spring:message code="feedback.admin.form.showing"/>
-					<span style="font-weight: bold;">${ model.start + 1 } - 
-					   ${ (model.start + model.items) > model.totalItems ? model.totalItems : model.start + model.items }</span> 
-					   <spring:message code="feedback.admin.form.of"/> <span style="font-weight: bold;">${ model.totalItems }</span>
-					<c:if test="${ model.start > 0 }">
-						<a href="<portlet:renderURL><portlet:param name="start" value="${ model.start - model.items }"/></portlet:renderURL>">&lt; <spring:message code="feedback.admin.form.prev"/></a>
+					<span style="font-weight: bold;">${ start + 1 } - 
+					   ${ (start + items) > totalItems ? totalItems : start + items }</span> 
+					   <spring:message code="feedback.admin.form.of"/> <span style="font-weight: bold;">${ totalItems }</span>
+					<c:if test="${ start > 0 }">
+						<a href="<portlet:renderURL><portlet:param name="start" value="${ start - items }"/></portlet:renderURL>">&lt; <spring:message code="feedback.admin.form.prev"/></a>
 					</c:if>
-					<c:if test="${ model.start > 0 and model.start + model.items < model.totalItems }">|</c:if>
-					<c:if test="${ model.start + model.items < model.totalItems }">
-						<a href="<portlet:renderURL><portlet:param name="start" value="${ model.start + model.items }"/></portlet:renderURL>"><spring:message code="feedback.admin.form.next"/> &gt;</a>
+					<c:if test="${ start > 0 and start + items < totalItems }">|</c:if>
+					<c:if test="${ start + items < totalItems }">
+						<a href="<portlet:renderURL><portlet:param name="start" value="${ start + items }"/></portlet:renderURL>"><spring:message code="feedback.admin.form.next"/> &gt;</a>
 					</c:if>
-
+					<br>
+                    <spring:message code="feedback.admin.form.jumpto"/><input type="text" id=${n}pagingBox path="start">
+                    <button type="button" id=${n}pagingGoButton><spring:message code="feedback.admin.form.goto"/></button>
     		</td>
 		</tr>
 	</table>
@@ -170,7 +187,7 @@ datePickerController.addEvent(window, "load", function() {
 			<th><spring:message code="feedback.admin.rowtitle.browser"/></th>
 			<th><spring:message code="feedback.admin.rowtitle.time"/></th>
 		</tr>
-		<c:forEach items="${model.feedback}" var="item" varStatus="status">
+		<c:forEach items="${feedback}" var="item" varStatus="status">
 			<tr class="${ status.index % 2 == 0 ? 'main' : 'alt' }">
 				<td style="width: 25px; text-align: center; border-bottom: thin solid #999; vertical-align: top" rowspan="2"><img src="<c:url value="/images/${ fn:toLowerCase(item.feedbacktype) }.png"/>"/></td>
 				<td>${ item.tabname }</td>
