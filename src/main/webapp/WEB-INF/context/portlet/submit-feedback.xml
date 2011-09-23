@@ -8,17 +8,6 @@
     <bean id="submitFeedbackController"
         class="org.jasig.portlets.FeedbackPortlet.web.SubmitFeedbackFormController">
         <property name="feedbackStore" ref="feedbackStore"/>
-        <property name="formView">
-            <value>submitFeedback</value>
-        </property>
-        <property name="successView">
-            <value>feedbackSuccess</value>
-        </property>
-        <property name="validator" ref="feedbackValidator" />        
-        <property name="commandClass" value="org.jasig.portlets.FeedbackPortlet.web.SubmitFeedbackForm"/>
-        <property name="sessionForm">
-            <value>false</value>
-        </property>
         <property name="userPropertiesResolver" ref="userPropertiesResolver"/>
         <property name="feedbackSubmissionListeners">
             <list>

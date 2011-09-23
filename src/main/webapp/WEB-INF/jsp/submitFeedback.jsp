@@ -11,7 +11,7 @@
 
 <h1><spring:message code="feedback.form.question"/></h1>
 
-<form:form commandName="prefs" action="${postUrl}">       
+<form:form action="${postUrl}" modelAttribute="submitFeedbackForm">       
     <spring:bind path="prefs.*">
     	<c:if test="${status.error}">
     	<div id="${n}error-message" class="error-message portlet-msg-error portlet-msg error" role="alert" style="display:none">

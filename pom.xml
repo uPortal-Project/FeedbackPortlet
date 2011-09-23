@@ -19,7 +19,22 @@
     <description>Feedback Portlet.</description>
     
     <properties>
-        <resource-server.version>1.0.9</resource-server.version>
+    	<commons-lang.version>2.6</commons-lang.version>
+        <commons-logging.version>1.1
+        </commons-logging.version>
+        <commons-collections.version>3.2.1</commons-collections.version>
+        <ehcache.version>2.4.3</ehcache.version>
+        <hibernate.version>3.2.7.ga</hibernate.version>
+        <hsqldb.version>1.8.0.7</hsqldb.version>
+        <log4j.version>1.2.14</log4j.version>
+        <javax.activation.version>1.1.1</javax.activation.version>
+        <javax.mail>1.4</javax.mail>
+        <javax.servlet>2.4</javax.servlet>
+        <jstl.version>1.1.2</jstl.version>
+        <poi.version>3.5-FINAL</poi.version>
+        <resource-server.version>1.0.14</resource-server.version>
+        <spring.version>2.5.6</spring.version>
+        <taglib.version>1.1.2</taglib.version>
     </properties>
 
     <repositories>
@@ -46,7 +61,7 @@
         <dependency>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
-            <version>1.1</version>
+            <version>${commons-logging.version}</version>
             <type>jar</type>
             <scope>compile</scope>
             <exclusions>
@@ -90,7 +105,7 @@
         <dependency>
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
-            <version>2.3</version>
+            <version>${commons-lang.version}</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
@@ -98,7 +113,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate</artifactId>
-            <version>3.2.3.ga</version>
+            <version>${hibernate.version}</version>
             <type>jar</type>
             <scope>compile</scope>
             <exclusions>
@@ -106,13 +121,17 @@
                     <groupId>net.sf.ehcache</groupId>
                     <artifactId>ehcache</artifactId>
                 </exclusion>
+                <exclusion>
+                	<groupId>commons-logging</groupId>
+                	<artifactId>commons-logging</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
-            <version>1.1.2</version>
+            <version>${jstl.version}</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
@@ -120,7 +139,7 @@
         <dependency>
             <groupId>taglibs</groupId>
             <artifactId>standard</artifactId>
-            <version>1.1.2</version>
+            <version>${taglib.version}</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
@@ -128,7 +147,7 @@
         <dependency>
             <groupId>net.sf.ehcache</groupId>
             <artifactId>ehcache</artifactId>
-            <version>2.2.0</version>
+            <version>${ehcache.version}</version>
             <type>pom</type>
         </dependency>
 
@@ -147,69 +166,73 @@
                     <groupId>org.springframework</groupId>
                     <artifactId>spring-web</artifactId>
                 </exclusion>
+                <exclusion>
+            		<groupId>org.springframework</groupId>
+            		<artifactId>spring-beans</artifactId>
+            	</exclusion>
+            	<exclusion>
+            		<groupId>org.springframework</groupId>
+            		<artifactId>spring-core</artifactId>
+            	</exclusion>
             </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-            <version>2.0.5</version>
-            <type>jar</type>
-            <scope>compile</scope>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-dao</artifactId>
-            <version>2.0.5</version>
-            <type>jar</type>
-            <scope>compile</scope>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-hibernate3</artifactId>
-            <version>2.0.5</version>
-            <type>jar</type>
-            <scope>compile</scope>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-jmx</artifactId>
-            <version>2.0.5</version>
-            <type>jar</type>
-            <scope>compile</scope>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-portlet</artifactId>
-            <version>2.0.5</version>
-            <type>jar</type>
-            <scope>compile</scope>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
-            <version>2.0.5</version>
-            <type>jar</type>
-            <scope>compile</scope>
         </dependency>
         
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aop</artifactId>
-            <version>2.0.5</version>
+            <version>${spring.version}</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
         
         <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>${spring.version}</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>${spring.version}</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc-portlet</artifactId>
+            <version>${spring.version}</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        
+        <dependency>
+        	<groupId>org.springframework</groupId>
+        	<artifactId>spring-webmvc</artifactId>
+        	<version>${spring.version}</version>
+        </dependency>
+        
+        <dependency>
             <groupId>hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
-            <version>1.8.0.7</version>
+            <version>${hsqldb.version}</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
@@ -217,7 +240,7 @@
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi</artifactId>
-            <version>3.0.1-FINAL</version>
+            <version>${poi.version}</version>
         </dependency>
         
         <!-- ===== Runtime Dependencies ================================== -->
@@ -225,7 +248,7 @@
         <dependency>
             <groupId>commons-collections</groupId>
             <artifactId>commons-collections</artifactId>
-            <version>3.2</version>
+            <version>${commons-collections.version}</version>
             <type>jar</type>
             <scope>runtime</scope>
         </dependency>
@@ -233,7 +256,7 @@
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
-            <version>1.2.14</version>
+            <version>${log4j.version}</version>
             <type>jar</type>
             <scope>runtime</scope>
         </dependency>
@@ -241,7 +264,7 @@
         <dependency>
             <groupId>javax.activation</groupId>
             <artifactId>activation</artifactId>
-            <version>1.0.2</version>
+            <version>${javax.activation.version}</version>
             <type>jar</type>
             <scope>runtime</scope>
         </dependency>
@@ -249,7 +272,7 @@
         <dependency>
             <groupId>javax.mail</groupId>
             <artifactId>mail</artifactId>
-            <version>1.4</version>
+            <version>${javax.mail}</version>
             <type>jar</type>
             <scope>runtime</scope>
         </dependency>
@@ -258,7 +281,7 @@
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
-            <version>2.4</version>
+            <version>${javax.servlet}</version>
             <type>jar</type>
             <scope>provided</scope>
         </dependency>

@@ -14,6 +14,7 @@ import java.util.Map;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
+import javax.portlet.RenderRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -22,9 +23,14 @@ import org.jasig.portlets.FeedbackPortlet.PortletUserPropertiesResolver;
 import org.jasig.portlets.FeedbackPortlet.UserProperties;
 import org.jasig.portlets.FeedbackPortlet.dao.FeedbackStore;
 import org.jasig.portlets.FeedbackPortlet.service.FeedbackSubmissionListener;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
-import org.springframework.web.portlet.mvc.SimpleFormController;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.portlet.ModelAndView;
 
 /**
  * SubmitFeedbackFormController allows a user to submit feedback via a portlet
@@ -32,7 +38,9 @@ import org.springframework.web.portlet.mvc.SimpleFormController;
  * 
  * @author Jen Bourey
  */
-public class SubmitFeedbackFormController extends SimpleFormController {
+@Controller
+@RequestMapping("VIEW")
+public class SubmitFeedbackFormController {
 
 	private static Log log = LogFactory.getLog(SubmitFeedbackFormController.class);
 	private FeedbackStore feedbackStore;
@@ -41,28 +49,32 @@ public class SubmitFeedbackFormController extends SimpleFormController {
 	private String feedbackWidth = "95%";
 	private int feedbackMaxChars = 500;
 
-	public SubmitFeedbackFormController() {
+	/*public SubmitFeedbackFormController() {
 		setCommandName("prefs");
 		setCommandClass(SubmitFeedbackForm.class);
-	}
+	}*/
 	
+	@Autowired
     public void setFeedbackRows(int feedbackRows) {
         this.feedbackRows = feedbackRows;
     }
 
+	@Autowired
     public void setFeedbackWidth(String feedbackWidth) {
         this.feedbackWidth = feedbackWidth;
     }
 
+	@Autowired
     public void setFeedbackMaxChars(int feedbackMaxChars) {
         this.feedbackMaxChars = feedbackMaxChars;
     }
 
-	protected void processFormSubmission(ActionRequest request,
-			ActionResponse response, Object command, BindException errors) {
-		
-		// get the form data
-		SubmitFeedbackForm form = (SubmitFeedbackForm) command;
+    @RequestMapping(method = RequestMethod.POST)
+	protected void onSubmit(ActionRequest request,
+            ActionResponse response,
+            @ModelAttribute("submitFeedbackForm") SubmitFeedbackForm form) {
+		/*processFormSubmission(ActionRequest request,
+            ActionResponse response, Object command, BindException errors)*/
 		
 		// construct a new feedback object from the form data
 		FeedbackItem feedback = new FeedbackItem();
@@ -100,14 +112,11 @@ public class SubmitFeedbackFormController extends SimpleFormController {
 	}
 
     @SuppressWarnings("unchecked")
-    @Override
-    protected Map referenceData(PortletRequest request, Object command,
-            Errors errors) throws Exception {
+    @RequestMapping
+    public ModelAndView getView(RenderRequest request) throws Exception {
 
-        Map<String,Object> map = super.referenceData(request, command, errors);
-        if (map == null) {
-            map = new HashMap<String,Object>();
-        }
+        //Map<String,Object> map = super.referenceData(request, command, errors);
+        Map<String,Object> map = new HashMap<String,Object>();
         
         // Add settings from feedback.properties
         map.put("feedbackRows", feedbackRows);
@@ -117,20 +126,26 @@ public class SubmitFeedbackFormController extends SimpleFormController {
         if (request.getParameter("feedbackTabName") != null) {
             map.put("tabName", request.getParameter("feedbackTabName"));
         }
+        
+        // Adds a blank form to satisfy mapping
+        map.put("submitFeedbackForm", new SubmitFeedbackForm());
 
-        return map;
+        return new ModelAndView("submitFeedback", map);
 
     }
 
+    @Autowired
 	public void setFeedbackStore(FeedbackStore feedbackStore) {
 		this.feedbackStore = feedbackStore;
 	}
 
+    @Autowired
 	private PortletUserPropertiesResolver userPropertiesResolver;
 	public void setUserPropertiesResolver(PortletUserPropertiesResolver resolver) {
 		this.userPropertiesResolver = resolver;
 	}
 	
+	@Autowired
 	private List<FeedbackSubmissionListener> feedbackSubmissionListeners;
 	public void setFeedbackSubmissionListeners(List<FeedbackSubmissionListener> listeners) {
 		this.feedbackSubmissionListeners = listeners;

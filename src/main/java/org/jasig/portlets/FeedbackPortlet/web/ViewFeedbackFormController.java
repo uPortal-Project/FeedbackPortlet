@@ -26,7 +26,11 @@ import org.apache.commons.logging.LogFactory;
 import org.jasig.portlets.FeedbackPortlet.FeedbackItem;
 import org.jasig.portlets.FeedbackPortlet.FeedbackQueryParameters;
 import org.jasig.portlets.FeedbackPortlet.dao.FeedbackStore;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindException;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.portlet.ModelAndView;
 import org.springframework.web.portlet.mvc.SimpleFormController;
 
@@ -38,7 +42,9 @@ import org.springframework.web.portlet.mvc.SimpleFormController;
  *
  * @author Jen Bourey
  */
-public class ViewFeedbackFormController extends SimpleFormController {
+@Controller
+@RequestMapping("VIEW")
+public class ViewFeedbackFormController {
 
     private static Log log = LogFactory.getLog(ViewFeedbackFormController.class);
     
@@ -51,18 +57,17 @@ public class ViewFeedbackFormController extends SimpleFormController {
     
     
     
-    public ViewFeedbackFormController() {
+    /*public ViewFeedbackFormController() {
         setCommandName("viewFeedbackForm");
         setCommandClass(ViewFeedbackForm.class);
-    }
+    }*/
 
-    @Override
-    protected void onSubmitAction(ActionRequest request,
-            ActionResponse response, Object command, BindException errors)
+    @RequestMapping(method = RequestMethod.POST)
+    protected void onSubmitAction(ActionRequest request, ActionResponse response, 
+            @ModelAttribute("viewFeedbackForm") ViewFeedbackForm form)
             throws Exception {
         
         PortletSession session = request.getPortletSession();
-        ViewFeedbackForm form = (ViewFeedbackForm) command; // pulls the form data submitted by the user
         
         FeedbackQueryParameters queryParameters = (FeedbackQueryParameters) session.getAttribute("feedbackQueryParameters", session.APPLICATION_SCOPE);
         // gather the appropriate data from the form
@@ -73,17 +78,16 @@ public class ViewFeedbackFormController extends SimpleFormController {
     }
 
     
-    @Override
+    /*@Override
     protected Object formBackingObject(PortletRequest request) throws Exception {
         log.debug("backing object");
         ViewFeedbackForm form = new ViewFeedbackForm();
         return form;
-    }
+    }*/
 
     
-    @Override
-    protected ModelAndView showForm(RenderRequest request,
-            RenderResponse response, BindException errors, Map controlModel)
+    @RequestMapping
+    protected ModelAndView showForm(RenderRequest request)
             throws Exception {
 
         PortletSession session = request.getPortletSession();
@@ -116,16 +120,10 @@ public class ViewFeedbackFormController extends SimpleFormController {
         model.put("overallstats", feedbackStore.getStatsByRole());
         model.put("feedback", theFeedbackItems);
         model.put("datePickerFormat", DATEPICKER_FORMAT); // puts in the date picker format for use by the date picker.
-        request.setAttribute(getCommandName(), new ViewFeedbackForm());
+        request.setAttribute("viewFeedbackForm", new ViewFeedbackForm());
+        model.put("viewFeedbackForm", new ViewFeedbackForm());
         
-        return new ModelAndView("/viewFeedback", "model", model);
-    }
-    
-    @Override
-    protected ModelAndView onSubmitRender(RenderRequest request,
-            RenderResponse response, Object command, BindException errors)
-            throws Exception {
-        return showForm(request, response, errors);
+        return new ModelAndView("/viewFeedback", model);
     }
     
     private FeedbackStore feedbackStore;

@@ -7,15 +7,6 @@
     <bean id="viewFeedbackController"
         class="org.jasig.portlets.FeedbackPortlet.web.ViewFeedbackFormController">
         <property name="feedbackStore" ref="feedbackStore"/>
-        <property name="formView">
-            <value>viewFeedback</value>
-        </property>
-        <property name="successView">
-            <value>viewFeedback</value>
-        </property>
-        <property name="sessionForm">
-            <value>true</value>
-        </property>
     </bean>
 
     <!-- Handler Mapping -->
