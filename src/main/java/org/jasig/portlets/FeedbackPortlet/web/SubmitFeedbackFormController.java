@@ -73,8 +73,6 @@ public class SubmitFeedbackFormController {
 	protected void onSubmit(ActionRequest request,
             ActionResponse response,
             @ModelAttribute("submitFeedbackForm") SubmitFeedbackForm form) {
-		/*processFormSubmission(ActionRequest request,
-            ActionResponse response, Object command, BindException errors)*/
 		
 		// construct a new feedback object from the form data
 		FeedbackItem feedback = new FeedbackItem();
@@ -108,15 +106,22 @@ public class SubmitFeedbackFormController {
 		
 		// save the feedback to the data store
 		feedbackStore.storeFeedback(feedback);
-		
+		request.getPortletSession().setAttribute("viewName", "feedbackSuccess");
 	}
 
     @SuppressWarnings("unchecked")
-    @RequestMapping
+    @RequestMapping("VIEW")
     public ModelAndView getView(RenderRequest request) throws Exception {
 
-        //Map<String,Object> map = super.referenceData(request, command, errors);
         Map<String,Object> map = new HashMap<String,Object>();
+        
+        String viewName = "submitFeedback";
+        
+        if (request.getPortletSession().getAttribute("viewName") != null)
+        {
+            viewName = request.getPortletSession().getAttribute("viewName").toString();
+            request.getPortletSession().removeAttribute("viewName");
+        }
         
         // Add settings from feedback.properties
         map.put("feedbackRows", feedbackRows);
@@ -130,7 +135,7 @@ public class SubmitFeedbackFormController {
         // Adds a blank form to satisfy mapping
         map.put("submitFeedbackForm", new SubmitFeedbackForm());
 
-        return new ModelAndView("submitFeedback", map);
+        return new ModelAndView(viewName, map);
 
     }
 
