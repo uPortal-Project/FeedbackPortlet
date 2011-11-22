@@ -80,14 +80,33 @@ public class FeedbackQueryParameters {
         }
         
         SimpleDateFormat dateFormatter = new SimpleDateFormat(DATE_FORMAT);
-        Date startDisplayDate = dateFormatter.parse(form.getStartDisplayDate());
+        Date startDisplayDate;
+        Date endDisplayDate;
+        if(!form.getStartDisplayDate().equals(""))
+        {
+        	startDisplayDate = dateFormatter.parse(form.getStartDisplayDate());
+        }
+        else
+        {
+        	//Defaulting start display date if it is empty
+        	String startDefaultDate = dateFormatter.format(new Date(System.currentTimeMillis() - MILLIS_IN_30_DAYS));
+        	startDisplayDate = dateFormatter.parse(startDefaultDate);
+        }
         if (startDisplayDate != null)
         {
             queryParameters.put(START_DISPLAY_DATE, startDisplayDate);
         }
         
-        
-        Date endDisplayDate = dateFormatter.parse(form.getEndDisplayDate());
+        if(!form.getEndDisplayDate().equals(""))
+        {        	
+        	endDisplayDate = dateFormatter.parse(form.getEndDisplayDate());
+        }
+        else
+        {
+        	//Defaulting end display date if it is empty
+        	String endDefaultDate = dateFormatter.format(new Date(System.currentTimeMillis()));
+        	endDisplayDate = dateFormatter.parse(endDefaultDate);   	
+        }        
         if (endDisplayDate != null)
         {
             queryParameters.put(END_DISPLAY_DATE, endDisplayDate);
@@ -143,6 +162,8 @@ public class FeedbackQueryParameters {
         
         // Date format required to parse user input dates
         SimpleDateFormat dateFormatter = new SimpleDateFormat(DATE_FORMAT);
+        System.out.println("The start display date is:"+dateFormatter.format(startDisplayDate));
+        System.out.println("The end display date is:"+dateFormatter.format(endDisplayDate));
         model.put("startDisplayDate",dateFormatter.format(startDisplayDate) );
         model.put("endDisplayDate", dateFormatter.format(endDisplayDate) );
         return model;

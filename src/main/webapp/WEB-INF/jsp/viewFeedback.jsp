@@ -23,17 +23,11 @@
 <!-- assigning a variable to the name so it can be called in a non-conflicting way -->      
 <c:set var="n"><portlet:namespace/></c:set>
 <script src="<rs:resourceURL value="/rs/jquery/1.4.2/jquery-1.4.2.min.js"/>" type="text/javascript"></script>
-<script src="<c:url value="/date-picker/js/datepicker.js"/>" type="text/javascript"></script>
+<script src="<rs:resourceURL value="/rs/jqueryui/1.8/jquery-ui-1.8.min.js"/>" type="text/javascript"></script>
         
-<link href="<c:url value="/date-picker/css/datepicker.css"/>" rel="stylesheet" type="text/css" />
-
 <script type="text/javascript">
     var ${n} = ${n} || {}; //create a unique variable to assign our namespace too
     ${n}.jQuery = jQuery.noConflict(true); //assign jQuery to this namespace
-
-datePickerController.addEvent(window, "load", function() {
-      datePickerController.createDatePicker({});
-});
     
     /*  runs when the document is finished loading.  This prevents things like the 'div' from being fully created */
     ${n}.jQuery(document).ready(function () { 
@@ -47,10 +41,11 @@ datePickerController.addEvent(window, "load", function() {
         // handle the 'filter by feedback type' to show the current setting. 
         $("#${n}feedbackTypeShown").val("${feedbacktype}");
 
-        // handle the two text boxes associated with filter by date
-        $("#${n}datePicker1").val("${ startDisplayDate }"); 
-    	$("#${n}datePicker2").val("${ endDisplayDate }");
-
+        // handle the two text boxes associated with filter by date  	
+    	
+    	$( "#${n}datepicker1" ).datepicker().val("${startDisplayDate}");		
+		$( "#${n}datepicker2" ).datepicker().val("${endDisplayDate}");
+		
         $("#${n}pagingGoButton").click(function() {
             var pageInt = parseInt("0" + $("#${n}pagingBox").get(0).value);
             pageInt = pageInt-1;
@@ -151,11 +146,11 @@ datePickerController.addEvent(window, "load", function() {
                 <errorElement id="${n}datePickerError"></errorElement>
                 <spring:message code="feedback.admin.filter.title"/>
                 <br>
-              	<label for="${n}datePicker1"><spring:message code="feedback.admin.filter.startdate"/></label> :
-              	<form:input cssClass="${ datePickerFormat }" path="startDisplayDate" id="${n}datePicker1" />
+                <label for="${n}datePicker1"><spring:message code="feedback.admin.filter.startdate"/></label> :
+              	<form:input path="startDisplayDate" id="${n}datepicker1" />
                 <br>
-              	<label for="dp-1"><spring:message code="feedback.admin.filter.enddate"/></label> :
-              	<form:input cssClass="${ datePickerFormat }" path="endDisplayDate" id="${n}datePicker2"/>
+                <label for="${n}datePicker2"><spring:message code="feedback.admin.filter.enddate"/></label> :
+              	<form:input path="endDisplayDate" id="${n}datepicker2" />
                 </div>
 			<button type="submit"><spring:message code="feedback.admin.form.submit"/></button>
 			</td>
