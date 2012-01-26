@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -35,7 +36,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 public class HibernateFeedbackStore extends HibernateDaoSupport implements FeedbackStore {
 
 	private Log log = LogFactory.getLog(getClass());
-
+	
 	@Override
 	public void storeFeedback(FeedbackItem feedback) {
 		try {
@@ -98,8 +99,8 @@ public class HibernateFeedbackStore extends HibernateDaoSupport implements Feedb
                  crit.add(Expression.eq("feedbacktype", feedbacktype));
             }
             if (comments == true) {
+                crit.add(Expression.or(Expression.ne("feedback", ""), Expression.ne("feedback", " ")));
                 crit.add(Expression.isNotNull("feedback"));
-                crit.add(Expression.gt("feedback", ""));
             }
             // Dates are on by default and throws an error if not entered, so they should never be null 
             crit.add(Expression.between("submissiontime", startDate, endDate));
