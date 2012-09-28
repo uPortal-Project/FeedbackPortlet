@@ -43,7 +43,7 @@
         <taglib.version>1.1.2</taglib.version>
     </properties>
 
-    <repositories>
+    <!-- repositories>
         <repository>
             <id>jasig-repository</id>
             <name>JA-SIG Maven2 Repository</name>
@@ -59,7 +59,7 @@
                 <enabled>false</enabled>
             </releases>
         </repository>
-    </repositories>
+    </repositories-->
     
     <dependencies>
         
@@ -152,9 +152,8 @@
         
         <dependency>
             <groupId>net.sf.ehcache</groupId>
-            <artifactId>ehcache</artifactId>
+            <artifactId>ehcache-core</artifactId>
             <version>${ehcache.version}</version>
-            <type>pom</type>
         </dependency>
 
         <dependency>
