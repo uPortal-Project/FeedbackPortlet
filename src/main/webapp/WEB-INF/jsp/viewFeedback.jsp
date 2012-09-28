@@ -1,6 +1,4 @@
-<jsp:directive.include file="/WEB-INF/jsp/include.jsp"/>
-<link href="<c:url value="/css/feedback.css"/>" rel="stylesheet" type="text/css" />
-<!--
+<%--
 
     Licensed to Jasig under one or more contributor license
     agreements. See the NOTICE file distributed with this work
@@ -19,7 +17,10 @@
     specific language governing permissions and limitations
     under the License.
 
--->
+--%>
+<jsp:directive.include file="/WEB-INF/jsp/include.jsp"/>
+<link href="<c:url value="/css/feedback.css"/>" rel="stylesheet" type="text/css" />
+
 <!-- assigning a variable to the name so it can be called in a non-conflicting way -->      
 <c:set var="n"><portlet:namespace/></c:set>
 <script src="<rs:resourceURL value="/rs/jquery/1.4.2/jquery-1.4.2.min.js"/>" type="text/javascript"></script>
