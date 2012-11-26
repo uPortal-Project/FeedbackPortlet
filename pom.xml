@@ -35,11 +35,22 @@
         <javax.mail>1.4</javax.mail>
         <javax.servlet>2.4</javax.servlet>
         <jstl.version>1.1.2</jstl.version>
+        <jta.version>1.1</jta.version>
         <poi.version>3.5-FINAL</poi.version>
         <resource-server.version>1.0.14</resource-server.version>
         <spring.version>2.5.6</spring.version>
         <taglib.version>1.1.2</taglib.version>
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>javax.transaction</groupId>
+                <artifactId>jta</artifactId>
+                <version>${jta.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
     
     <dependencies>
         
@@ -113,7 +124,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        
+
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
