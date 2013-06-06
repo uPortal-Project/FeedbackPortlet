@@ -24,9 +24,9 @@
 <!-- assigning a variable to the name so it can be called in a non-conflicting way -->      
 <c:set var="n"><portlet:namespace/></c:set>
 <script src="<rs:resourceURL value="/rs/jquery/1.8.3/jquery-1.8.3.min.js"/>" type="text/javascript"></script>
-<script src="<rs:resourceURL value="/rs/jqueryui/1.8.24/jquery-ui-1.8.24.min.js"/>" type="text/javascript"></script>
+<script src="<rs:resourceURL value="/rs/jqueryui/1.8.13/jquery-ui-1.8.13.min.js"/>" type="text/javascript"></script>
         
-<script type="text/javascript">
+<script type="text/javascript"><rs:compressJs>
     var ${n} = ${n} || {}; //create a unique variable to assign our namespace too
     ${n}.jQuery = jQuery.noConflict(true); //assign jQuery to this namespace
     
@@ -62,7 +62,7 @@
          } );
     });
     
-</script>
+</rs:compressJs></script>
 
 
 	<h3><spring:message code="feedback.admin.title"/></h3>

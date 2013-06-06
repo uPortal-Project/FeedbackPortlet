@@ -75,7 +75,7 @@
 </form:form>
 </div>
 
-<script type="text/javascript">
+<script type="text/javascript"><rs:compressJs>
    // Enable submitFeedback work here only on Mobile
     var $ = up.jQuery;
     $(document).bind("pageinit", function (e) {
@@ -146,4 +146,4 @@
         
     });
 
-</script>
+</rs:compressJs></script>
