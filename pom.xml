@@ -362,7 +362,7 @@
                             <artifactId>resource-server-content</artifactId>
                             <includes>
                                 <include>rs/jquery/1.11.0/jquery-1.11.0.min.js</include>
-                                <include>rs/jqueryui/1.8.24/jquery-ui-1.8.24.min.js</include>
+                                <include>rs/jqueryui/1.8.13/jquery-ui-1.8.13.min.js</include>
                             </includes>
                         </overlay>
                     </overlays>
