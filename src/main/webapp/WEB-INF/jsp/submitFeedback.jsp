@@ -20,7 +20,7 @@
 --%>
 <jsp:directive.include file="/WEB-INF/jsp/include.jsp"/>
 
-<script src="<rs:resourceURL value="/rs/jquery/1.4.2/jquery-1.4.2.min.js"/>" type="text/javascript"></script>
+<script src="<rs:resourceURL value="/rs/jquery/1.8.3/jquery-1.8.3.min.js"/>" type="text/javascript"></script>
 <script src="<c:url value="/js/twitlimit-0.2.0.compressed.js"/>" type="text/javascript"></script>
 
 <link href="<c:url value="/css/feedback.css"/>" type="text/css" rel="stylesheet"/>
@@ -29,7 +29,8 @@
 
 <portlet:actionURL var="postUrl"/>
 
-<h1><spring:message code="feedback.form.question"/></h1>
+<div>
+<h3><spring:message code="feedback.form.question"/></h3>
 
 <form:form action="${postUrl}" modelAttribute="submitFeedbackForm">       
     <spring:bind path="prefs.*">
@@ -39,37 +40,62 @@
 		</div>
 	    </c:if>
 	</spring:bind>
-	<br>
-	<p id="${n}answer">
-      	<form:radiobutton id="yes" path="like" value="YES"/>
-      	<label class="portlet-form-field-label"><spring:message code="feedback.answer.yes"/></label>
-      	<form:radiobutton id="no" path="like" value="NO"/>
-      	<label class="portlet-form-field-label"><spring:message code="feedback.answer.no"/></label>
-      	<form:radiobutton id="maybe" path="like" value="MAYBE"/>
-      	<label class="portlet-form-field-label"><spring:message code="feedback.answer.maybe"/></label>
-    </p>
+
+    <div data-role="fieldcontain">
+    <fieldset data-role="controlgroup" id="${n}answer">
+          <input type="radio" id="yes" name="like" value="YES"/>
+          <label for="yes" class="portlet-form-field-label"><spring:message code="feedback.answer.yes"/></label>
+          <input type="radio" id="no" name="like" value="NO"/>
+          <label for="no" class="portlet-form-field-label"><spring:message code="feedback.answer.no"/></label>
+          <input type="radio" id="maybe" name="like" value="MAYBE"/>
+          <label for="maybe" class="portlet-form-field-label"><spring:message code="feedback.answer.maybe"/></label>
+    </fieldset>
+    </div>
 
  	<p> 		
  		<label class="portlet-form-field-label"><spring:message code="feedback.form.suggestion"/></label>
- 		<textarea id="${n}feedback" path="feedback" name="feedback" rows="${feedbackRows}" style="width:${feedbackWidth}"></textarea> 		
+         <textarea id="${n}feedback" name="feedback" rows="${feedbackRows}" style="width:${feedbackWidth}"></textarea>
  	</p>
  	<div id="${n}limit" style="margin-bottom: 12px;"></div>
 
- 	<p>
-        <form:checkbox path="anonymous" value="true"/>
-		<label class="portlet-form-field-label"><spring:message code="feedback.form.anonymous"/></label>
-	</p>
+     <p>
+        <fieldset data-role="controlgroup">
+            <input type="checkbox" id="${n}anonymous" name="anonymous" value="true"/>
+            <label for="${n}anonymous" class="portlet-form-field-label"><spring:message code="feedback.form.anonymous"/></label>
+        </fieldset>
+    </p>
 
  	<input id="${n}useragentstring" type="hidden" name="useragent"/>
  	<input id="${n}feedbacktabname" type="hidden" name="tabname"/>
 
     <p>
-       <button type="submit" id="submit" class="feedback-submit-button" disabled="disabled"><spring:message code="feedback.form.submit"/></button>
+       <input type="submit" id="${n}submitfeedback" class="feedback-submit-button ui-btn-hidden" disabled="disabled" aria-disabled="true" value="<spring:message code="feedback.form.submit"/>">
     </p>
 
 </form:form>
+</div>
 
-<script type="text/javascript">
+<script type="text/javascript"><rs:compressJs>
+   // Enable submitFeedback work here only on Mobile
+    var $ = up.jQuery;
+    $(document).bind("pageinit", function (e) {
+        var $page = $(e.target);
+        $page.find("input:radio[name=like]").change(function () {
+            $(this).checkboxradio("refresh");
+            $page.find("input:radio[name=like]").each(function (index, element) {
+                var $radio = $(this);
+                var $label = $radio.next();
+                if ($label.hasClass("ui-radio-on")) {
+                    if ($('#${n}submitfeedback').attr('disabled')) $('#${n}submitfeedback').removeAttr('disabled');
+                    if ($('#${n}submitfeedback').attr('aria-disabled')) $('#${n}submitfeedback').removeAttr('aria-disabled');
+                    if ($('#${n}submitfeedback').prop('disabled')) $('#${n}submitfeedback').prop('disabled', false);
+                    if($('#${n}submitfeedback').hasClass('feedback-submit-button')) $('#${n}submitfeedback').removeClass('feedback-submit-button');
+                    if(!$('#${n}submitfeedback').hasClass('portlet-form-button')) $('#${n}submitfeedback').addClass('portlet-form-button');
+                    if($('#${n}submitfeedback').parent().hasClass('ui-disabled')) $('#${n}submitfeedback').parent().removeClass('ui-disabled');
+                }
+            });
+        });
+    });
 
     var ${n} = {};
     ${n}.jQuery = jQuery.noConflict(true);
@@ -79,7 +105,7 @@
         var $ = ${n}.jQuery;
         $('#${n}feedback').twitLimit({
             limit: ${feedbackMaxChars},
-            message: 'You have %1 characters remaining', 
+            message: '<spring:message code="feedback.form.charactersremaining" arguments="%1"/>',
             counterElem: '#${n}limit', 
             allowNegative: false
         });
@@ -88,10 +114,23 @@
         
         $("#${n}error-message").slideDown(500);
         
-        $('#${n}answer input:radio').click(function (){            
-            $('#submit').removeAttr('disabled');                
-            $('#submit').removeClass('feedback-submit-button');
-            $('#submit').addClass('portlet-form-button');
+        $('#submitFeedbackForm').submit(function (){
+            // disable submit
+            $('input[type=submit]', this).attr('disabled','disabled');
+            $('#${n}submitfeedback').attr('disabled','disabled');
+            $('#${n}submitfeedback').addClass('feedback-submit-button');
+            $('#${n}submitfeedback').removeClass('portlet-form-button');
+            $('#${n}submitfeedback').parent().addClass('ui-disabled');
+        });
+
+       // Enable submitFeedback work here only on Desktop
+       $("#${n}answer input:radio, #${n}answer label").click(function (){
+            if ($('#${n}submitfeedback').attr('disabled')) $('#${n}submitfeedback').removeAttr('disabled');
+            if ($('#${n}submitfeedback').attr('aria-disabled')) $('#${n}submitfeedback').removeAttr('aria-disabled');
+            if ($('#${n}submitfeedback').prop('disabled')) $('#${n}submitfeedback').prop('disabled', false);
+            if($('#${n}submitfeedback').hasClass('feedback-submit-button')) $('#${n}submitfeedback').removeClass('feedback-submit-button');
+            if(!$('#${n}submitfeedback').hasClass('portlet-form-button')) $('#${n}submitfeedback').addClass('portlet-form-button');
+            if($('#${n}submitfeedback').parent().hasClass('ui-disabled')) $('#${n}submitfeedback').parent().removeClass('ui-disabled');
         });        
         
         // check to see if a tab name parameter was submitted
@@ -107,4 +146,4 @@
         
     });
 
-</script>
+</rs:compressJs></script>
