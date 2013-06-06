@@ -1,42 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    
+
     <parent>
         <groupId>org.jasig.parent</groupId>
         <artifactId>jasig-parent</artifactId>
         <version>34</version>
     </parent>
-    
+
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.jasig.portlet</groupId>
     <artifactId>FeedbackPortlet</artifactId>
     <packaging>war</packaging>
     <version>1.0.2-SNAPSHOT</version>
-    
+
     <name>Feedback Portlet</name>
     <description>Collects user feedback on the portal.</description>
-    
+
     <scm>
         <connection>scm:git:git://github.com/Jasig/FeedbackPortlet.git</connection>
         <developerConnection>scm:git:git@github.com:Jasig/FeedbackPortlet.git</developerConnection>
         <url>https://github.com/Jasig/FeedbackPortlet</url>
       <tag>HEAD</tag>
   </scm>
-    
+
     <properties>
     	<commons-lang.version>2.6</commons-lang.version>
-        <commons-logging.version>1.1</commons-logging.version>
+        <commons-logging.version>1.1.1</commons-logging.version>
         <commons-collections.version>3.2.2</commons-collections.version>
         <ehcache.version>2.6.5</ehcache.version>
         <hibernate.version>3.2.7.ga</hibernate.version>
         <hsqldb.version>1.8.0.7</hsqldb.version>
-        <log4j.version>1.2.14</log4j.version>
+        <log4j.version>1.2.17</log4j.version>
         <javax.activation.version>1.1.1</javax.activation.version>
         <javax.mail>1.4.7</javax.mail>
         <javax.servlet>2.5</javax.servlet>
         <jstl.version>1.1.2</jstl.version>
         <jta.version>1.1</jta.version>
-        <poi.version>3.5-FINAL</poi.version>
+        <poi.version>3.9</poi.version>
         <resource-server.version>1.0.42</resource-server.version>
         <spring.version>3.2.16.RELEASE</spring.version>
         <taglib.version>1.1.2</taglib.version>
@@ -51,9 +51,9 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-    
+
     <dependencies>
-        
+
         <!-- ===== Compile Time Dependencies ============================== -->
         <dependency>
             <groupId>commons-logging</groupId>
@@ -80,7 +80,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        
+
         <dependency>
             <groupId>commons-httpclient</groupId>
             <artifactId>commons-httpclient</artifactId>
@@ -98,7 +98,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        
+
         <dependency>
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
@@ -106,7 +106,7 @@
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
-        
+
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate</artifactId>
@@ -132,7 +132,7 @@
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
-        
+
         <dependency>
             <groupId>taglibs</groupId>
             <artifactId>standard</artifactId>
@@ -140,7 +140,7 @@
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
-        
+
         <dependency>
             <groupId>net.sf.ehcache</groupId>
             <artifactId>ehcache-core</artifactId>
@@ -159,6 +159,10 @@
             <version>${resource-server.version}</version>
             <exclusions>
                 <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>jcl-over-slf4j</artifactId>
+                </exclusion>
+                <exclusion>
                     <groupId>org.springframework</groupId>
                     <artifactId>spring-web</artifactId>
                 </exclusion>
@@ -172,7 +176,7 @@
             	</exclusion>
             </exclusions>
         </dependency>
-        
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aop</artifactId>
@@ -180,7 +184,7 @@
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
-        
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
@@ -196,7 +200,7 @@
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
-        
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
@@ -204,7 +208,7 @@
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
-        
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
@@ -212,7 +216,7 @@
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
-        
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc-portlet</artifactId>
@@ -220,19 +224,19 @@
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
-        
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
             <version>${spring.version}</version>
         </dependency>
-        
+
         <dependency>
         	<groupId>org.springframework</groupId>
         	<artifactId>spring-webmvc</artifactId>
         	<version>${spring.version}</version>
         </dependency>
-        
+
         <dependency>
             <groupId>hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
@@ -240,15 +244,15 @@
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
-        
+
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi</artifactId>
             <version>${poi.version}</version>
         </dependency>
-        
+
         <!-- ===== Runtime Dependencies ================================== -->
-        
+
         <dependency>
             <groupId>commons-collections</groupId>
             <artifactId>commons-collections</artifactId>
@@ -256,7 +260,7 @@
             <type>jar</type>
             <scope>runtime</scope>
         </dependency>
-        
+
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
@@ -264,7 +268,7 @@
             <type>jar</type>
             <scope>runtime</scope>
         </dependency>
-        
+
         <dependency>
             <groupId>javax.activation</groupId>
             <artifactId>activation</artifactId>
@@ -272,7 +276,7 @@
             <type>jar</type>
             <scope>runtime</scope>
         </dependency>
-        
+
         <dependency>
             <groupId>javax.mail</groupId>
             <artifactId>mail</artifactId>
@@ -280,7 +284,7 @@
             <type>jar</type>
             <scope>runtime</scope>
         </dependency>
-        
+
         <!-- ===== Provided Dependencies ================================== -->
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -289,7 +293,7 @@
             <type>jar</type>
             <scope>provided</scope>
         </dependency>
-        
+
         <dependency>
             <groupId>javax.portlet</groupId>
             <artifactId>portlet-api</artifactId>
@@ -297,7 +301,7 @@
             <type>jar</type>
             <scope>provided</scope>
         </dependency>
-        
+
         <!-- ===== Test Dependencies ====================================== -->
         <dependency>
             <groupId>junit</groupId>
@@ -307,7 +311,7 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-    
+
     <build>
         <plugins>
             <plugin>
@@ -358,7 +362,7 @@
                             <artifactId>resource-server-content</artifactId>
                             <includes>
                                 <include>rs/jquery/1.11.0/jquery-1.11.0.min.js</include>
-                                <include>rs/jqueryui/1.8/jquery-ui-1.8.min.js</include>
+                                <include>rs/jqueryui/1.8.24/jquery-ui-1.8.24.min.js</include>
                             </includes>
                         </overlay>
                     </overlays>
