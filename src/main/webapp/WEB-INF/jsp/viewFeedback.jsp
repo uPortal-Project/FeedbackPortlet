@@ -23,8 +23,8 @@
 
 <!-- assigning a variable to the name so it can be called in a non-conflicting way -->      
 <c:set var="n"><portlet:namespace/></c:set>
-<script src="<rs:resourceURL value="/rs/jquery/1.4.2/jquery-1.4.2.min.js"/>" type="text/javascript"></script>
-<script src="<rs:resourceURL value="/rs/jqueryui/1.8/jquery-ui-1.8.min.js"/>" type="text/javascript"></script>
+<script src="<rs:resourceURL value="/rs/jquery/1.8.3/jquery-1.8.3.min.js"/>" type="text/javascript"></script>
+<script src="<rs:resourceURL value="/rs/jqueryui/1.8.24/jquery-ui-1.8.24.min.js"/>" type="text/javascript"></script>
         
 <script type="text/javascript">
     var ${n} = ${n} || {}; //create a unique variable to assign our namespace too
@@ -65,7 +65,7 @@
 </script>
 
 
-	<h1><spring:message code="feedback.admin.title"/></h1>
+	<h3><spring:message code="feedback.admin.title"/></h3>
 	
 	<table class="feedback-summary" width="100%">
 	   <tr>
@@ -128,7 +128,7 @@
 
 			<spring:message code="feedback.admin.form.role"/>: 
 			<form:select id="${n}userRoleShown" path="userrole">
-				<form:option value="" label="all"/>
+				<form:option value="" label="all"><spring:message code="feedback.admin.type.all"/></form:option>
 				<form:option value="student"><spring:message code="feedback.admin.type.student"/></form:option>
 				<form:option value="staff"><spring:message code="feedback.admin.type.staff"/></form:option>
 				<form:option value="faculty"><spring:message code="feedback.admin.type.faculty"/></form:option>
@@ -136,7 +136,7 @@
 
 			<spring:message code="feedback.admin.form.type"/>: 
 			<form:select id="${n}feedbackTypeShown" path="feedbacktype">
-				<form:option value="" label="all"/>
+				<form:option value="" label="all"><spring:message code="feedback.admin.stats.answer.all"/></form:option>
 				<form:option value="YES" ><spring:message code="feedback.admin.stats.answer.yes"/></form:option>
 				<form:option value="NO" label="negative"><spring:message code="feedback.admin.stats.answer.no"/></form:option>
 				<form:option value="MAYBE" label="undecided"><spring:message code="feedback.admin.stats.answer.maybe"/></form:option>
