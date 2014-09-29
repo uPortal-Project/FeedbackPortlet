@@ -20,7 +20,7 @@
 --%>
 <jsp:directive.include file="/WEB-INF/jsp/include.jsp"/>
 
-<script src="<rs:resourceURL value="/rs/jquery/1.4.2/jquery-1.4.2.min.js"/>" type="text/javascript"></script>
+<script src="<rs:resourceURL value="/rs/jquery/1.11.0/jquery-1.11.0.min.js"/>" type="text/javascript"></script>
 <script src="<c:url value="/js/twitlimit-0.2.0.compressed.js"/>" type="text/javascript"></script>
 
 <link href="<c:url value="/css/feedback.css"/>" type="text/css" rel="stylesheet"/>
