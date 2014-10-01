@@ -11,7 +11,7 @@
     <groupId>org.jasig.portlet</groupId>
     <artifactId>FeedbackPortlet</artifactId>
     <packaging>war</packaging>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.1</version>
     
     <name>Feedback Portlet</name>
     <description>Collects user feedback on the portal.</description>
@@ -20,7 +20,8 @@
         <connection>scm:git:git://github.com/Jasig/FeedbackPortlet.git</connection>
         <developerConnection>scm:git:git@github.com:Jasig/FeedbackPortlet.git</developerConnection>
         <url>https://github.com/Jasig/FeedbackPortlet</url>
-    </scm>
+      <tag>FeedbackPortlet-1.0.1</tag>
+  </scm>
     
     <properties>
     	<commons-lang.version>2.6</commons-lang.version>
