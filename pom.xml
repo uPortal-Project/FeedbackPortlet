@@ -332,8 +332,14 @@
                 <artifactId>maven-license-plugin</artifactId>
                 <configuration>
                     <excludes>
+                        <exclude>.gitignore</exclude>
+                        <exclude>LICENSE</exclude>
+                        <exclude>NOTICE</exclude>
+                        <exclude>docs/**</exclude>
                         <exclude>src/main/webapp/date-picker/**</exclude>
                         <exclude>src/main/webapp/js/twitlimit*</exclude>
+                        <exclude>.idea/**</exclude> <!-- for IntelliJ working folders -->
+                        <exclude>overlays/**</exclude> <!-- for IntelliJ working folders -->
                     </excludes>
                 </configuration>
             </plugin>
