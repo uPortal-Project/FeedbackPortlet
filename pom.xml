@@ -27,7 +27,7 @@
     	<commons-lang.version>2.6</commons-lang.version>
         <commons-logging.version>1.1
         </commons-logging.version>
-        <commons-collections.version>3.2.1</commons-collections.version>
+        <commons-collections.version>3.2.2</commons-collections.version>
         <ehcache.version>2.4.3</ehcache.version>
         <hibernate.version>3.2.7.ga</hibernate.version>
         <hsqldb.version>1.8.0.7</hsqldb.version>
@@ -303,6 +303,23 @@
     
     <build>
         <plugins>
+            <plugin>
+              <artifactId>maven-enforcer-plugin</artifactId>
+              <executions>
+                <execution>
+                  <goals><goal>enforce</goal></goals>
+                  <configuration>
+                    <rules>
+                      <bannedDependencies>
+                        <excludes>
+                          <exclude>commons-collections:commons-collections:[3.2.1]</exclude>
+                        </excludes>
+                      </bannedDependencies>
+                    </rules>
+                  </configuration>
+                </execution>
+              </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
