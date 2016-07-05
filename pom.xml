@@ -27,7 +27,7 @@
     	<commons-lang.version>2.6</commons-lang.version>
         <commons-logging.version>1.1</commons-logging.version>
         <commons-collections.version>3.2.2</commons-collections.version>
-        <ehcache.version>2.4.3</ehcache.version>
+        <ehcache.version>2.6.5</ehcache.version>
         <hibernate.version>3.2.7.ga</hibernate.version>
         <hsqldb.version>1.8.0.7</hsqldb.version>
         <log4j.version>1.2.14</log4j.version>
@@ -379,6 +379,26 @@
                         <exclude>overlays/**</exclude> <!-- for IntelliJ working folders -->
                     </excludes>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.lesscss</groupId>
+                <artifactId>lesscss-maven-plugin</artifactId>
+                <version>1.7.0.1.1</version>
+                <configuration>
+                    <sourceDirectory>${project.basedir}/src/main/webapp/less</sourceDirectory>
+                    <outputDirectory>${project.build.directory}/${project.build.finalName}/css</outputDirectory>
+                    <compress>true</compress>
+                    <includes>
+                        <include>feedback.less</include>
+                    </includes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
