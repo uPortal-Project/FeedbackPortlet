@@ -20,91 +20,145 @@
 --%>
 <jsp:directive.include file="/WEB-INF/jsp/include.jsp"/>
 
-<script src="<rs:resourceURL value="/rs/jquery/1.11.0/jquery-1.11.0.min.js"/>" type="text/javascript"></script>
-<script src="<c:url value="/js/twitlimit-0.2.0.compressed.js"/>" type="text/javascript"></script>
-
 <link href="<c:url value="/css/feedback.css"/>" type="text/css" rel="stylesheet"/>
+
+<script src="<rs:resourceURL value="/rs/jquery/1.11.0/jquery-1.11.0.min.js"/>" type="text/javascript"></script>
+<script src="/ResourceServingWebapp/rs/jquery-migrate/1.2.1/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+<script src="<c:url value="/js/twitlimit-0.2.0.compressed.js"/>" type="text/javascript"></script>
 
 <c:set var="n"><portlet:namespace/></c:set>
 
 <portlet:actionURL var="postUrl"/>
 
-<h1><spring:message code="feedback.form.question"/></h1>
+<div class="feedback-portlet awesome-bootstrap-checkbox bootstrap-styles">
+<h3 style="font-weight: bold;"><spring:message code="feedback.form.question"/></h3>
 
-<form:form action="${postUrl}" modelAttribute="submitFeedbackForm">       
+<form:form action="${postUrl}" modelAttribute="submitFeedbackForm">
     <spring:bind path="prefs.*">
-    	<c:if test="${status.error}">
-    	<div id="${n}error-message" class="error-message portlet-msg-error portlet-msg error" role="alert" style="display:none">
-   	 	<p><form:errors path="feedback"/></p>
-		</div>
-	    </c:if>
-	</spring:bind>
-	<br>
-	<p id="${n}answer">
-      	<form:radiobutton id="yes" path="like" value="YES"/>
-      	<label class="portlet-form-field-label"><spring:message code="feedback.answer.yes"/></label>
-      	<form:radiobutton id="no" path="like" value="NO"/>
-      	<label class="portlet-form-field-label"><spring:message code="feedback.answer.no"/></label>
-      	<form:radiobutton id="maybe" path="like" value="MAYBE"/>
-      	<label class="portlet-form-field-label"><spring:message code="feedback.answer.maybe"/></label>
-    </p>
+        <c:if test="${status.error}">
+        <div id="${n}error-message" class="alert alert-danger" role="alert" style="display:none">
+            <p><form:errors path="feedback"/></p>
+        </div>
+        </c:if>
+    </spring:bind>
 
- 	<p> 		
- 		<label class="portlet-form-field-label"><spring:message code="feedback.form.suggestion"/></label>
- 		<textarea id="${n}feedback" path="feedback" name="feedback" rows="${feedbackRows}" style="width:${feedbackWidth}"></textarea> 		
- 	</p>
- 	<div id="${n}limit" style="margin-bottom: 12px;"></div>
+    <div data-role="fieldcontain">
+    <fieldset data-role="controlgroup" id="${n}answer">
+        <div class="radio radio-success">
+          <input type="radio" id="yes" name="like" value="YES"/>
+          <label for="yes" class="portlet-form-field-label"><spring:message code="feedback.answer.yes"/></label>
+        </div>
+        <div class="radio radio-danger">
+          <input type="radio" id="no" name="like" value="NO"/>
+          <label for="no" class="portlet-form-field-label"><spring:message code="feedback.answer.no"/></label>
+        </div>
+        <div class="radio radio-warning">
+          <input type="radio" id="maybe" name="like" value="MAYBE"/>
+          <label for="maybe" class="portlet-form-field-label"><spring:message code="feedback.answer.maybe"/></label>
+        </div>
+    </fieldset>
+    </div>
 
- 	<p>
-        <form:checkbox path="anonymous" value="true"/>
-		<label class="portlet-form-field-label"><spring:message code="feedback.form.anonymous"/></label>
-	</p>
+     <p>
+         <label class="portlet-form-field-label" for="${n}feedback"><spring:message code="feedback.form.suggestion"/></label>
+         <textarea id="${n}feedback" name="feedback" class="form-control" rows="${feedbackRows}" style="width:${feedbackWidth}"></textarea>
 
- 	<input id="${n}useragentstring" type="hidden" name="useragent"/>
- 	<input id="${n}feedbacktabname" type="hidden" name="tabname"/>
+     </p>
+     <div id="${n}limit" style="margin-bottom: 12px;"></div>
+
+     <!-- p>
+        <fieldset data-role="controlgroup">
+            <input type="checkbox" id="${n}anonymous" name="anonymous" value="true"/>
+            <label for="${n}anonymous" class="portlet-form-field-label"><spring:message code="feedback.form.anonymous"/></label>
+        </fieldset>
+    </p -->
+
+     <input id="${n}useragentstring" type="hidden" name="useragent"/>
+     <input id="${n}feedbacktabname" type="hidden" name="tabname"/>
 
     <p>
-       <button type="submit" id="submit" class="feedback-submit-button" disabled="disabled"><spring:message code="feedback.form.submit"/></button>
+       <input type="submit" id="${n}submitfeedback" class="feedback-submit-button btn btn-default ui-btn-hidden" disabled="disabled" aria-disabled="true" value="<spring:message code="feedback.form.submit"/>">
     </p>
 
 </form:form>
+</div>
 
-<script type="text/javascript">
+<script type="text/javascript"><rs:compressJs>
+   // Enable submitFeedback work here only on Mobile
+    var $ = up.jQuery;
+    $(document).bind("pageinit", function (e) {
+        var $page = $(e.target);
+        $page.find("input:radio[name=like]").change(function () {
+            $(this).checkboxradio("refresh");
+            $page.find("input:radio[name=like]").each(function (index, element) {
+                var $radio = $(this);
+                var $label = $radio.next();
+                if ($label.hasClass("ui-radio-on")) {
+                    //$radio.prop("checked", true);
+                    // DEBUG radio checked
+                    //alert("radio checked");
+                    if ($('#${n}submitfeedback').attr('disabled')) $('#${n}submitfeedback').removeAttr('disabled');
+                    if ($('#${n}submitfeedback').attr('aria-disabled')) $('#${n}submitfeedback').removeAttr('aria-disabled');
+                    if ($('#${n}submitfeedback').prop('disabled')) $('#${n}submitfeedback').prop('disabled', false);
+                    if($('#${n}submitfeedback').hasClass('feedback-submit-button')) $('#${n}submitfeedback').removeClass('feedback-submit-button');
+                    if(!$('#${n}submitfeedback').hasClass('portlet-form-button')) $('#${n}submitfeedback').addClass('portlet-form-button');
+                    if($('#${n}submitfeedback').parent().hasClass('ui-disabled')) $('#${n}submitfeedback').parent().removeClass('ui-disabled');
+                }
+            });
+        });
+    });
 
     var ${n} = {};
+
     ${n}.jQuery = jQuery.noConflict(true);
 
     ${n}.jQuery(function(){
 
         var $ = ${n}.jQuery;
+
         $('#${n}feedback').twitLimit({
             limit: ${feedbackMaxChars},
-            message: 'You have %1 characters remaining', 
-            counterElem: '#${n}limit', 
+            message: '<spring:message code="feedback.form.charactersremaining" arguments="%1"/>',
+            counterElem: '#${n}limit',
             allowNegative: false
         });
-                   
+
         document.getElementById('${n}useragentstring').value = navigator.userAgent;
-        
+
         $("#${n}error-message").slideDown(500);
-        
-        $('#${n}answer input:radio').click(function (){            
-            $('#submit').removeAttr('disabled');                
-            $('#submit').removeClass('feedback-submit-button');
-            $('#submit').addClass('portlet-form-button');
-        });        
-        
+
+        $('#submitFeedbackForm').submit(function (){
+            // disable submit
+            $('input[type=submit]', this).attr('disabled','disabled');
+            $('#${n}submitfeedback').attr('disabled','disabled');
+            $('#${n}submitfeedback').addClass('feedback-submit-button');
+            $('#${n}submitfeedback').removeClass('portlet-form-button');
+            $('#${n}submitfeedback').parent().addClass('ui-disabled');
+        });
+
+       // Enable submitFeedback work here only on Desktop
+       $("#${n}answer input:radio, #${n}answer label").click(function (){
+            // DEBUG alert click on radio
+            //alert("radio click");
+            if ($('#${n}submitfeedback').attr('disabled')) $('#${n}submitfeedback').removeAttr('disabled');
+            if ($('#${n}submitfeedback').attr('aria-disabled')) $('#${n}submitfeedback').removeAttr('aria-disabled');
+            if ($('#${n}submitfeedback').prop('disabled')) $('#${n}submitfeedback').prop('disabled', false);
+            if($('#${n}submitfeedback').hasClass('feedback-submit-button')) $('#${n}submitfeedback').removeClass('feedback-submit-button');
+            if(!$('#${n}submitfeedback').hasClass('portlet-form-button')) $('#${n}submitfeedback').addClass('portlet-form-button');
+            if($('#${n}submitfeedback').parent().hasClass('ui-disabled')) $('#${n}submitfeedback').parent().removeClass('ui-disabled');
+        });
+
         // check to see if a tab name parameter was submitted
         if ('${ requestScope.tabName }' != null && '${ requestScope.tabName }' != '') {
-            document.getElementById('${n}feedbacktabname').value = '${requestScope.tabName }'; 
+            document.getElementById('${n}feedbacktabname').value = '${requestScope.tabName }';
         // uPortal 2 tab name
         } else if (document.getElementById('tabName') != null) {
             document.getElementById('${n}feedbacktabname').value = $("#tabName").text();
         // uPortal 3 tab name
         } else if (document.getElementById('portalPageBodyTitle') != null) {
             document.getElementById('${n}feedbacktabname').value = $("#portalPageBodyTitle").text();
-        }          
-        
+        }
+
     });
 
-</script>
+</rs:compressJs></script>

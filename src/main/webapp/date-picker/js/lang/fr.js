@@ -62,7 +62,7 @@ var fdLocale = {
                 "Cliquez et d\u00E9placez",
                 "Montre \u201C[[%0%]]\u201D en premier",
                 "Aujourd\u2019hui",
-                "Date désactivé"
+                "Date d\u00E9sactiv\u00E9e"
                 ]
 };
  
