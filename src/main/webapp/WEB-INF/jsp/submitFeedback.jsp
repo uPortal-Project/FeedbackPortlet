@@ -66,19 +66,21 @@
      </p>
      <div id="${n}limit" style="margin-bottom: 12px;"></div>
 
-     <!-- p>
+     <p>
         <fieldset data-role="controlgroup">
-            <input type="checkbox" id="${n}anonymous" name="anonymous" value="true"/>
-            <label for="${n}anonymous" class="portlet-form-field-label"><spring:message code="feedback.form.anonymous"/></label>
+            <div class="checkbox">
+               <input type="checkbox" id="${n}anonymous" name="anonymous" value="true"/>
+               <label for="${n}anonymous" class="portlet-form-field-label"><spring:message code="feedback.form.anonymous"/></label>
+            </div>
         </fieldset>
-    </p -->
+     </p>
 
      <input id="${n}useragentstring" type="hidden" name="useragent"/>
      <input id="${n}feedbacktabname" type="hidden" name="tabname"/>
 
-    <p>
-       <input type="submit" id="${n}submitfeedback" class="feedback-submit-button btn btn-default ui-btn-hidden" disabled="disabled" aria-disabled="true" value="<spring:message code="feedback.form.submit"/>">
-    </p>
+     <p>
+         <input type="submit" id="${n}submitfeedback" class="feedback-submit-button btn btn-default ui-btn-hidden" disabled="disabled" aria-disabled="true" value="<spring:message code="feedback.form.submit"/>">
+     </p>
 
 </form:form>
 </div>
