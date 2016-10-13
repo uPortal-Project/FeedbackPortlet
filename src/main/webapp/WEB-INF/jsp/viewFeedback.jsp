@@ -134,7 +134,7 @@
 <!-- assigning a variable to the name so it can be called in a non-conflicting way -->      
 <c:set var="n"><portlet:namespace/></c:set>
 <script src="<rs:resourceURL value="/rs/jquery/1.11.0/jquery-1.11.0.min.js"/>" type="text/javascript"></script>
-<!-- <script src="/ResourceServingWebapp/rs/jquery-migrate/1.2.1/jquery-migrate-1.2.1.min.js" type="text/javascript"></script> -->
+<script src="/ResourceServingWebapp/rs/jquery-migrate/1.2.1/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
 <script src="<rs:resourceURL value="/rs/jqueryui/1.8.24/jquery-ui-1.8.24.min.js"/>" type="text/javascript"></script>
         
 <script type="text/javascript"><rs:compressJs>
@@ -214,10 +214,10 @@
 	  <h3><spring:message code="feedback.admin.title"/></h3>
           <div class="col-xs-12 col-sm-2 col-md-2">	
              <c:set var="stats" value="${stats}"/>
-    	     <img src="http://chart.apis.google.com/chart?cht=p&chd=t:${stats.positiveResponses * 100 / stats.totalResponses },${stats.undecidedResponses * 100 / stats.totalResponses },${stats.negativeResponses * 100 / stats.totalResponses }&chco=5cb85c,A5A5A5,d9534f&chs=100x100"/>
+    	     <img src="http://chart.apis.google.com/chart?cht=p&chd=t:${stats.positiveResponses * 100 / stats.totalResponses },${stats.undecidedResponses * 100 / stats.totalResponses },${stats.negativeResponses * 100 / stats.totalResponses }&chco=5cb85c,A5A5A5,d9534f&chs=100x100" alt="<spring:message code='feedback.admin.title'/>" aria-describedby="feeddback-list-summary" />
              <div>&nbsp;</div>
 	  </div>
-	  <div class="col-xs-12 col-sm-4 col-md-3">
+	  <div class="col-xs-12 col-sm-4 col-md-3" id="feeddback-list-summary">
              <span style="font-weight: bold">${ stats.totalResponses }</span> <spring:message code="feedback.admin.stats.total"/><br /> 
              <span style="font-weight: bold">${ stats.uniqueUsers }</span> <spring:message code="feedback.admin.stats.unique"/><br />
              <span style="font-weight: bold; color: #5cb85c"><fmt:formatNumber value="${ stats.positiveResponses / stats.totalResponses }" type="percent"/></span> <span class="glyphicon glyphicon-ok-sign" style="color:#5cb85c;" aria-hidden="true"></span> <spring:message code="feedback.admin.stats.answer.yes"/><br />
@@ -227,13 +227,14 @@
           </div>
           <div class="col-xs-12 col-sm-6 col-md-7"><!-- col-md-7 begin -->
              <table class="reflow feedback-list table-striped">
+                <caption><spring:message code="feedback.admin.list.caption"/></caption>
                 <thead>
                    <tr>
-                      <th><spring:message code="feedback.admin.list.population"/></th>
-                      <th><spring:message code="feedback.admin.list.unique.user"/></th>
-                      <th><spring:message code="feedback.answer.yes"/></th>
-                      <th><spring:message code="feedback.answer.no"/></th>
-                      <th><spring:message code="feedback.admin.stats.answer.maybe"/><sup> <a href="#${n}feedback-list-hearder-anchor">[1]</a></sup></th>
+                      <th scope="col"><spring:message code="feedback.admin.list.population"/></th>
+                      <th scope="col"><spring:message code="feedback.admin.list.unique.user"/></th>
+                      <th scope="col"><spring:message code="feedback.answer.yes"/></th>
+                      <th scope="col"><spring:message code="feedback.answer.no"/></th>
+                      <th scope="col"><spring:message code="feedback.admin.stats.answer.maybe"/><sup> <a href="#${n}feedback-list-hearder-anchor">[1]</a></sup></th>
                    </tr>
                 </thead>
                 <tbody>
@@ -363,14 +364,15 @@
         <div class="row">
           <div class="col-xs-12 col-sm-12 col-md-12">
           <table class="reflow feedback-result table-striped-by-2" cellspacing="0">
+             <caption><spring:message code="feedback.admin.rowtitle.caption"/></caption>
              <thead>
                 <tr>
-                   <th><spring:message code="feedback.admin.rowtitle.response"/></th>
-                   <th><spring:message code="feedback.admin.rowtitle.page"/></th>
-                   <th><spring:message code="feedback.admin.rowtitle.name"/></th>
-                   <th><spring:message code="feedback.admin.rowtitle.role"/></th>
-                   <th><spring:message code="feedback.admin.rowtitle.browser"/></th>
-                   <th><spring:message code="feedback.admin.rowtitle.time"/></th>
+                   <th scope="col"><spring:message code="feedback.admin.rowtitle.response"/></th>
+                   <th scope="col"><spring:message code="feedback.admin.rowtitle.page"/></th>
+                   <th scope="col"><spring:message code="feedback.admin.rowtitle.name"/></th>
+                   <th scope="col"><spring:message code="feedback.admin.rowtitle.role"/></th>
+                   <th scope="col"><spring:message code="feedback.admin.rowtitle.browser"/></th>
+                   <th scope="col"><spring:message code="feedback.admin.rowtitle.time"/></th>
 		</tr>
              </thead>
              <tbody>
@@ -404,7 +406,7 @@
                    <td><fmt:formatDate value="${ item.submissiontime }"/></td>
                 </tr>
                 <tr class="${ status.index % 2 == 0 ? 'main' : 'alt' } bottom">
-                   <td class="row-bottom-header"><spring:message code="feedback.admin.rowheader.comment"/></td>
+                   <th scope="row" class="row-bottom-header"><spring:message code="feedback.admin.rowheader.comment"/></td>
                    <td colspan="5">${ item.feedback }</td>
                 </tr>
 		</c:forEach>
