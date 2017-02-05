@@ -96,15 +96,30 @@
                 var $radio = $(this);
                 var $label = $radio.next();
                 if ($label.hasClass("ui-radio-on")) {
-                    //$radio.prop("checked", true);
-                    // DEBUG radio checked
-                    //alert("radio checked");
-                    if ($('#${n}submitfeedback').attr('disabled')) $('#${n}submitfeedback').removeAttr('disabled');
-                    if ($('#${n}submitfeedback').attr('aria-disabled')) $('#${n}submitfeedback').removeAttr('aria-disabled');
-                    if ($('#${n}submitfeedback').prop('disabled')) $('#${n}submitfeedback').prop('disabled', false);
-                    if($('#${n}submitfeedback').hasClass('feedback-submit-button')) $('#${n}submitfeedback').removeClass('feedback-submit-button');
-                    if(!$('#${n}submitfeedback').hasClass('portlet-form-button')) $('#${n}submitfeedback').addClass('portlet-form-button');
-                    if($('#${n}submitfeedback').parent().hasClass('ui-disabled')) $('#${n}submitfeedback').parent().removeClass('ui-disabled');
+
+                    if ($('#${n}submitfeedback').attr('disabled')) {
+                        $('#${n}submitfeedback').removeAttr('disabled');
+                    }
+
+                    if ($('#${n}submitfeedback').attr('aria-disabled')) {
+                        $('#${n}submitfeedback').removeAttr('aria-disabled');
+                    }
+
+                    if ($('#${n}submitfeedback').prop('disabled')) {
+                        $('#${n}submitfeedback').prop('disabled', false);
+                    }
+
+                    if($('#${n}submitfeedback').hasClass('feedback-submit-button')) {
+                        $('#${n}submitfeedback').removeClass('feedback-submit-button');
+                    }
+
+                    if(!$('#${n}submitfeedback').hasClass('portlet-form-button')) {
+                        $('#${n}submitfeedback').addClass('portlet-form-button');
+                    }
+
+                    if($('#${n}submitfeedback').parent().hasClass('ui-disabled')) {
+                        $('#${n}submitfeedback').parent().removeClass('ui-disabled');
+                    }
                 }
             });
         });
