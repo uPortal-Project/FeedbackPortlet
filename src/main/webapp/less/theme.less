@@ -1,0 +1,102 @@
+/**
+ * Licensed to Apereo under one or more contributor license
+ * agreements. See the NOTICE file distributed with this work
+ * for additional information regarding copyright ownership.
+ * Apereo licenses this file to you under the Apache License,
+ * Version 2.0 (the "License"); you may not use this file
+ * except in compliance with the License.  You may obtain a
+ * copy of the License at the following location:
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
+// ==========================================================================
+// Namespace: .feedback-portlet
+// ==========================================================================
+// Everything in this stylesheet is scoped (nested) within
+// ".feedback-portlet". As a best practice, anything added to this
+// stylesheet (that is not a variable or mixin) should also be scoped within
+// the namespace.
+
+.feedback-portlet {
+   .table-striped-by-2 {
+      tbody {
+         tr {
+            &:nth-child(4n-3) {
+               background-color: @table-result-striped-background-color;
+               .row-bottom-header {
+                  background-color: @table-result-striped-background-color;
+               }
+            
+            }
+            &:nth-child(4n-2) {
+               background-color: @table-result-striped-background-color;
+               .row-bottom-header {
+                  background-color: @table-result-striped-background-color;
+               }
+            }
+         }
+      }
+   }
+   /* launch table reflow mixin */
+   .createtable-reflow (@background:white,  @color:black, @border-color:#ccc, @th-width-mobile:110px,@table-reflow-max-width:450px,@min-width:0px,@max-width:768px);
+
+   .reflow.feedback-list {
+      max-width :410px;
+      caption {
+          width:100%;
+       }
+      tbody {
+         tr {
+            margin-bottom:8px;
+         }
+      }
+   }
+
+   .hasDatepicker {
+      max-width: 300px;
+   }
+
+   .reflow.feedback-result {
+       max-width :950px;
+       caption {
+          width:100%;
+       }
+       tbody {
+          .bottom {
+            border-top:none;
+            margin-bottom:8px;
+            border-bottom: 1px solid @border-color;
+            .row-bottom-header {
+                border-bottom: none;
+                font-weight:bold;
+                text-align:left;
+            }
+         }
+      }
+   }
+}
+
+/*  Main loop : @name=col-md && @columns=12. Scope the styles of portlet-grid within .portal-page-column.col-md-X, .portletnamespace and .bootstrap-style-by-X */
+.col(@name; @columns; @index: 1) when (@index =< @columns) {
+    .col(@name; @columns; (@index + 1));
+    .portal-page-column.@{name}-@{index} .@{namespace}.bootstrap-styles-by-@{col-md-breackpoint} {
+        .grid(col-md; 12; 6);
+    }
+}
+
+/* launch the loop */
+
+ @media screen {
+   @media (min-width: 992px) {
+     .col(col-md; @col);
+   }
+}
+
