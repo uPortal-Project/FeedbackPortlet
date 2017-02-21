@@ -30,13 +30,13 @@
 
 <portlet:actionURL var="postUrl"/>
 
-<div class="feedback-portlet awesome-bootstrap-checkbox bootstrap-styles">
+<div>
 <h3 style="font-weight: bold;"><spring:message code="feedback.form.question"/></h3>
 
 <form:form action="${postUrl}" modelAttribute="submitFeedbackForm">
     <spring:bind path="prefs.*">
         <c:if test="${status.error}">
-        <div id="${n}error-message" class="alert alert-danger" role="alert" style="display:none">
+        <div id="${n}error-message" role="alert" style="display:none">
             <p><form:errors path="feedback"/></p>
         </div>
         </c:if>
@@ -44,33 +44,33 @@
 
     <div data-role="fieldcontain">
     <fieldset data-role="controlgroup" id="${n}answer">
-        <div class="radio radio-success">
+        <div>
           <input type="radio" id="yes" name="like" value="YES"/>
-          <label for="yes" class="portlet-form-field-label"><spring:message code="feedback.answer.yes"/></label>
+          <label for="yes"><spring:message code="feedback.answer.yes"/></label>
         </div>
-        <div class="radio radio-danger">
+        <div>
           <input type="radio" id="no" name="like" value="NO"/>
-          <label for="no" class="portlet-form-field-label"><spring:message code="feedback.answer.no"/></label>
+          <label for="no"><spring:message code="feedback.answer.no"/></label>
         </div>
-        <div class="radio radio-warning">
+        <div>
           <input type="radio" id="maybe" name="like" value="MAYBE"/>
-          <label for="maybe" class="portlet-form-field-label"><spring:message code="feedback.answer.maybe"/></label>
+          <label for="maybe"><spring:message code="feedback.answer.maybe"/></label>
         </div>
     </fieldset>
     </div>
 
      <p>
-         <label class="portlet-form-field-label" for="${n}feedback"><spring:message code="feedback.form.suggestion"/></label>
-         <textarea id="${n}feedback" name="feedback" class="form-control" rows="${feedbackRows}" style="width:${feedbackWidth}"></textarea>
+         <label for="${n}feedback"><spring:message code="feedback.form.suggestion"/></label>
+         <textarea id="${n}feedback" name="feedback" rows="${feedbackRows}" style="width:${feedbackWidth}"></textarea>
 
      </p>
      <div id="${n}limit" style="margin-bottom: 12px;"></div>
 
      <p>
         <fieldset data-role="controlgroup">
-            <div class="checkbox">
+            <div>
                <input type="checkbox" id="${n}anonymous" name="anonymous" value="true"/>
-               <label for="${n}anonymous" class="portlet-form-field-label"><spring:message code="feedback.form.anonymous"/></label>
+               <label for="${n}anonymous"><spring:message code="feedback.form.anonymous"/></label>
             </div>
         </fieldset>
      </p>
@@ -79,7 +79,7 @@
      <input id="${n}feedbacktabname" type="hidden" name="tabname"/>
 
      <p>
-         <input type="submit" id="${n}submitfeedback" class="feedback-submit-button btn btn-default ui-btn-hidden" disabled="disabled" aria-disabled="true" value="<spring:message code="feedback.form.submit"/>">
+         <input type="submit" id="${n}submitfeedback" disabled="disabled" aria-disabled="true" value="<spring:message code="feedback.form.submit"/>">
      </p>
 
 </form:form>
