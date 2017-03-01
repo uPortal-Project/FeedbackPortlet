@@ -25,18 +25,18 @@
 
     <properties>
     	<commons-lang.version>2.6</commons-lang.version>
-        <commons-logging.version>1.1</commons-logging.version>
+        <commons-logging.version>1.1.1</commons-logging.version>
         <commons-collections.version>3.2.2</commons-collections.version>
         <ehcache.version>2.6.5</ehcache.version>
         <hibernate.version>3.2.7.ga</hibernate.version>
         <hsqldb.version>1.8.0.7</hsqldb.version>
-        <log4j.version>1.2.14</log4j.version>
+        <log4j.version>1.2.17</log4j.version>
         <javax.activation.version>1.1.1</javax.activation.version>
         <javax.mail>1.4.7</javax.mail>
         <javax.servlet>2.5</javax.servlet>
         <jstl.version>1.1.2</jstl.version>
         <jta.version>1.1</jta.version>
-        <poi.version>3.5-FINAL</poi.version>
+        <poi.version>3.9</poi.version>
         <resource-server.version>1.0.42</resource-server.version>
         <spring.version>3.2.16.RELEASE</spring.version>
         <taglib.version>1.1.2</taglib.version>
@@ -158,6 +158,10 @@
             <artifactId>resource-server-utils</artifactId>
             <version>${resource-server.version}</version>
             <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>jcl-over-slf4j</artifactId>
+                </exclusion>
                 <exclusion>
                     <groupId>org.springframework</groupId>
                     <artifactId>spring-web</artifactId>
@@ -358,7 +362,7 @@
                             <artifactId>resource-server-content</artifactId>
                             <includes>
                                 <include>rs/jquery/1.11.0/jquery-1.11.0.min.js</include>
-                                <include>rs/jqueryui/1.8/jquery-ui-1.8.min.js</include>
+                                <include>rs/jqueryui/1.8.13/jquery-ui-1.8.13.min.js</include>
                             </includes>
                         </overlay>
                     </overlays>

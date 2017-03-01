@@ -28,11 +28,15 @@ import java.util.Map;
 import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.jasig.portlets.FeedbackPortlet.dao.*;
 import org.jasig.portlets.FeedbackPortlet.web.ViewFeedbackForm;
 import org.jasig.portlets.FeedbackPortlet.*;
 
 public class FeedbackQueryParameters {
+
+    private static final Log log = LogFactory.getLog(FeedbackQueryParameters.class);
 
     public static final long MILLIS_IN_A_DAY = (60000L * 60L * 24L); // 60000 millis to a min, 60 min to hour. 24 /day, -1 millisecond to be end of day 
     public static final long MILLIS_IN_30_DAYS = (60000L * 60L * 24L * 30L); // 60*1000 millis = 1 min;  60 min = 1 hour; 24 h = 1 day; 30 days
@@ -180,8 +184,10 @@ public class FeedbackQueryParameters {
         
         // Date format required to parse user input dates
         SimpleDateFormat dateFormatter = new SimpleDateFormat(DATE_FORMAT);
-        System.out.println("The start display date is:"+dateFormatter.format(startDisplayDate));
-        System.out.println("The end display date is:"+dateFormatter.format(endDisplayDate));
+        if(log.isDebugEnabled()) {
+            log.debug("The start display date is:"+dateFormatter.format(startDisplayDate));
+            log.debug("The end display date is:"+dateFormatter.format(endDisplayDate));
+        }
         model.put("startDisplayDate",dateFormatter.format(startDisplayDate) );
         model.put("endDisplayDate", dateFormatter.format(endDisplayDate) );
         return model;

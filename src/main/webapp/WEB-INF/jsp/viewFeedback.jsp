@@ -23,7 +23,7 @@
 <link href="<c:url value="/css/feedback.css"/>" rel="stylesheet" type="text/css" />
 <style>
 
-            /* 
+            /*
             Max width before this PARTICULAR table gets nasty
             This query will take effect for any screen smaller than 768px
             and also iPads specifically.
@@ -31,10 +31,10 @@
 
             /*
              * Table reflow headers for feedback-result in mobile view
-             * TODO when CSS4 element() function will land in browsers other than FF -> remove these inline CSS. http://caniuse.com/#feat=css-element-function 
+             * TODO when CSS4 element() function will land in browsers other than FF -> remove these inline CSS. http://caniuse.com/#feat=css-element-function
              */
 
-            @media 
+            @media
                 only screen and (max-width: 768px)  {
 
 
@@ -72,53 +72,53 @@
 
             /*
              * Table reflow headers for feedback-result in multi-columns dashboard
-             * TODO when CSS4 element() function will land in browser -> remove these inline CSS. http://caniuse.com/#feat=css-element-function 
+             * TODO when CSS4 element() function will land in browser -> remove these inline CSS. http://caniuse.com/#feat=css-element-function
              */
 
             @media only screen and (min-width: 992px) and (max-width: 3840px), and (min-device-width: 992px) and (max-device-width: 3840px) {
-                
+
 .portal-page-column.col-md-7 .feedback-portlet.bootstrap-styles-by-6 .col-md-12 table.reflow.feedback-result tbody tr:not(.bottom) td:nth-of-type(1):before { content: "<spring:message code="feedback.admin.rowtitle.response"/> :";font-weight:bold; }
 .portal-page-column.col-md-7 .feedback-portlet.bootstrap-styles-by-6 .col-md-12 table.reflow.feedback-result tbody tr:not(.bottom) td:nth-of-type(2):before { content: "<spring:message code="feedback.admin.rowtitle.page"/> :";font-weight:bold; }
 .portal-page-column.col-md-7 .feedback-portlet.bootstrap-styles-by-6 .col-md-12 table.reflow.feedback-result tbody td:nth-of-type(3):before { content: "<spring:message code="feedback.admin.rowtitle.name"/> :";font-weight:bold; }
 .portal-page-column.col-md-7 .feedback-portlet.bootstrap-styles-by-6 .col-md-12 table.reflow.feedback-result tbody td:nth-of-type(4):before { content: "<spring:message code="feedback.admin.rowtitle.role"/> :"; font-weight:bold;}
 .portal-page-column.col-md-7 .feedback-portlet.bootstrap-styles-by-6 .col-md-12 table.reflow.feedback-result tbody td:nth-of-type(5):before { content: "<spring:message code="feedback.admin.rowtitle.browser"/> :"; font-weight:bold;}
 .portal-page-column.col-md-7 .feedback-portlet.bootstrap-styles-by-6 .col-md-12 table.reflow.feedback-result tbody td:nth-of-type(6):before { content: "<spring:message code="feedback.admin.rowtitle.time"/> :"; font-weight:bold;}
-    
+
 .portal-page-column.col-md-6 .feedback-portlet.bootstrap-styles-by-6 .col-md-12 table.reflow.feedback-result tbody tr:not(.bottom) td:nth-of-type(1):before { content: "<spring:message code="feedback.admin.rowtitle.response"/> :";font-weight:bold; }
 .portal-page-column.col-md-6 .feedback-portlet.bootstrap-styles-by-6 .col-md-12 table.reflow.feedback-result tbody tr:not(.bottom) td:nth-of-type(2):before { content: "<spring:message code="feedback.admin.rowtitle.page"/> :";font-weight:bold; }
 .portal-page-column.col-md-6 .feedback-portlet.bootstrap-styles-by-6 .col-md-12 table.reflow.feedback-result tbody td:nth-of-type(3):before { content: "<spring:message code="feedback.admin.rowtitle.name"/> :";font-weight:bold; }
 .portal-page-column.col-md-6 .feedback-portlet.bootstrap-styles-by-6 .col-md-12 table.reflow.feedback-result tbody td:nth-of-type(4):before { content: "<spring:message code="feedback.admin.rowtitle.role"/> :"; font-weight:bold;}
 .portal-page-column.col-md-6 .feedback-portlet.bootstrap-styles-by-6 .col-md-12 table.reflow.feedback-result tbody td:nth-of-type(5):before { content: "<spring:message code="feedback.admin.rowtitle.browser"/> :"; font-weight:bold;}
 .portal-page-column.col-md-6 .feedback-portlet.bootstrap-styles-by-6 .col-md-12 table.reflow.feedback-result tbody td:nth-of-type(6):before { content: "<spring:message code="feedback.admin.rowtitle.time"/> :"; font-weight:bold;}
-    
+
 .portal-page-column.col-md-5 .feedback-portlet.bootstrap-styles-by-6 .col-md-12 table.reflow.feedback-result tbody tr:not(.bottom) td:nth-of-type(1):before { content: "<spring:message code="feedback.admin.rowtitle.response"/> :";font-weight:bold; }
 .portal-page-column.col-md-5 .feedback-portlet.bootstrap-styles-by-6 .col-md-12 table.reflow.feedback-result tbody tr:not(.bottom) td:nth-of-type(2):before { content: "<spring:message code="feedback.admin.rowtitle.page"/> :";font-weight:bold; }
 .portal-page-column.col-md-5 .feedback-portlet.bootstrap-styles-by-6 .col-md-12 table.reflow.feedback-result tbody td:nth-of-type(3):before { content: "<spring:message code="feedback.admin.rowtitle.name"/> :";font-weight:bold; }
 .portal-page-column.col-md-5 .feedback-portlet.bootstrap-styles-by-6 .col-md-12 table.reflow.feedback-result tbody td:nth-of-type(4):before { content: "<spring:message code="feedback.admin.rowtitle.role"/> :"; font-weight:bold;}
 .portal-page-column.col-md-5 .feedback-portlet.bootstrap-styles-by-6 .col-md-12 table.reflow.feedback-result tbody td:nth-of-type(5):before { content: "<spring:message code="feedback.admin.rowtitle.browser"/> :"; font-weight:bold;}
 .portal-page-column.col-md-5 .feedback-portlet.bootstrap-styles-by-6 .col-md-12 table.reflow.feedback-result tbody td:nth-of-type(6):before { content: "<spring:message code="feedback.admin.rowtitle.time"/> :"; font-weight:bold;}
-    
+
 .portal-page-column.col-md-4 .feedback-portlet.bootstrap-styles-by-6 .col-md-12 table.reflow.feedback-result tbody tr:not(.bottom) td:nth-of-type(1):before { content: "<spring:message code="feedback.admin.rowtitle.response"/> :";font-weight:bold; }
 .portal-page-column.col-md-4 .feedback-portlet.bootstrap-styles-by-6 .col-md-12 table.reflow.feedback-result tbody tr:not(.bottom) td:nth-of-type(2):before { content: "<spring:message code="feedback.admin.rowtitle.page"/> :";font-weight:bold; }
 .portal-page-column.col-md-4 .feedback-portlet.bootstrap-styles-by-6 .col-md-12 table.reflow.feedback-result tbody td:nth-of-type(3):before { content: "<spring:message code="feedback.admin.rowtitle.name"/> :";font-weight:bold; }
 .portal-page-column.col-md-4 .feedback-portlet.bootstrap-styles-by-6 .col-md-12 table.reflow.feedback-result tbody td:nth-of-type(4):before { content: "<spring:message code="feedback.admin.rowtitle.role"/> :"; font-weight:bold;}
 .portal-page-column.col-md-4 .feedback-portlet.bootstrap-styles-by-6 .col-md-12 table.reflow.feedback-result tbody td:nth-of-type(5):before { content: "<spring:message code="feedback.admin.rowtitle.browser"/> :"; font-weight:bold;}
 .portal-page-column.col-md-4 .feedback-portlet.bootstrap-styles-by-6 .col-md-12 table.reflow.feedback-result tbody td:nth-of-type(6):before { content: "<spring:message code="feedback.admin.rowtitle.time"/> :"; font-weight:bold;}
-    
+
 .portal-page-column.col-md-3 .feedback-portlet.bootstrap-styles-by-6 .col-md-12 table.reflow.feedback-result tbody tr:not(.bottom) td:nth-of-type(1):before { content: "<spring:message code="feedback.admin.rowtitle.response"/> :";font-weight:bold; }
 .portal-page-column.col-md-3 .feedback-portlet.bootstrap-styles-by-6 .col-md-12 table.reflow.feedback-result tbody tr:not(.bottom) td:nth-of-type(2):before { content: "<spring:message code="feedback.admin.rowtitle.page"/> :";font-weight:bold; }
 .portal-page-column.col-md-3 .feedback-portlet.bootstrap-styles-by-6 .col-md-12 table.reflow.feedback-result tbody td:nth-of-type(3):before { content: "<spring:message code="feedback.admin.rowtitle.name"/> :";font-weight:bold; }
 .portal-page-column.col-md-3 .feedback-portlet.bootstrap-styles-by-6 .col-md-12 table.reflow.feedback-result tbody td:nth-of-type(4):before { content: "<spring:message code="feedback.admin.rowtitle.role"/> :"; font-weight:bold;}
 .portal-page-column.col-md-3 .feedback-portlet.bootstrap-styles-by-6 .col-md-12 table.reflow.feedback-result tbody td:nth-of-type(5):before { content: "<spring:message code="feedback.admin.rowtitle.browser"/> :"; font-weight:bold;}
 .portal-page-column.col-md-3 .feedback-portlet.bootstrap-styles-by-6 .col-md-12 table.reflow.feedback-result tbody td:nth-of-type(6):before { content: "<spring:message code="feedback.admin.rowtitle.time"/> :"; font-weight:bold;}
-    
+
 .portal-page-column.col-md-2 .feedback-portlet.bootstrap-styles-by-6 .col-md-12 table.reflow.feedback-result tbody tr:not(.bottom) td:nth-of-type(1):before { content: "<spring:message code="feedback.admin.rowtitle.response"/> :";font-weight:bold; }
 .portal-page-column.col-md-2 .feedback-portlet.bootstrap-styles-by-6 .col-md-12 table.reflow.feedback-result tbody tr:not(.bottom) td:nth-of-type(2):before { content: "<spring:message code="feedback.admin.rowtitle.page"/> :";font-weight:bold; }
 .portal-page-column.col-md-2 .feedback-portlet.bootstrap-styles-by-6 .col-md-12 table.reflow.feedback-result tbody td:nth-of-type(3):before { content: "<spring:message code="feedback.admin.rowtitle.name"/> :";font-weight:bold; }
 .portal-page-column.col-md-2 .feedback-portlet.bootstrap-styles-by-6 .col-md-12 table.reflow.feedback-result tbody td:nth-of-type(4):before { content: "<spring:message code="feedback.admin.rowtitle.role"/> :"; font-weight:bold;}
 .portal-page-column.col-md-2 .feedback-portlet.bootstrap-styles-by-6 .col-md-12 table.reflow.feedback-result tbody td:nth-of-type(5):before { content: "<spring:message code="feedback.admin.rowtitle.browser"/> :"; font-weight:bold;}
 .portal-page-column.col-md-2 .feedback-portlet.bootstrap-styles-by-6 .col-md-12 table.reflow.feedback-result tbody td:nth-of-type(6):before { content: "<spring:message code="feedback.admin.rowtitle.time"/> :"; font-weight:bold;}
-    
+
 .portal-page-column.col-md-1 .feedback-portlet.bootstrap-styles-by-6 .col-md-12 table.reflow.feedback-result tbody tr:not(.bottom) td:nth-of-type(1):before { content: "<spring:message code="feedback.admin.rowtitle.response"/> :";font-weight:bold; }
 .portal-page-column.col-md-1 .feedback-portlet.bootstrap-styles-by-6 .col-md-12 table.reflow.feedback-result tbody tr:not(.bottom) td:nth-of-type(2):before { content: "<spring:message code="feedback.admin.rowtitle.page"/> :";font-weight:bold; }
 .portal-page-column.col-md-1 .feedback-portlet.bootstrap-styles-by-6 .col-md-12 table.reflow.feedback-result tbody td:nth-of-type(3):before { content: "<spring:message code="feedback.admin.rowtitle.name"/> :";font-weight:bold; }
@@ -131,18 +131,18 @@
 
         </style>
 
-<!-- assigning a variable to the name so it can be called in a non-conflicting way -->      
+<!-- assigning a variable to the name so it can be called in a non-conflicting way -->
 <c:set var="n"><portlet:namespace/></c:set>
 <script src="<rs:resourceURL value="/rs/jquery/1.11.0/jquery-1.11.0.min.js"/>" type="text/javascript"></script>
 <script src="/ResourceServingWebapp/rs/jquery-migrate/1.2.1/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
 <script src="<rs:resourceURL value="/rs/jqueryui/1.8.24/jquery-ui-1.8.24.min.js"/>" type="text/javascript"></script>
-        
+
 <script type="text/javascript"><rs:compressJs>
     var ${n} = ${n} || {}; //create a unique variable to assign our namespace too
     ${n}.jQuery = jQuery.noConflict(true); //assign jQuery to this namespace
-    
+
     /*  runs when the document is finished loading.  This prevents things like the 'div' from being fully created */
-    ${n}.jQuery(document).ready(function () { 
+    ${n}.jQuery(document).ready(function () {
         var $ = ${n}.jQuery; //reassign $ for normal use of jQuery
         // handle the 'select number of items to display' so that it shows the current setting.
         $("#${n}itemsShown").val("${items}");
@@ -150,14 +150,14 @@
         // handle 'filter by user role' so that it shows the current setting
 		$("#${n}userRoleShown").val("${userrole}");
 
-        // handle the 'filter by feedback type' to show the current setting. 
+        // handle the 'filter by feedback type' to show the current setting.
         $("#${n}feedbackTypeShown").val("${feedbacktype}");
 
-        // handle the two text boxes associated with filter by date  	
-    	
-    	$( "#${n}datepicker1" ).datepicker().val("${startDisplayDate}");		
+        // handle the two text boxes associated with filter by date
+
+    	$( "#${n}datepicker1" ).datepicker().val("${startDisplayDate}");
 		$( "#${n}datepicker2" ).datepicker().val("${endDisplayDate}");
-		
+
         $("#${n}pagingGoButton").click(function() {
             var pageInt = parseInt("0" + $("#${n}pagingBox").get(0).value);
             pageInt = pageInt-1;
@@ -172,12 +172,12 @@
             window.location=(portletParam.replace("start=03171879", "start=" + pageInt.toString()));
          } );
     });
-    
+
 </rs:compressJs></script>
 
       <div class="container-fluid feedback-portlet awesome-bootstrap-checkbox bootstrap-styles-by-6"> <!-- feedback-admin begin -->
 
-<!-- Bootstrap Grid helper 
+<!-- Bootstrap Grid helper
         <button class="btn btn-default btn-xs" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
            <span class="glyphicon glyphicon-th" aria-hidden="true"></span> Bootstrap Grid
         </button>
@@ -212,13 +212,13 @@
 
         <div class="row">
 	  <h3><spring:message code="feedback.admin.title"/></h3>
-          <div class="col-xs-12 col-sm-2 col-md-2">	
+          <div class="col-xs-12 col-sm-2 col-md-2">
              <c:set var="stats" value="${stats}"/>
     	     <img src="http://chart.apis.google.com/chart?cht=p&chd=t:${stats.positiveResponses * 100 / stats.totalResponses },${stats.undecidedResponses * 100 / stats.totalResponses },${stats.negativeResponses * 100 / stats.totalResponses }&chco=5cb85c,A5A5A5,d9534f&chs=100x100" alt="<spring:message code='feedback.admin.title'/>" aria-describedby="feeddback-list-summary" />
              <div>&nbsp;</div>
 	  </div>
 	  <div class="col-xs-12 col-sm-4 col-md-3" id="feeddback-list-summary">
-             <span style="font-weight: bold">${ stats.totalResponses }</span> <spring:message code="feedback.admin.stats.total"/><br /> 
+             <span style="font-weight: bold">${ stats.totalResponses }</span> <spring:message code="feedback.admin.stats.total"/><br />
              <span style="font-weight: bold">${ stats.uniqueUsers }</span> <spring:message code="feedback.admin.stats.unique"/><br />
              <span style="font-weight: bold; color: #5cb85c"><fmt:formatNumber value="${ stats.positiveResponses / stats.totalResponses }" type="percent"/></span> <span class="glyphicon glyphicon-ok-sign" style="color:#5cb85c;" aria-hidden="true"></span> <spring:message code="feedback.admin.stats.answer.yes"/><br />
              <span style="font-weight: bold; color: #d9534f"><fmt:formatNumber value="${ stats.negativeResponses / stats.totalResponses }" type="percent"/></span> <span class="glyphicon glyphicon-remove-sign" style="color:#d9534f;" aria-hidden="true"></span> <spring:message code="feedback.admin.stats.answer.no"/><br />
@@ -264,7 +264,7 @@
                    <div class="form-group">
                       <label class="sr-only" for="${n}itemsShown"><spring:message code="feedback.admin.form.show"/></label>
                       <div class="input-group">
-                        <div class="input-group-addon" style="min-width:75px"><spring:message code="feedback.admin.form.show"/></div> 
+                        <div class="input-group-addon" style="min-width:75px"><spring:message code="feedback.admin.form.show"/></div>
                         <form:select cssClass="form-control" id="${n}itemsShown" path="items">
                            <form:option value="10"/>
                            <form:option value="20"/>
@@ -275,7 +275,7 @@
                    <div class="form-group">
                       <label class="sr-only" for="${n}userRoleShown"><spring:message code="feedback.admin.form.role"/></label>
                       <div class="input-group">
-                        <div class="input-group-addon" style="min-width:75px"><spring:message code="feedback.admin.form.role"/></div> 
+                        <div class="input-group-addon" style="min-width:75px"><spring:message code="feedback.admin.form.role"/></div>
                         <form:select cssClass="form-control" id="${n}userRoleShown" path="userrole">
                            <form:option value="" label="all"><spring:message code="feedback.admin.type.all"/></form:option>
                            <form:option value="student"><spring:message code="feedback.admin.type.student"/></form:option>
@@ -290,7 +290,7 @@
                    <div class="form-group">
                       <label class="sr-only" for="${n}feedbackTypeShown"><spring:message code="feedback.admin.form.type"/></label>
                       <div class="input-group">
-                        <div class="input-group-addon" style="min-width:75px"><spring:message code="feedback.admin.form.type"/></div>  
+                        <div class="input-group-addon" style="min-width:75px"><spring:message code="feedback.admin.form.type"/></div>
                         <form:select cssClass="form-control" id="${n}feedbackTypeShown" path="feedbacktype">
                            <form:option value="" label="all"><spring:message code="feedback.admin.stats.answer.all"/></form:option>
                            <form:option value="YES" ><spring:message code="feedback.admin.stats.answer.yes"/></form:option>
