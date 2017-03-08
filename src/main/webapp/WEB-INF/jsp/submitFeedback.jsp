@@ -38,7 +38,6 @@
 <portlet:actionURL var="postUrl"/>
 
 <div>
-<h3 style="font-weight: bold;"><spring:message code="feedback.form.question"/></h3>
 
 <form:form action="${postUrl}" modelAttribute="submitFeedbackForm">
     <spring:bind path="prefs.*">
@@ -50,17 +49,18 @@
     </spring:bind>
 
     <div data-role="fieldcontain">
-    <fieldset data-role="controlgroup" id="${n}answer">
+    <label id="question"><spring:message code="feedback.form.question"/></label>
+    <fieldset aria-labelledby="question" role="radiogroup" data-role="controlgroup" id="${n}answer">
         <div>
-          <input type="radio" id="yes" name="like" value="YES"/>
+          <input role="radio" type="radio" id="yes" name="like" value="YES"/>
           <label for="yes"><spring:message code="feedback.answer.yes"/></label>
         </div>
         <div>
-          <input type="radio" id="no" name="like" value="NO"/>
+          <input role="radio" type="radio" id="no" name="like" value="NO"/>
           <label for="no"><spring:message code="feedback.answer.no"/></label>
         </div>
         <div>
-          <input type="radio" id="maybe" name="like" value="MAYBE"/>
+          <input role="radio" type="radio" id="maybe" name="like" value="MAYBE"/>
           <label for="maybe"><spring:message code="feedback.answer.maybe"/></label>
         </div>
     </fieldset>
