@@ -162,8 +162,20 @@
 
        // Enable submitFeedback work here only on Desktop
        $("#${n}answer input:radio, #${n}answer label").click(function (){
-            // DEBUG alert click on radio
-            //alert("radio click");
+            // Toggle aria-checked attributes when a radio button is selected
+            $(this).attr('aria-checked', 'true');
+
+            if (Object.is($(this).attr('id'), 'yes')) {
+                $('#no').attr('aria-checked', 'false');
+                $('#maybe').attr('aria-checked', 'false');
+            }else if (Object.is($(this).attr('id'), 'no')) {
+                $('#yes').attr('aria-checked', 'false');
+                $('#maybe').attr('aria-checked', 'false');
+            }else if (Object.is($(this).attr('id'), 'maybe')) {
+                $('#yes').attr('aria-checked', 'false');
+                $('#no').attr('aria-checked', 'false');
+            }
+
             if ($('#${n}submitfeedback').attr('disabled')) $('#${n}submitfeedback').removeAttr('disabled');
             if ($('#${n}submitfeedback').attr('aria-disabled')) $('#${n}submitfeedback').removeAttr('aria-disabled');
             if ($('#${n}submitfeedback').prop('disabled')) $('#${n}submitfeedback').prop('disabled', false);
