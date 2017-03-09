@@ -52,15 +52,15 @@
     <label id="question"><spring:message code="feedback.form.question"/></label>
     <fieldset aria-labelledby="question" role="radiogroup" data-role="controlgroup" id="${n}answer">
         <div>
-          <input role="radio" type="radio" id="yes" name="like" value="YES"/>
+          <input role="radio" aria-checked="false" type="radio" id="yes" name="like" value="YES"/>
           <label for="yes"><spring:message code="feedback.answer.yes"/></label>
         </div>
         <div>
-          <input role="radio" type="radio" id="no" name="like" value="NO"/>
+          <input role="radio" aria-checked="false" type="radio" id="no" name="like" value="NO"/>
           <label for="no"><spring:message code="feedback.answer.no"/></label>
         </div>
         <div>
-          <input role="radio" type="radio" id="maybe" name="like" value="MAYBE"/>
+          <input role="radio" aria-checked="false" type="radio" id="maybe" name="like" value="MAYBE"/>
           <label for="maybe"><spring:message code="feedback.answer.maybe"/></label>
         </div>
     </fieldset>
