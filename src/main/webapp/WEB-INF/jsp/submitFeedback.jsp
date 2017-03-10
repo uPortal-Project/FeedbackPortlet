@@ -48,9 +48,8 @@
         </c:if>
     </spring:bind>
 
-    <div data-role="fieldcontain">
-    <label id="question"><spring:message code="feedback.form.question"/></label>
-    <fieldset aria-labelledby="question" role="radiogroup" data-role="controlgroup" id="${n}answer">
+    <div aria-labelledby="question" role="radiogroup" id="${n}answer">
+        <label id="question"><spring:message code="feedback.form.question"/></label>
         <div>
           <input role="radio" aria-checked="false" type="radio" id="yes" name="like" value="YES"/>
           <label for="yes"><spring:message code="feedback.answer.yes"/></label>
@@ -63,7 +62,6 @@
           <input role="radio" aria-checked="false" type="radio" id="maybe" name="like" value="MAYBE"/>
           <label for="maybe"><spring:message code="feedback.answer.maybe"/></label>
         </div>
-    </fieldset>
     </div>
 
      <p>
@@ -74,12 +72,10 @@
      <div id="${n}limit" style="margin-bottom: 12px;"></div>
 
      <p>
-        <fieldset data-role="controlgroup">
-            <div>
-               <input type="checkbox" id="${n}anonymous" name="anonymous" value="true"/>
-               <label for="${n}anonymous"><spring:message code="feedback.form.anonymous"/></label>
-            </div>
-        </fieldset>
+        <div>
+            <input type="checkbox" id="${n}anonymous" name="anonymous" value="true"/>
+            <label for="${n}anonymous"><spring:message code="feedback.form.anonymous"/></label>
+        </div>
      </p>
 
      <input id="${n}useragentstring" type="hidden" name="useragent"/>
