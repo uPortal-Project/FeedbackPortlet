@@ -111,18 +111,6 @@
                     if ($('#${n}submitfeedback').prop('disabled')) {
                         $('#${n}submitfeedback').prop('disabled', false);
                     }
-
-                    if($('#${n}submitfeedback').hasClass('feedback-submit-button')) {
-                        $('#${n}submitfeedback').removeClass('feedback-submit-button');
-                    }
-
-                    if(!$('#${n}submitfeedback').hasClass('portlet-form-button')) {
-                        $('#${n}submitfeedback').addClass('portlet-form-button');
-                    }
-
-                    if($('#${n}submitfeedback').parent().hasClass('ui-disabled')) {
-                        $('#${n}submitfeedback').parent().removeClass('ui-disabled');
-                    }
                 }
             });
         });
@@ -151,9 +139,6 @@
             // disable submit
             $('input[type=submit]', this).attr('disabled','disabled');
             $('#${n}submitfeedback').attr('disabled','disabled');
-            $('#${n}submitfeedback').addClass('feedback-submit-button');
-            $('#${n}submitfeedback').removeClass('portlet-form-button');
-            $('#${n}submitfeedback').parent().addClass('ui-disabled');
         });
 
        // Enable submitFeedback work here only on Desktop
@@ -175,9 +160,6 @@
             if ($('#${n}submitfeedback').attr('disabled')) $('#${n}submitfeedback').removeAttr('disabled');
             if ($('#${n}submitfeedback').attr('aria-disabled')) $('#${n}submitfeedback').removeAttr('aria-disabled');
             if ($('#${n}submitfeedback').prop('disabled')) $('#${n}submitfeedback').prop('disabled', false);
-            if($('#${n}submitfeedback').hasClass('feedback-submit-button')) $('#${n}submitfeedback').removeClass('feedback-submit-button');
-            if(!$('#${n}submitfeedback').hasClass('portlet-form-button')) $('#${n}submitfeedback').addClass('portlet-form-button');
-            if($('#${n}submitfeedback').parent().hasClass('ui-disabled')) $('#${n}submitfeedback').parent().removeClass('ui-disabled');
         });
 
         // check to see if a tab name parameter was submitted
