@@ -51,16 +51,22 @@
     <div aria-labelledby="question" role="radiogroup" id="${n}answer">
         <label id="question"><spring:message code="feedback.form.question"/></label>
         <div>
-          <input role="radio" aria-checked="false" type="radio" id="yes" name="like" value="YES"/>
-          <label for="yes"><spring:message code="feedback.answer.yes"/></label>
+            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="yes">
+                <input class="mdl-radio__button" role="radio" aria-checked="false" id="yes" name="like" type="radio" value="YES">
+                <span class="mdl-radio__label"><spring:message code="feedback.answer.yes"/></span>
+            </label>
         </div>
         <div>
-          <input role="radio" aria-checked="false" type="radio" id="no" name="like" value="NO"/>
-          <label for="no"><spring:message code="feedback.answer.no"/></label>
+            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="no">
+                <input class="mdl-radio__button" role="radio" aria-checked="false" id="no" name="like" type="radio" value="NO">
+                <span class="mdl-radio__label"><spring:message code="feedback.answer.no"/></span>
+            </label>
         </div>
         <div>
-          <input role="radio" aria-checked="false" type="radio" id="maybe" name="like" value="MAYBE"/>
-          <label for="maybe"><spring:message code="feedback.answer.maybe"/></label>
+            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="maybe">
+                <input class="mdl-radio__button" role="radio" aria-checked="false" id="maybe" name="like" type="radio" value="MAYBE">
+                <span class="mdl-radio__label"><spring:message code="feedback.answer.maybe"/></span>
+            </label>
         </div>
     </div>
 
