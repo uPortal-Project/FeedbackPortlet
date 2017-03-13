@@ -70,11 +70,13 @@
         </div>
     </div>
 
-     <p>
-         <label for="${n}feedback"><spring:message code="feedback.form.suggestion"/></label>
-         <textarea id="${n}feedback" name="feedback" rows="${feedbackRows}" style="width:${feedbackWidth}"></textarea>
+    <p class="mdl-textfield mdl-js-textfield">
+        <textarea class="mdl-textfield__input" id="${n}feedback" name="feedback" rows="${feedbackRows}" style="width:${feedbackWidth}"></textarea>
 
-     </p>
+        <!-- margin-bottom: 0px works around a conflict with the .portlet-form-field-label Bootstrap class. -->
+        <label class="mdl-textfield__label" style="margin-bottom: 0px;width:${feedbackWidth}" for="${n}feedback"><spring:message code="feedback.form.suggestion"/></label>
+    </p>
+
      <div id="${n}limit" style="margin-bottom: 12px;"></div>
 
      <p>
