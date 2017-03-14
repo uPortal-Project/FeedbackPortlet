@@ -80,10 +80,10 @@
      <div id="${n}limit" style="margin-bottom: 12px;"></div>
 
      <p>
-        <div>
-            <input type="checkbox" id="${n}anonymous" name="anonymous" value="true"/>
-            <label for="${n}anonymous"><spring:message code="feedback.form.anonymous"/></label>
-        </div>
+        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="${n}anonymous">
+            <input class="mdl-checkbox__input" type="checkbox" id="${n}anonymous" name="anonymous" value="true"/>
+            <span class="mdl-checkbox__label"><spring:message code="feedback.form.anonymous"/></span>
+        </label>
      </p>
 
      <input id="${n}useragentstring" type="hidden" name="useragent"/>
