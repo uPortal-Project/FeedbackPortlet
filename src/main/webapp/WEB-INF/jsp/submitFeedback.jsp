@@ -90,7 +90,9 @@
      <input id="${n}feedbacktabname" type="hidden" name="tabname"/>
 
      <p>
-         <input type="submit" id="${n}submitfeedback" disabled="disabled" aria-disabled="true" value="<spring:message code="feedback.form.submit"/>">
+         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" id="${n}submitfeedback" disabled aria-disabled="true">
+            <spring:message code="feedback.form.submit"/>
+         </button>
      </p>
 
 </form:form>
