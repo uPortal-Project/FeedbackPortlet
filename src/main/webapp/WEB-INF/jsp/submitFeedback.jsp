@@ -48,7 +48,7 @@
         </c:if>
     </spring:bind>
 
-    <div aria-labelledby="question" role="radiogroup" id="${n}answer">
+    <div aria-labelledby="question" aria-required="true" role="radiogroup" id="${n}answer">
         <label id="question"><spring:message code="feedback.form.question"/></label>
         <div>
             <label class="mdl-radio mdl-js-radio" for="yes">
