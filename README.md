@@ -1,6 +1,7 @@
 # Feedback Portlet
 
-[![Build Status](https://travis-ci.org/Jasig/FeedbackPortlet.svg?branch=master)](https://travis-ci.org/Jasig/FeedbackPortlet)
+[![Linux Build Status](https://travis-ci.org/Jasig/FeedbackPortlet.svg?branch=master)](https://travis-ci.org/Jasig/FeedbackPortlet)
+[![Windows Build status](https://ci.appveyor.com/api/projects/status/1j35afgwdtvu0ets/branch/master?svg=true)](https://ci.appveyor.com/project/ChristianMurphy/feedbackportlet/branch/master)
 
 ## About
 
