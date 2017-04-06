@@ -32,6 +32,8 @@ import org.apache.commons.logging.LogFactory;
 import org.jasig.portlets.FeedbackPortlet.FeedbackItem;
 import org.jasig.portlets.FeedbackPortlet.FeedbackQueryParameters;
 import org.jasig.portlets.FeedbackPortlet.dao.FeedbackStore;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 
@@ -41,11 +43,13 @@ import org.springframework.web.servlet.mvc.AbstractController;
  * 
  * @author Jen Bourey
  */
+@Controller
 public class ExcelFeedbackController extends AbstractController {
 
 	private static Log log = LogFactory.getLog(ExcelFeedbackController.class);
 
 	@Override
+	@RequestMapping("/excelFeedback")
 	protected ModelAndView handleRequestInternal(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 	    HttpSession session = request.getSession(); // grabs the session to see what current settings the user has
