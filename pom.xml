@@ -20,27 +20,40 @@
         <connection>scm:git:git://github.com/Jasig/FeedbackPortlet.git</connection>
         <developerConnection>scm:git:git@github.com:Jasig/FeedbackPortlet.git</developerConnection>
         <url>https://github.com/Jasig/FeedbackPortlet</url>
-      <tag>HEAD</tag>
-  </scm>
+        <tag>HEAD</tag>
+    </scm>
 
     <properties>
-    	<commons-lang.version>2.6</commons-lang.version>
-        <commons-logging.version>1.1.1</commons-logging.version>
+        <commons-lang.version>2.6</commons-lang.version>
+        <commons-logging.version>1.2</commons-logging.version>
         <commons-collections.version>3.2.2</commons-collections.version>
-        <ehcache.version>2.6.5</ehcache.version>
+        <ehcache.version>2.6.11</ehcache.version>
         <hibernate.version>3.2.7.ga</hibernate.version>
-        <hsqldb.version>1.8.0.7</hsqldb.version>
+        <hsqldb.version>1.8.0.10</hsqldb.version>
         <log4j.version>1.2.17</log4j.version>
         <javax.activation.version>1.1.1</javax.activation.version>
-        <javax.mail>1.4.7</javax.mail>
+        <javax.mail>1.5.0-b01</javax.mail>
         <javax.servlet>2.5</javax.servlet>
         <jstl.version>1.1.2</jstl.version>
         <jta.version>1.1</jta.version>
         <poi.version>3.9</poi.version>
-        <resource-server.version>1.0.42</resource-server.version>
+        <resource-server.version>1.0.46</resource-server.version>
         <spring.version>3.2.16.RELEASE</spring.version>
         <taglib.version>1.1.2</taglib.version>
     </properties>
+
+    <!-- Remove when JavaDocs fixed -->
+    <profiles>
+        <profile>
+            <id>disable-java8-doclint</id>
+            <activation>
+                <jdk>[1.8,)</jdk>
+            </activation>
+            <properties>
+                <additionalparam>-Xdoclint:none</additionalparam>
+            </properties>
+        </profile>
+    </profiles>
 
     <dependencyManagement>
         <dependencies>
@@ -84,7 +97,7 @@
         <dependency>
             <groupId>commons-httpclient</groupId>
             <artifactId>commons-httpclient</artifactId>
-            <version>3.0.1</version>
+            <version>3.1</version>
             <type>jar</type>
             <scope>compile</scope>
             <exclusions>
@@ -119,8 +132,8 @@
                     <artifactId>ehcache</artifactId>
                 </exclusion>
                 <exclusion>
-                	<groupId>commons-logging</groupId>
-                	<artifactId>commons-logging</artifactId>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
@@ -167,13 +180,13 @@
                     <artifactId>spring-web</artifactId>
                 </exclusion>
                 <exclusion>
-            		<groupId>org.springframework</groupId>
-            		<artifactId>spring-beans</artifactId>
-            	</exclusion>
-            	<exclusion>
-            		<groupId>org.springframework</groupId>
-            		<artifactId>spring-core</artifactId>
-            	</exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-beans</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-core</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
 
@@ -232,9 +245,9 @@
         </dependency>
 
         <dependency>
-        	<groupId>org.springframework</groupId>
-        	<artifactId>spring-webmvc</artifactId>
-        	<version>${spring.version}</version>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${spring.version}</version>
         </dependency>
 
         <dependency>
@@ -306,7 +319,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.2</version>
+            <version>4.12</version>
             <type>jar</type>
             <scope>test</scope>
         </dependency>
@@ -315,21 +328,21 @@
     <build>
         <plugins>
             <plugin>
-              <artifactId>maven-enforcer-plugin</artifactId>
-              <executions>
-                <execution>
-                  <goals><goal>enforce</goal></goals>
-                  <configuration>
-                    <rules>
-                      <bannedDependencies>
-                        <excludes>
-                          <exclude>commons-collections:commons-collections:[3.2.1]</exclude>
-                        </excludes>
-                      </bannedDependencies>
-                    </rules>
-                  </configuration>
-                </execution>
-              </executions>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals><goal>enforce</goal></goals>
+                        <configuration>
+                            <rules>
+                                <bannedDependencies>
+                                    <excludes>
+                                        <exclude>commons-collections:commons-collections:[3.2.1]</exclude>
+                                    </excludes>
+                                </bannedDependencies>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -408,15 +421,15 @@
     </build>
 
     <reporting>
-       <plugins>
-           <plugin>
-               <groupId>org.apache.maven.plugins</groupId>
-               <artifactId>maven-checkstyle-plugin</artifactId>
-               <version>2.17</version>
-               <configuration>
-                   <configLocation>google_checks.xml</configLocation>
-               </configuration>
-           </plugin>
-       </plugins>
-   </reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>2.17</version>
+                <configuration>
+                    <configLocation>google_checks.xml</configLocation>
+                </configuration>
+            </plugin>
+        </plugins>
+    </reporting>
 </project>
