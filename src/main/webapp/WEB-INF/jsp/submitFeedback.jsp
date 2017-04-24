@@ -70,14 +70,18 @@
         </div>
     </div>
 
-    <p class="mdl-textfield mdl-js-textfield">
-        <textarea class="mdl-textfield__input" id="${n}feedback" name="feedback" rows="${feedbackRows}" style="width:${feedbackWidth}"></textarea>
+    <p class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="margin-top: 12px; margin-bottom: 12px;">
+        <textarea class="mdl-textfield__input" aria-describedby="${n}limit" maxlength="${feedbackMaxChars}" id="${n}feedback" name="feedback" rows="${feedbackRows}" style="width:${feedbackWidth}"></textarea>
 
         <!-- margin-bottom: 0px works around a conflict with the .portlet-form-field-label Bootstrap class. -->
-        <label class="mdl-textfield__label" style="margin-bottom: 0px;width:${feedbackWidth}" for="${n}feedback"><spring:message code="feedback.form.suggestion"/></label>
-    </p>
+        <label class="mdl-textfield__label" style="margin-bottom: 0px; width:${feedbackWidth}" for="${n}feedback"><spring:message code="feedback.form.suggestion"/></label>
 
-     <div id="${n}limit" style="margin-bottom: 12px;"></div>
+        <!-- A modified mdl-textfield__error class, used for character counting -->
+        <span class="mdl-textfield__error" style="color: #3F51B5; visibility: visible" aria-atomic="true" aria-live="polite" id="${n}limit">
+            <span id="${n}charsremaining">${feedbackMaxChars} </span>
+            <spring:message code="feedback.form.charactersremaining"/>
+        </span>
+    </p>
 
      <p>
         <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="${n}anonymous">
@@ -134,12 +138,46 @@
 
         var $ = ${n}.jQuery;
 
-        $('#${n}feedback').twitLimit({
-            limit: ${feedbackMaxChars},
-            message: '<spring:message code="feedback.form.charactersremaining" arguments="%1"/>',
-            counterElem: '#${n}limit',
-            allowNegative: false
-        });
+       // Characters remaining for screen reader users
+       function updateCharsRemaining() {
+            // Update the number of remaining characters
+            var charsRemaining = ${feedbackMaxChars} - $('#${n}feedback').val().length;
+            $('#${n}charsremaining').text(charsRemaining);
+
+            if (charsRemaining <= 0) {
+                // Tell the user they've reached the limit
+                $('#${n}limit').attr('role', 'alert');
+                $('#${n}limit').attr('aria-label', '<spring:message code="feedback.form.characterlimit"/>');
+
+                // Make the character limit text red
+                $('#${n}limit').attr('style', 'color: #B71C1C; visibility: visible');
+            }else{
+                $('#${n}limit').removeAttr('role');
+                $('#${n}limit').removeAttr('aria-label');
+
+                // Make the character limit text blue
+                $('#${n}limit').attr('style', 'color: #3F51B5; visibility: visible');
+            }
+
+            if (charsRemaining <= ${feedbackAssertiveFlag}) {
+                // Assertive announcement
+                $('#${n}limit').attr('aria-hidden', 'false');
+                $('#${n}limit').attr('aria-live', 'assertive');
+                $('#${n}limit').attr('aria-atomic', 'true');
+            }else if (charsRemaining <= ${feedbackPoliteFlag}
+                    || charsRemaining == ${feedbackMaxChars}) {
+                // Polite announcement
+                $('#${n}limit').attr('aria-hidden', 'false');
+                $('#${n}limit').attr('aria-live', 'polite');
+                $('#${n}limit').attr('aria-atomic', 'true');
+            }else{
+                // No announcement
+                $('#${n}limit').attr('aria-hidden', 'true');
+            }
+       };
+
+       $('#${n}feedback').on("keyup", updateCharsRemaining);
+       $('#${n}feedback').one("focus", updateCharsRemaining);
 
         document.getElementById('${n}useragentstring').value = navigator.userAgent;
 

@@ -52,6 +52,8 @@
         <property name="feedbackRows" value="${feedback.rows}"/>
         <property name="feedbackWidth" value="${feedback.width}"/>
         <property name="feedbackMaxChars" value="${feedback.max_chars}"/>
+        <property name="feedbackPoliteFlag" value="${feedback.polite_flag}"/>
+        <property name="feedbackAssertiveFlag" value="${feedback.assertive_flag}"/>
     </bean>
     
     <bean id="userPropertiesResolver" class="org.jasig.portlets.FeedbackPortlet.PortletUserPropertiesResolver">
