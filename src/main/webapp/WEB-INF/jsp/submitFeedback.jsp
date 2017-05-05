@@ -22,15 +22,11 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+<link rel="stylesheet" href="<rs:resourceURL value="/rs/mdl/1.3.0/css/material.min.css"/>">
 
-<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-
-<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+<script defer src="<rs:resourceURL value="/rs/mdl/1.3.0/js/material.min.js"/>"></script>
 
 <script src="<rs:resourceURL value="/rs/jquery/1.11.0/jquery-1.11.0.min.js"/>" type="text/javascript"></script>
-<!-- <script src="/ResourceServingWebapp/rs/jquery-migrate/1.2.1/jquery-migrate-1.2.1.min.js" type="text/javascript"></script> -->
 
 <c:set var="n"><portlet:namespace/></c:set>
 
@@ -131,7 +127,7 @@
 
     var ${n} = {};
 
-    ${n}.jQuery = jQuery.noConflict(true);
+    ${n}.jQuery = $.noConflict(true);
 
     ${n}.jQuery(function(){
 
