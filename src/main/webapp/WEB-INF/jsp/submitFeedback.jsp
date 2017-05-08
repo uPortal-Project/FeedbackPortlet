@@ -42,22 +42,22 @@
         </c:if>
     </spring:bind>
 
-    <div aria-labelledby="question" aria-required="true" role="radiogroup" id="${n}answer">
+    <div aria-labelledby="${n}question" aria-required="true" role="radiogroup" id="${n}answer">
         <label id="${n}question"><spring:message code="feedback.form.question"/></label>
         <div>
-            <label class="mdl-radio mdl-js-radio" for="yes">
+            <label class="mdl-radio mdl-js-radio" for="${n}yes">
                 <input class="mdl-radio__button" role="radio" aria-checked="false" id="${n}yes" name="like" type="radio" value="YES">
                 <span class="mdl-radio__label"><spring:message code="feedback.answer.yes"/></span>
             </label>
         </div>
         <div>
-            <label class="mdl-radio mdl-js-radio" for="no">
+            <label class="mdl-radio mdl-js-radio" for="${n}no">
                 <input class="mdl-radio__button" role="radio" aria-checked="false" id="${n}no" name="like" type="radio" value="NO">
                 <span class="mdl-radio__label"><spring:message code="feedback.answer.no"/></span>
             </label>
         </div>
         <div>
-            <label class="mdl-radio mdl-js-radio" for="maybe">
+            <label class="mdl-radio mdl-js-radio" for="${n}maybe">
                 <input class="mdl-radio__button" role="radio" aria-checked="false" id="${n}maybe" name="like" type="radio" value="MAYBE">
                 <span class="mdl-radio__label"><spring:message code="feedback.answer.maybe"/></span>
             </label>
@@ -189,14 +189,14 @@
             $(this).attr('aria-checked', 'true');
 
             if (Object.is($(this).attr('id'), 'yes')) {
-                $('#no').attr('aria-checked', 'false');
-                $('#maybe').attr('aria-checked', 'false');
+                $('#${n}no').attr('aria-checked', 'false');
+                $('#${n}maybe').attr('aria-checked', 'false');
             }else if (Object.is($(this).attr('id'), 'no')) {
-                $('#yes').attr('aria-checked', 'false');
-                $('#maybe').attr('aria-checked', 'false');
+                $('#${n}yes').attr('aria-checked', 'false');
+                $('#${n}maybe').attr('aria-checked', 'false');
             }else if (Object.is($(this).attr('id'), 'maybe')) {
-                $('#yes').attr('aria-checked', 'false');
-                $('#no').attr('aria-checked', 'false');
+                $('#${n}yes').attr('aria-checked', 'false');
+                $('#${n}no').attr('aria-checked', 'false');
             }
 
             if ($('#${n}submitfeedback').attr('disabled')) $('#${n}submitfeedback').removeAttr('disabled');
