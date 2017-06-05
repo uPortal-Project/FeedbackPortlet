@@ -126,7 +126,7 @@
 
     var ${n} = {};
 
-    ${n}.jQuery = $.noConflict(true);
+    ${n}.jQuery = jQuery.noConflict(true);
 
     ${n}.jQuery(function(){
 
