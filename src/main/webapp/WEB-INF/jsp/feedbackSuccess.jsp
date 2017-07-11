@@ -22,10 +22,19 @@
 
 <link href="<c:url value="/css/feedback.css"/>" type="text/css" rel="stylesheet"/>
 
-<div class="feedback-portlet bootstrap-styles-by-6">
-    <h3><spring:message code="feedback.success.title"/></h3>
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
-    <p><spring:message code="feedback.success.message"/></p>
+<link rel="stylesheet" href="<rs:resourceURL value="/rs/mdl/1.3.0/css/material.min.css"/>">
+<script defer src="<rs:resourceURL value="/rs/mdl/1.3.0/js/material.min.js"/>"></script>
 
-    <p><a class="btn btn-default" href="<portlet:renderURL/>" role="button"><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span> <spring:message code="feedback.success.more"/></a></p>
+<div>
+    <div role="alert" aria-live="polite">
+        <div style="font-weight: bold;"><spring:message code="feedback.success.title"/></div>
+        <p><spring:message code="feedback.success.message"/></p>
+    </div>
+
+    <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" href="<portlet:renderURL/>" style="text-decoration: none;">
+        <i aria-hidden="true" class="material-icons" style="padding-right: 10px;">refresh</i>
+        <spring:message code="feedback.success.more"/>
+    </a>
 </div>

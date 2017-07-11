@@ -20,66 +20,77 @@
 --%>
 <jsp:directive.include file="/WEB-INF/jsp/include.jsp"/>
 
-<link href="<c:url value="/css/feedback.css"/>" type="text/css" rel="stylesheet"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="<rs:resourceURL value="/rs/mdl/1.3.0/css/material.min.css"/>">
+<script defer src="<rs:resourceURL value="/rs/mdl/1.3.0/js/material.min.js"/>"></script>
 
 <script src="<rs:resourceURL value="/rs/jquery/1.11.0/jquery-1.11.0.min.js"/>" type="text/javascript"></script>
-<!-- <script src="/ResourceServingWebapp/rs/jquery-migrate/1.2.1/jquery-migrate-1.2.1.min.js" type="text/javascript"></script> -->
-<script src="<c:url value="/js/twitlimit-0.2.0.compressed.js"/>" type="text/javascript"></script>
 
 <c:set var="n"><portlet:namespace/></c:set>
 
 <portlet:actionURL var="postUrl"/>
 
-<div class="feedback-portlet awesome-bootstrap-checkbox bootstrap-styles">
-<h3 style="font-weight: bold;"><spring:message code="feedback.form.question"/></h3>
+<div>
 
 <form:form action="${postUrl}" modelAttribute="submitFeedbackForm">
     <spring:bind path="prefs.*">
         <c:if test="${status.error}">
-        <div id="${n}error-message" class="alert alert-danger" role="alert" style="display:none">
+        <div id="${n}error-message" role="alert" style="display:none">
             <p><form:errors path="feedback"/></p>
         </div>
         </c:if>
     </spring:bind>
 
-    <div data-role="fieldcontain">
-    <fieldset data-role="controlgroup" id="${n}answer">
-        <div class="radio radio-success">
-          <input type="radio" id="yes" name="like" value="YES"/>
-          <label for="yes" class="portlet-form-field-label"><spring:message code="feedback.answer.yes"/></label>
+    <div aria-labelledby="${n}question" aria-required="true" role="radiogroup" id="${n}answer">
+        <label id="${n}question"><spring:message code="feedback.form.question"/></label>
+        <div>
+            <label class="mdl-radio mdl-js-radio" for="${n}yes">
+                <input class="mdl-radio__button" role="radio" aria-checked="false" id="${n}yes" name="like" type="radio" value="YES">
+                <span class="mdl-radio__label"><spring:message code="feedback.answer.yes"/></span>
+            </label>
         </div>
-        <div class="radio radio-danger">
-          <input type="radio" id="no" name="like" value="NO"/>
-          <label for="no" class="portlet-form-field-label"><spring:message code="feedback.answer.no"/></label>
+        <div>
+            <label class="mdl-radio mdl-js-radio" for="${n}no">
+                <input class="mdl-radio__button" role="radio" aria-checked="false" id="${n}no" name="like" type="radio" value="NO">
+                <span class="mdl-radio__label"><spring:message code="feedback.answer.no"/></span>
+            </label>
         </div>
-        <div class="radio radio-warning">
-          <input type="radio" id="maybe" name="like" value="MAYBE"/>
-          <label for="maybe" class="portlet-form-field-label"><spring:message code="feedback.answer.maybe"/></label>
+        <div>
+            <label class="mdl-radio mdl-js-radio" for="${n}maybe">
+                <input class="mdl-radio__button" role="radio" aria-checked="false" id="${n}maybe" name="like" type="radio" value="MAYBE">
+                <span class="mdl-radio__label"><spring:message code="feedback.answer.maybe"/></span>
+            </label>
         </div>
-    </fieldset>
     </div>
 
-     <p>
-         <label class="portlet-form-field-label" for="${n}feedback"><spring:message code="feedback.form.suggestion"/></label>
-         <textarea id="${n}feedback" name="feedback" class="form-control" rows="${feedbackRows}" style="width:${feedbackWidth}"></textarea>
+    <p class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="margin-top: 12px; margin-bottom: 12px;">
+        <textarea class="mdl-textfield__input" aria-describedby="${n}limit" maxlength="${feedbackMaxChars}" id="${n}feedback" name="feedback" rows="${feedbackRows}" style="width:${feedbackWidth}"></textarea>
 
-     </p>
-     <div id="${n}limit" style="margin-bottom: 12px;"></div>
+        <!-- margin-bottom: 0px works around a conflict with the .portlet-form-field-label Bootstrap class. -->
+        <label class="mdl-textfield__label" style="margin-bottom: 0px; width:${feedbackWidth}" for="${n}feedback"><spring:message code="feedback.form.suggestion"/></label>
+
+        <!-- A modified mdl-textfield__error class, used for character counting -->
+        <span class="mdl-textfield__error" style="color: #3F51B5; visibility: visible" aria-atomic="true" aria-live="polite" id="${n}limit">
+            <span id="${n}charsremaining">${feedbackMaxChars} </span>
+            <spring:message code="feedback.form.charactersremaining"/>
+        </span>
+    </p>
 
      <p>
-        <fieldset data-role="controlgroup">
-            <div class="checkbox">
-               <input type="checkbox" id="${n}anonymous" name="anonymous" value="true"/>
-               <label for="${n}anonymous" class="portlet-form-field-label"><spring:message code="feedback.form.anonymous"/></label>
-            </div>
-        </fieldset>
+        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="${n}anonymous">
+            <input class="mdl-checkbox__input" type="checkbox" id="${n}anonymous" name="anonymous" value="true"/>
+            <span class="mdl-checkbox__label"><spring:message code="feedback.form.anonymous"/></span>
+        </label>
      </p>
 
      <input id="${n}useragentstring" type="hidden" name="useragent"/>
      <input id="${n}feedbacktabname" type="hidden" name="tabname"/>
 
      <p>
-         <input type="submit" id="${n}submitfeedback" class="feedback-submit-button btn btn-default ui-btn-hidden" disabled="disabled" aria-disabled="true" value="<spring:message code="feedback.form.submit"/>">
+         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" id="${n}submitfeedback" disabled aria-disabled="true">
+            <spring:message code="feedback.form.submit"/>
+         </button>
      </p>
 
 </form:form>
@@ -108,18 +119,6 @@
                     if ($('#${n}submitfeedback').prop('disabled')) {
                         $('#${n}submitfeedback').prop('disabled', false);
                     }
-
-                    if($('#${n}submitfeedback').hasClass('feedback-submit-button')) {
-                        $('#${n}submitfeedback').removeClass('feedback-submit-button');
-                    }
-
-                    if(!$('#${n}submitfeedback').hasClass('portlet-form-button')) {
-                        $('#${n}submitfeedback').addClass('portlet-form-button');
-                    }
-
-                    if($('#${n}submitfeedback').parent().hasClass('ui-disabled')) {
-                        $('#${n}submitfeedback').parent().removeClass('ui-disabled');
-                    }
                 }
             });
         });
@@ -133,12 +132,46 @@
 
         var $ = ${n}.jQuery;
 
-        $('#${n}feedback').twitLimit({
-            limit: ${feedbackMaxChars},
-            message: '<spring:message code="feedback.form.charactersremaining" arguments="%1"/>',
-            counterElem: '#${n}limit',
-            allowNegative: false
-        });
+       // Characters remaining for screen reader users
+       function updateCharsRemaining() {
+            // Update the number of remaining characters
+            var charsRemaining = ${feedbackMaxChars} - $('#${n}feedback').val().length;
+            $('#${n}charsremaining').text(charsRemaining);
+
+            if (charsRemaining <= 0) {
+                // Tell the user they've reached the limit
+                $('#${n}limit').attr('role', 'alert');
+                $('#${n}limit').attr('aria-label', '<spring:message code="feedback.form.characterlimit"/>');
+
+                // Make the character limit text red
+                $('#${n}limit').attr('style', 'color: #B71C1C; visibility: visible');
+            }else{
+                $('#${n}limit').removeAttr('role');
+                $('#${n}limit').removeAttr('aria-label');
+
+                // Make the character limit text blue
+                $('#${n}limit').attr('style', 'color: #3F51B5; visibility: visible');
+            }
+
+            if (charsRemaining <= ${feedbackAssertiveFlag}) {
+                // Assertive announcement
+                $('#${n}limit').attr('aria-hidden', 'false');
+                $('#${n}limit').attr('aria-live', 'assertive');
+                $('#${n}limit').attr('aria-atomic', 'true');
+            }else if (charsRemaining <= ${feedbackPoliteFlag}
+                    || charsRemaining == ${feedbackMaxChars}) {
+                // Polite announcement
+                $('#${n}limit').attr('aria-hidden', 'false');
+                $('#${n}limit').attr('aria-live', 'polite');
+                $('#${n}limit').attr('aria-atomic', 'true');
+            }else{
+                // No announcement
+                $('#${n}limit').attr('aria-hidden', 'true');
+            }
+       };
+
+       $('#${n}feedback').on("keyup", updateCharsRemaining);
+       $('#${n}feedback').one("focus", updateCharsRemaining);
 
         document.getElementById('${n}useragentstring').value = navigator.userAgent;
 
@@ -148,21 +181,27 @@
             // disable submit
             $('input[type=submit]', this).attr('disabled','disabled');
             $('#${n}submitfeedback').attr('disabled','disabled');
-            $('#${n}submitfeedback').addClass('feedback-submit-button');
-            $('#${n}submitfeedback').removeClass('portlet-form-button');
-            $('#${n}submitfeedback').parent().addClass('ui-disabled');
         });
 
        // Enable submitFeedback work here only on Desktop
        $("#${n}answer input:radio, #${n}answer label").click(function (){
-            // DEBUG alert click on radio
-            //alert("radio click");
+            // Toggle aria-checked attributes when a radio button is selected
+            $(this).attr('aria-checked', 'true');
+
+            if (Object.is($(this).attr('id'), 'yes')) {
+                $('#${n}no').attr('aria-checked', 'false');
+                $('#${n}maybe').attr('aria-checked', 'false');
+            }else if (Object.is($(this).attr('id'), 'no')) {
+                $('#${n}yes').attr('aria-checked', 'false');
+                $('#${n}maybe').attr('aria-checked', 'false');
+            }else if (Object.is($(this).attr('id'), 'maybe')) {
+                $('#${n}yes').attr('aria-checked', 'false');
+                $('#${n}no').attr('aria-checked', 'false');
+            }
+
             if ($('#${n}submitfeedback').attr('disabled')) $('#${n}submitfeedback').removeAttr('disabled');
             if ($('#${n}submitfeedback').attr('aria-disabled')) $('#${n}submitfeedback').removeAttr('aria-disabled');
             if ($('#${n}submitfeedback').prop('disabled')) $('#${n}submitfeedback').prop('disabled', false);
-            if($('#${n}submitfeedback').hasClass('feedback-submit-button')) $('#${n}submitfeedback').removeClass('feedback-submit-button');
-            if(!$('#${n}submitfeedback').hasClass('portlet-form-button')) $('#${n}submitfeedback').addClass('portlet-form-button');
-            if($('#${n}submitfeedback').parent().hasClass('ui-disabled')) $('#${n}submitfeedback').parent().removeClass('ui-disabled');
         });
 
         // check to see if a tab name parameter was submitted

@@ -59,6 +59,8 @@ public class SubmitFeedbackFormController {
 	private int feedbackRows = 3;
 	private String feedbackWidth = "95%";
 	private int feedbackMaxChars = 500;
+	private int feedbackPoliteFlag = 150;
+	private int feedbackAssertiveFlag = 20;
 
 	/*public SubmitFeedbackFormController() {
 		setCommandName("prefs");
@@ -78,6 +80,16 @@ public class SubmitFeedbackFormController {
 	@Autowired
     public void setFeedbackMaxChars(int feedbackMaxChars) {
         this.feedbackMaxChars = feedbackMaxChars;
+    }
+
+    @Autowired
+    public void setFeedbackPoliteFlag(int feedbackPoliteFlag) {
+        this.feedbackPoliteFlag = feedbackPoliteFlag;
+    }
+
+    @Autowired
+    public void setFeedbackAssertiveFlag(int feedbackAssertiveFlag) {
+        this.feedbackAssertiveFlag = feedbackAssertiveFlag;
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -138,6 +150,8 @@ public class SubmitFeedbackFormController {
         map.put("feedbackRows", feedbackRows);
         map.put("feedbackWidth", feedbackWidth);
         map.put("feedbackMaxChars", feedbackMaxChars);
+        map.put("feedbackPoliteFlag", feedbackPoliteFlag);
+        map.put("feedbackAssertiveFlag", feedbackAssertiveFlag);
         
         if (request.getParameter("feedbackTabName") != null) {
             map.put("tabName", request.getParameter("feedbackTabName"));
