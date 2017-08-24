@@ -19,110 +19,134 @@
 
 -->
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:ehcache="http://www.springmodules.org/schema/ehcache"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans
-	http://www.springframework.org/schema/beans/spring-beans.xsd
-	http://www.springmodules.org/schema/ehcache
-	http://www.springmodules.org/schema/cache/springmodules-ehcache.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ehcache="http://www.springmodules.org/schema/ehcache"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springmodules.org/schema/ehcache
+    http://www.springmodules.org/schema/cache/springmodules-ehcache.xsd">
 
-	<bean id="propertyConfigurer"
-		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
-		lazy-init="false">
-		<property name="locations">
-			<list>
-				<value>classpath:datasource.properties</value>
-			</list>
-		</property>
-	</bean>
+    <!-- Custom uPortal tech that supports global.properties and Jasypt encryption -->
+    <bean id="propertyConfigurer" class="org.springframework.context.support.PortalPropertySourcesPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:datasource.properties</value>
+                <!--
+                 | The following optional files allow deployers to set or override most
+                 | configuration settings in a manner that is outside the footprint of the
+                 | build/deploy cycle and SCM.
+                 |
+                 | Reasons for choosing that may include:
+                 |   - Desire to keep sensitive information out of your Git repository
+                 |   - Ability to change some common settings without a full build and deploy cycle
+                 |   - Building a WAR/EAR that is environment-independent
+                 |
+                 | Any property defined in the above files that is referenced in the Spring context
+                 | may be overridden in one (or both) of these files.  Later files override earlier
+                 | files.
+                 |
+                 | The conventional location of ${portal.home} is ${catalina.base}/portal;  but you
+                 | can (typically) override that location using a PORTAL_HOME environment variable.
+                 | (Ultimately it depends on your setenv.sh or setenv.bat file.)
+                 |
+                 | The first file (global.properties) may contain properties that are shared with
+                 | other modules (e.g. portlets) in Tomcat.  Several Apereo portlets source
+                 | global.properties automatically.  The second file (feedback.properties) is
+                 | (should be) sourced by this module exclusively.
+                 +-->
+                <value>file:${portal.home}/global.properties</value>
+                <value>file:${portal.home}/feedback.properties</value>
+            </list>
+        </property>
+    </bean>
 
-	<!-- Message source for this context, loaded from localized "messages_xx" files -->
-	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
-		<property name="basenames">
-			<list>
-				<value>messages</value>
-			</list>
-		</property>
-	</bean>
+    <!-- Message source for this context, loaded from localized "messages_xx" files -->
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basenames">
+            <list>
+                <value>messages</value>
+            </list>
+        </property>
+    </bean>
 
-	<!-- Default View Resolver -->
-	<bean id="viewResolver"
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
-		<property name="prefix" value="/WEB-INF/jsp/"/>
-		<property name="suffix" value=".jsp"/>
-	</bean>
+    <!-- Default View Resolver -->
+    <bean id="viewResolver"
+        class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
 
-	<!-- Abstract Default Exception Handler Bean -->
-	<bean id="defaultExceptionHandlerTemplate"
-		class="org.springframework.web.portlet.handler.SimpleMappingExceptionResolver"
-		abstract="true">
-		<property name="defaultErrorView" value="defError"/>
-		<property name="exceptionMappings">
-			<props>
-				<prop key="javax.portlet.PortletSecurityException">notAuthorized</prop>
-				<prop key="javax.portlet.UnavailableException">notAvailable</prop>
-			</props>
-		</property>
-	</bean>
+    <!-- Abstract Default Exception Handler Bean -->
+    <bean id="defaultExceptionHandlerTemplate"
+        class="org.springframework.web.portlet.handler.SimpleMappingExceptionResolver"
+        abstract="true">
+        <property name="defaultErrorView" value="defError"/>
+        <property name="exceptionMappings">
+            <props>
+                <prop key="javax.portlet.PortletSecurityException">notAuthorized</prop>
+                <prop key="javax.portlet.UnavailableException">notAvailable</prop>
+            </props>
+        </property>
+    </bean>
 
-	<!-- Hibernate Persistence Code -->
-	<bean id="feedbackStore" parent="abstractStoreTransactionProxy">
-		<property name="target" ref="feedbackStoreTarget"/>
-	</bean>
+    <!-- Hibernate Persistence Code -->
+    <bean id="feedbackStore" parent="abstractStoreTransactionProxy">
+        <property name="target" ref="feedbackStoreTarget"/>
+    </bean>
 
-	<bean id="feedbackStoreTarget" class="org.jasig.portlets.FeedbackPortlet.dao.hibernate.HibernateFeedbackStore"
-		parent="abstractHibernateTemplate"> </bean>
+    <bean id="feedbackStoreTarget" class="org.jasig.portlets.FeedbackPortlet.dao.hibernate.HibernateFeedbackStore"
+        parent="abstractHibernateTemplate"> </bean>
 
-	<bean id="abstractStoreTransactionProxy"
-		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"
-		abstract="true">
-		<property name="transactionManager" ref="transactionManager"/>
-		<property name="transactionAttributes">
-			<props>
-				<prop key="create*">PROPAGATION_REQUIRED</prop>
-				<prop key="store*">PROPAGATION_REQUIRED</prop>
-				<prop key="remove*">PROPAGATION_REQUIRED</prop>
-				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
-			</props>
-		</property>
-	</bean>
+    <bean id="abstractStoreTransactionProxy"
+        class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"
+        abstract="true">
+        <property name="transactionManager" ref="transactionManager"/>
+        <property name="transactionAttributes">
+            <props>
+                <prop key="create*">PROPAGATION_REQUIRED</prop>
+                <prop key="store*">PROPAGATION_REQUIRED</prop>
+                <prop key="remove*">PROPAGATION_REQUIRED</prop>
+                <prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+            </props>
+        </property>
+    </bean>
 
-	<bean id="abstractHibernateTemplate" abstract="true">
-		<property name="sessionFactory">
-			<ref local="sessionFactory"/>
-		</property>
-	</bean>
+    <bean id="abstractHibernateTemplate" abstract="true">
+        <property name="sessionFactory">
+            <ref local="sessionFactory"/>
+        </property>
+    </bean>
 
-	<bean id="transactionManager"
-		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
-		<property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
+    <bean id="transactionManager"
+        class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
 
-	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
-		<property name="dataSource" ref="dataSource"/>
-		<property name="configLocation" value="classpath:hibernate.cfg.xml"/>
-		<property name="hibernateProperties">
-			<props>
-				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
-			</props>
-		</property>
-	</bean>
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:hibernate.cfg.xml"/>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+            </props>
+        </property>
+    </bean>
 
 
-	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName">
-			<value>${hibernate.connection.driver_class}</value>
-		</property>
-		<property name="url">
-			<value>${hibernate.connection.url}</value>
-		</property>
-		<property name="username">
-			<value>${hibernate.connection.username}</value>
-		</property>
-		<property name="password">
-			<value>${hibernate.connection.password}</value>
-		</property>
-	</bean>
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName">
+            <value>${hibernate.connection.driver_class}</value>
+        </property>
+        <property name="url">
+            <value>${hibernate.connection.url}</value>
+        </property>
+        <property name="username">
+            <value>${hibernate.connection.username}</value>
+        </property>
+        <property name="password">
+            <value>${hibernate.connection.password}</value>
+        </property>
+    </bean>
 
 </beans>

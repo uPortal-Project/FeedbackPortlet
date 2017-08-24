@@ -266,6 +266,36 @@
 
         <!-- ===== Runtime Dependencies ================================== -->
 
+        <!-- Provides the PortalPropertySourcesPlaceholderConfigurer
+             that supports global.properties and Jasypt encryption-->
+        <dependency>
+            <groupId>org.jasig.portal</groupId>
+            <artifactId>uPortal-spring</artifactId>
+            <version>5.0.0-M4</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.jasig.portal</groupId>
+                    <artifactId>uPortal-api-internal</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.jasig.portal</groupId>
+                    <artifactId>uPortal-security-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.jasig.portal</groupId>
+                    <artifactId>uPortal-security-mvc</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.jasig.portal</groupId>
+                    <artifactId>uPortal-tools</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>net.oauth.core</groupId>
+                    <artifactId>oauth</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
         <dependency>
             <groupId>commons-collections</groupId>
             <artifactId>commons-collections</artifactId>
