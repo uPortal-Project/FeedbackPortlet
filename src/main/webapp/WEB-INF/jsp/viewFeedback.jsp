@@ -407,7 +407,7 @@
                 </tr>
                 <tr class="${ status.index % 2 == 0 ? 'main' : 'alt' } bottom">
                    <th scope="row" class="row-bottom-header"><spring:message code="feedback.admin.rowheader.comment"/></td>
-                   <td colspan="5">${ item.feedback }</td>
+                   <td colspan="5"><c:out value="${ item.feedback }"/></td>
                 </tr>
 		</c:forEach>
              </tbody>
