@@ -108,6 +108,12 @@ Feedback type: %FEEDBACKTYPE%
 
     <!-- Handler Mapping -->
     
+    <bean class="org.springframework.web.portlet.mvc.annotation.DefaultAnnotationHandlerMapping">
+        <property name="interceptors">
+            <bean class="org.jasig.portlets.FeedbackPortlet.FeedbackMinimizedStateHandlerInterceptor"/>
+        </property>
+    </bean>
+    
     <bean id="parameterMappingInterceptor"
         class="org.springframework.web.portlet.handler.ParameterMappingInterceptor"/>
     
@@ -139,7 +145,7 @@ Feedback type: %FEEDBACKTYPE%
             </map>
         </property>
     </bean>
-    
+
     <bean id="placeholderConfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="location" value="classpath:/feedback.properties"/>
     </bean>
