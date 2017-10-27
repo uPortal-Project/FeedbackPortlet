@@ -214,7 +214,7 @@
 	  <h3><spring:message code="feedback.admin.title"/></h3>
           <div class="col-xs-12 col-sm-2 col-md-2">
              <c:set var="stats" value="${stats}"/>
-    	     <img src="http://chart.apis.google.com/chart?cht=p&chd=t:${stats.positiveResponses * 100 / stats.totalResponses },${stats.undecidedResponses * 100 / stats.totalResponses },${stats.negativeResponses * 100 / stats.totalResponses }&chco=5cb85c,A5A5A5,d9534f&chs=100x100" alt="<spring:message code='feedback.admin.title'/>" aria-describedby="feeddback-list-summary" />
+             <img src="https://chart.apis.google.com/chart?cht=p&chd=t:${stats.positiveResponses * 100 / stats.totalResponses },${stats.undecidedResponses * 100 / stats.totalResponses },${stats.negativeResponses * 100 / stats.totalResponses }&chco=5cb85c,A5A5A5,d9534f&chs=100x100" alt="<spring:message code='feedback.admin.title'/>" aria-describedby="feeddback-list-summary" />
              <div>&nbsp;</div>
 	  </div>
 	  <div class="col-xs-12 col-sm-4 col-md-3" id="feeddback-list-summary">
