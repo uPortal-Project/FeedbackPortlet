@@ -188,13 +188,13 @@
             // Toggle aria-checked attributes when a radio button is selected
             $(this).attr('aria-checked', 'true');
 
-            if (Object.is($(this).attr('id'), 'yes')) {
+            if ($(this).attr('id') === 'yes') {
                 $('#${n}no').attr('aria-checked', 'false');
                 $('#${n}maybe').attr('aria-checked', 'false');
-            }else if (Object.is($(this).attr('id'), 'no')) {
+            }else if ($(this).attr('id') === 'no') {
                 $('#${n}yes').attr('aria-checked', 'false');
                 $('#${n}maybe').attr('aria-checked', 'false');
-            }else if (Object.is($(this).attr('id'), 'maybe')) {
+            }else if ($(this).attr('id') === 'maybe') {
                 $('#${n}yes').attr('aria-checked', 'false');
                 $('#${n}no').attr('aria-checked', 'false');
             }
