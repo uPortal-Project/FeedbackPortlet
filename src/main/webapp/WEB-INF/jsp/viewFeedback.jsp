@@ -389,7 +389,7 @@
                          <span class="glyphicon glyphicon-question-sign" style="color:#A5A5A5;font-size:18px" title="maybe" aria-label="maybe"></span>&nbsp;<spring:message code="feedback.admin.stats.answer.maybe"/>
                       </c:if>
                    </td>
-                   <td>${ item.tabname }&nbsp;</td>
+                   <td><c:out value="${ item.tabname }"/>&nbsp;</td>
                    <c:choose>
                       <c:when test="${ not empty item.useremail }">
                          <td>${ item.username } <a href="mailto:${ item.useremail }"><span class="glyphicon glyphicon-envelope" aria-label="email"></span></a></td>
