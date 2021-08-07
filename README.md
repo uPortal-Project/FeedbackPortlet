@@ -1,8 +1,7 @@
 # Feedback Portlet
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.jasig.portlet/FeedbackPortlet/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.jasig.portlet/FeedbackPortlet)
-[![Linux Build Status](https://travis-ci.org/Jasig/FeedbackPortlet.svg?branch=master)](https://travis-ci.org/Jasig/FeedbackPortlet)
-[![Windows Build status](https://ci.appveyor.com/api/projects/status/1j35afgwdtvu0ets/branch/master?svg=true)](https://ci.appveyor.com/project/ChristianMurphy/feedbackportlet/branch/master)
+[![build status](https://github.com/uPortal-Project/FeedbackPortlet/workflows/CI/badge.svg?branch=master)](https://github.com/uPortal-Project/FeedbackPortlet/actions)
 
 ## About
 
