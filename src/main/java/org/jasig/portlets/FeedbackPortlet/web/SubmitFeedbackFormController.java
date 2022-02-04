@@ -27,8 +27,8 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jasig.portlets.FeedbackPortlet.FeedbackItem;
 import org.jasig.portlets.FeedbackPortlet.PortletUserPropertiesResolver;
 import org.jasig.portlets.FeedbackPortlet.UserProperties;
@@ -53,7 +53,7 @@ import org.springframework.web.portlet.ModelAndView;
 @RequestMapping("VIEW")
 public class SubmitFeedbackFormController {
 
-	private static Log log = LogFactory.getLog(SubmitFeedbackFormController.class);
+	private static Logger log = LoggerFactory.getLogger(SubmitFeedbackFormController.class);
 	private FeedbackStore feedbackStore;
 	
 	private int feedbackRows = 3;

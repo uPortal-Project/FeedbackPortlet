@@ -32,8 +32,8 @@ import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jasig.portlets.FeedbackPortlet.FeedbackItem;
 import org.jasig.portlets.FeedbackPortlet.FeedbackQueryParameters;
 import org.jasig.portlets.FeedbackPortlet.dao.FeedbackStore;
@@ -57,7 +57,7 @@ import org.springframework.web.portlet.mvc.SimpleFormController;
 @RequestMapping("VIEW")
 public class ViewFeedbackFormController {
 
-    private static Log log = LogFactory.getLog(ViewFeedbackFormController.class);
+    private static Logger log = LoggerFactory.getLogger(ViewFeedbackFormController.class);
     
     public static final long MILLIS_IN_A_DAY = (60000L * 60L * 24L); // 60000 millis to a min, 60 min to hour. 24 /day, -1 millisecond to be end of day 
     private static final long MILLIS_IN_30_DAYS = (60000L * 60L * 24L * 30L); // 60*1000 millis = 1 min;  60 min = 1 hour; 24 h = 1 day; 30 days

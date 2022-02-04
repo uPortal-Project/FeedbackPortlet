@@ -31,18 +31,11 @@
         <param-value>/WEB-INF/context/applicationContext.xml</param-value>
     </context-param>
     <context-param>
-        <param-name>log4jConfigLocation</param-name>
-        <param-value>/WEB-INF/classes/log4j.properties</param-value>
-    </context-param>
-    <context-param>
         <param-name>webAppRootKey</param-name>
         <param-value>feedback.root</param-value>
     </context-param>
     <listener>
         <listener-class>org.springframework.web.util.WebAppRootListener</listener-class>
-    </listener>
-    <listener>
-        <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
     </listener>
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
@@ -58,9 +51,9 @@
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
-    
+
     <!-- [INSERT JSPC FRAGMENT HERE] -->
-    
+
     <servlet-mapping>
         <servlet-name>ViewRendererServlet</servlet-name>
         <url-pattern>/WEB-INF/servlet/view</url-pattern>
