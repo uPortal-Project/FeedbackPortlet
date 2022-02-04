@@ -25,8 +25,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -46,7 +46,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
  */
 public class HibernateFeedbackStore extends HibernateDaoSupport implements FeedbackStore {
 
-	private Log log = LogFactory.getLog(getClass());
+	private Logger log = LoggerFactory.getLogger(getClass());
 	
 	@Override
 	public void storeFeedback(FeedbackItem feedback) {

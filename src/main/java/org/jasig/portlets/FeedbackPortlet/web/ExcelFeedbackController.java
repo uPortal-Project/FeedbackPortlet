@@ -27,8 +27,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jasig.portlets.FeedbackPortlet.FeedbackItem;
 import org.jasig.portlets.FeedbackPortlet.FeedbackQueryParameters;
 import org.jasig.portlets.FeedbackPortlet.dao.FeedbackStore;
@@ -46,7 +46,7 @@ import org.springframework.web.servlet.mvc.AbstractController;
 @Controller
 public class ExcelFeedbackController extends AbstractController {
 
-	private static Log log = LogFactory.getLog(ExcelFeedbackController.class);
+	private static Logger log = LoggerFactory.getLogger(ExcelFeedbackController.class);
 
 	@Override
 	@RequestMapping("/excelFeedback")

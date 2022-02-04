@@ -25,19 +25,19 @@
 
     <properties>
         <commons-lang.version>2.6</commons-lang.version>
-        <commons-logging.version>1.2</commons-logging.version>
         <commons-collections.version>3.2.2</commons-collections.version>
         <ehcache.version>2.6.11</ehcache.version>
         <hibernate.version>3.2.7.ga</hibernate.version>
         <hsqldb.version>1.8.0.10</hsqldb.version>
-        <log4j.version>1.2.17</log4j.version>
         <javax.activation.version>1.1.1</javax.activation.version>
         <javax.mail>1.5.0-b01</javax.mail>
         <javax.servlet>2.5</javax.servlet>
         <jstl.version>1.1.2</jstl.version>
         <jta.version>1.1</jta.version>
+        <logbackVersion>1.2.10</logbackVersion>
         <poi.version>3.17</poi.version>
         <resource-server.version>1.0.47</resource-server.version>
+        <slf4jVersion>1.7.35</slf4jVersion>
         <spring.version>3.2.16.RELEASE</spring.version>
         <taglib.version>1.1.2</taglib.version>
     </properties>
@@ -69,29 +69,30 @@
 
         <!-- ===== Compile Time Dependencies ============================== -->
         <dependency>
-            <groupId>commons-logging</groupId>
-            <artifactId>commons-logging</artifactId>
-            <version>${commons-logging.version}</version>
-            <type>jar</type>
-            <scope>compile</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>logkit</groupId>
-                    <artifactId>logkit</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>log4j</groupId>
-                    <artifactId>log4j</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>avalon-framework</groupId>
-                    <artifactId>avalon-framework</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>javax.servlet</groupId>
-                    <artifactId>servlet-api</artifactId>
-                </exclusion>
-            </exclusions>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4jVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>${slf4jVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>log4j-over-slf4j</artifactId>
+            <version>${slf4jVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jul-to-slf4j</artifactId>
+            <version>${slf4jVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logbackVersion}</version>
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>
@@ -196,6 +197,12 @@
             <version>${spring.version}</version>
             <type>jar</type>
             <scope>compile</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -300,14 +307,6 @@
             <groupId>commons-collections</groupId>
             <artifactId>commons-collections</artifactId>
             <version>${commons-collections.version}</version>
-            <type>jar</type>
-            <scope>runtime</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>${log4j.version}</version>
             <type>jar</type>
             <scope>runtime</scope>
         </dependency>
