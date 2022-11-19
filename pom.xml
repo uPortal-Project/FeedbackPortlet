@@ -35,7 +35,7 @@
         <jstl.version>1.1.2</jstl.version>
         <jta.version>1.1</jta.version>
         <logbackVersion>1.4.5</logbackVersion>
-        <poi.version>3.17</poi.version>
+        <poi.version>5.2.3</poi.version>
         <resource-server.version>1.0.47</resource-server.version>
         <slf4jVersion>1.7.36</slf4jVersion>
         <spring.version>3.2.18.RELEASE</spring.version>
