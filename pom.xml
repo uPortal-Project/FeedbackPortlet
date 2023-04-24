@@ -27,7 +27,7 @@
         <commons-lang.version>2.6</commons-lang.version>
         <commons-collections.version>3.2.2</commons-collections.version>
         <ehcache.version>2.6.11</ehcache.version>
-        <hibernate.version>3.2.7.ga</hibernate.version>
+        <hibernate.version>3.5.4-Final</hibernate.version>
         <hsqldb.version>1.8.0.10</hsqldb.version>
 	<javax.activation.version>1.1.1</javax.activation.version>
         <javax.mail>1.5.0-b01</javax.mail>
