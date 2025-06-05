@@ -1,7 +1,7 @@
 # Feedback Portlet
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.jasig.portlet/FeedbackPortlet/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.jasig.portlet/FeedbackPortlet)
-[![build status](https://github.com/uPortal-Project/FeedbackPortlet/workflows/CI/badge.svg?branch=master)](https://github.com/uPortal-Project/FeedbackPortlet/actions)
+[![CI](https://github.com/uPortal-Project/FeedbackPortlet/actions/workflows/CI.yml/badge.svg?branch=master)](https://github.com/uPortal-Project/FeedbackPortlet/actions/workflows/CI.yml)
 
 ## About
 
