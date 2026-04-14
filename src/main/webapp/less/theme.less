@@ -26,6 +26,51 @@
 // the namespace.
 
 .feedback-portlet {
+   caption {
+      caption-side: top;
+   }
+
+   .input-group-addon {
+      width: 1%;
+      padding: 6px 12px;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1;
+      color: #555555;
+      text-align: center;
+      background-color: #eeeeee;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      display: table-cell;
+      white-space: nowrap;
+      vertical-align: middle;
+   }
+
+   .input-group {
+      display: table;
+      border-collapse: separate;
+      .input-group-addon + .form-control,
+      .input-group-addon + select {
+         display: table-cell;
+         width: 100%;
+      }
+   }
+
+   .form-group {
+      margin-bottom: 15px;
+   }
+
+   .checkbox {
+      position: relative;
+      display: block;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      padding-left: 20px;
+      label {
+         padding-left: 5px;
+      }
+   }
+
    .table-striped-by-2 {
       tbody {
          tr {
