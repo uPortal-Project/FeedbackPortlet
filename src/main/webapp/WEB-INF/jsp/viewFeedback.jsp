@@ -149,11 +149,6 @@
         // handle the 'filter by feedback type' to show the current setting.
         $("#${n}feedbackTypeShown").val("${feedbacktype}");
 
-        // handle the two text boxes associated with filter by date
-
-    	$( "#${n}datepicker1" ).val("${startDisplayDate}");
-		$( "#${n}datepicker2" ).val("${endDisplayDate}");
-
         $("#${n}pagingGoButton").click(function() {
             var pageInt = parseInt("0" + $("#${n}pagingBox").get(0).value);
             pageInt = pageInt-1;
