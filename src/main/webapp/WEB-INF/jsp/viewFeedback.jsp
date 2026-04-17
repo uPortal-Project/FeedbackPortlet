@@ -134,8 +134,8 @@
 <!-- assigning a variable to the name so it can be called in a non-conflicting way -->
 <c:set var="n"><portlet:namespace/></c:set>
 <script type="text/javascript">
-    var ${n} = ${n} || {}; //create a unique variable to assign our namespace too
-    ${n}.jQuery = (typeof up !== 'undefined' && up.jQuery) ? up.jQuery : jQuery;
+    var ${n} = ${n} || {};
+    ${n}.jQuery = up.jQuery;
 
     /*  runs when the document is finished loading.  This prevents things like the 'div' from being fully created */
     ${n}.jQuery(document).ready(function () {
