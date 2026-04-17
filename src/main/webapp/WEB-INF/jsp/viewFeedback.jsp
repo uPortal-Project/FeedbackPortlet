@@ -335,11 +335,11 @@
                     </div>
                  </div>
                  <div class="col-12 col-sm-6 col-md-6" style="min-height:30px;">
-                   <p style="float-start;margin-top:8px;margin-right:8px;">
+                   <p class="float-start" style="margin-top:8px;margin-right:8px;">
                       <spring:message code="feedback.admin.form.showing"/>
                       <span style="font-weight: bold;">${ start + 1 } - ${ (start + items) > totalItems ? totalItems : start + items }</span> <spring:message code="feedback.admin.form.of"/> <span style="font-weight: bold;">${ totalItems }</span>
                    </p>
-                   <ul class="pagination" style="float-start; margin:0">
+                   <ul class="pagination float-start" style="margin:0">
                       <c:if test="${ start > 0 }">
                       <li><a href="<portlet:renderURL><portlet:param name="start" value="${ start - items }"/></portlet:renderURL>"><i class="fa fa-chevron-left" aria-hidden="true"></i>&nbsp;<spring:message code="feedback.admin.form.prev"/></a></li>
                       </c:if>
