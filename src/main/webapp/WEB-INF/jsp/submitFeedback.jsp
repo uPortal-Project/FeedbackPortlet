@@ -96,7 +96,7 @@
 
 <script type="text/javascript">
     var ${n} = {};
-    ${n}.jQuery = (typeof up !== 'undefined' && up.jQuery) ? up.jQuery : jQuery;
+    ${n}.jQuery = up.jQuery;
 
     ${n}.jQuery(function(){
 
