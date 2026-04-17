@@ -329,9 +329,9 @@
                        <label class="sr-only" for="${n}pagingBox"><spring:message code="feedback.admin.form.jumpto"/></label>
                        <div class="input-group float-start" style="max-width:300px">
                            <div class="input-group-addon" style="min-width:120px"><spring:message code="feedback.admin.form.jumpto"/></div>
-                           <input type="text" id=${n}pagingBox path="start" class="form-control" />
+                           <input type="text" id="${n}pagingBox" path="start" class="form-control" />
                        </div>
-                       <button type="button" class="btn btn-secondary float-start" id=${n}pagingGoButton><spring:message code="feedback.admin.form.goto"/></button>
+                       <button type="button" class="btn btn-secondary float-start" id="${n}pagingGoButton"><spring:message code="feedback.admin.form.goto"/></button>
                     </div>
                  </div>
                  <div class="col-12 col-sm-6 col-md-6" style="min-height:30px;">
