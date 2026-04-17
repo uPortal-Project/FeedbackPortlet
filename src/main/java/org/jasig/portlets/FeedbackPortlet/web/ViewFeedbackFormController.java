@@ -63,7 +63,7 @@ public class ViewFeedbackFormController {
     private static final long MILLIS_IN_30_DAYS = (60000L * 60L * 24L * 30L); // 60*1000 millis = 1 min;  60 min = 1 hour; 24 h = 1 day; 30 days
     
     private static final String DATEPICKER_FORMAT = "dateformat-m-sl-d-sl-Y"; // used for defining date format in javascript date picker
-    // this format of 'month-slash-day-slash-year' should match the dateFormat "Month/Day/Year" in the FeedbackQueryParameter
+    // ISO-8601 date format (yyyy-MM-dd) matches HTML date input and FeedbackQueryParameters.DATE_FORMAT
 
     
     
