@@ -22,8 +22,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="stylesheet" href="/ResourceServingWebapp/rs/mdl/1.3.0/css/material.min.css">
-<script defer src="/ResourceServingWebapp/rs/mdl/1.3.0/js/material.min.js"></script>
+<link rel="stylesheet" href="<rs:resourceURL value='/rs/mdl/1.3.0/css/material.min.css'/>">
+<script defer src="<rs:resourceURL value='/rs/mdl/1.3.0/js/material.min.js'/>"></script>
 
 <c:set var="n"><portlet:namespace/></c:set>
 
