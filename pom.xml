@@ -2,9 +2,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <parent>
-        <groupId>org.jasig.parent</groupId>
-        <artifactId>jasig-parent</artifactId>
-        <version>41</version>
+        <groupId>org.jasig.portlet</groupId>
+        <artifactId>uportal-portlet-parent</artifactId>
+        <version>46</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -25,7 +25,6 @@
 
     <properties>
         <commons-lang.version>2.6</commons-lang.version>
-        <commons-collections.version>3.2.2</commons-collections.version>
         <ehcache.version>2.6.11</ehcache.version>
         <hibernate.version>3.2.7.ga</hibernate.version>
         <hsqldb.version>1.8.0.10</hsqldb.version>
@@ -320,14 +319,6 @@
         </dependency>
 
         <dependency>
-            <groupId>commons-collections</groupId>
-            <artifactId>commons-collections</artifactId>
-            <version>${commons-collections.version}</version>
-            <type>jar</type>
-            <scope>runtime</scope>
-        </dependency>
-
-        <dependency>
             <groupId>javax.activation</groupId>
             <artifactId>activation</artifactId>
             <version>${javax.activation.version}</version>
@@ -343,15 +334,15 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- ===== Provided Dependencies ================================== -->
+        <!-- ===== Provided Dependencies ==================================
+             servlet-api and portlet-api are provided at runtime by Tomcat;
+             version managed by uportal-portlet-parent. -->
+
         <dependency>
             <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>${javax.servlet}</version>
-            <type>jar</type>
+            <artifactId>javax.servlet-api</artifactId>
             <scope>provided</scope>
         </dependency>
-
         <dependency>
             <groupId>javax.portlet</groupId>
             <artifactId>portlet-api</artifactId>
