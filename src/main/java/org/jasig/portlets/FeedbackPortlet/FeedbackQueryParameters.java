@@ -49,7 +49,7 @@ public class FeedbackQueryParameters {
     public static final String START_DISPLAY_DATE = "startDisplayDate";
     public static final String END_DISPLAY_DATE = "endDisplayDate";
     
-    public static final String DATE_FORMAT = "MM/dd/yyyy";  // used to define the format in the java date formatter (to parse the date picker)
+    public static final String DATE_FORMAT = "yyyy-MM-dd";  // ISO-8601 format, matches HTML date input
     // This dateFormat should match the datepicker Format of Month slash Day slash Year 
     
     private HashMap queryParameters;  // Map of objects because its easier to store than dealing with each individually

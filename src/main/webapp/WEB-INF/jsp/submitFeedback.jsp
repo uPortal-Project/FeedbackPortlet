@@ -22,10 +22,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="stylesheet" href="<rs:resourceURL value="/rs/mdl/1.3.0/css/material.min.css"/>">
-<script defer src="<rs:resourceURL value="/rs/mdl/1.3.0/js/material.min.js"/>"></script>
-
-<script src="<rs:resourceURL value="/rs/jquery/1.11.0/jquery-1.11.0.min.js"/>" type="text/javascript"></script>
+<link rel="stylesheet" href="<rs:resourceURL value='/rs/mdl/1.3.0/css/material.min.css'/>">
+<script defer src="<rs:resourceURL value='/rs/mdl/1.3.0/js/material.min.js'/>"></script>
 
 <c:set var="n"><portlet:namespace/></c:set>
 
@@ -96,37 +94,9 @@
 </form:form>
 </div>
 
-<script type="text/javascript"><rs:compressJs>
-   // Enable submitFeedback work here only on Mobile
-    var $ = up.jQuery;
-    $(document).bind("pageinit", function (e) {
-        var $page = $(e.target);
-        $page.find("input:radio[name=like]").change(function () {
-            $(this).checkboxradio("refresh");
-            $page.find("input:radio[name=like]").each(function (index, element) {
-                var $radio = $(this);
-                var $label = $radio.next();
-                if ($label.hasClass("ui-radio-on")) {
-
-                    if ($('#${n}submitfeedback').attr('disabled')) {
-                        $('#${n}submitfeedback').removeAttr('disabled');
-                    }
-
-                    if ($('#${n}submitfeedback').attr('aria-disabled')) {
-                        $('#${n}submitfeedback').removeAttr('aria-disabled');
-                    }
-
-                    if ($('#${n}submitfeedback').prop('disabled')) {
-                        $('#${n}submitfeedback').prop('disabled', false);
-                    }
-                }
-            });
-        });
-    });
-
+<script type="text/javascript">
     var ${n} = {};
-
-    ${n}.jQuery = jQuery.noConflict(true);
+    ${n}.jQuery = up.jQuery;
 
     ${n}.jQuery(function(){
 
@@ -217,4 +187,4 @@
 
     });
 
-</rs:compressJs></script>
+</script>
