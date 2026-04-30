@@ -1,10 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Licensed to Apereo under one or more contributor license
+    agreements. See the NOTICE file distributed with this work
+    for additional information regarding copyright ownership.
+    Apereo licenses this file to you under the Apache License,
+    Version 2.0 (the "License"); you may not use this file
+    except in compliance with the License.  You may obtain a
+    copy of the License at the following location:
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+
+-->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <parent>
         <groupId>org.jasig.portlet</groupId>
         <artifactId>uportal-portlet-parent</artifactId>
-        <version>48</version>
+        <version>50</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -366,14 +386,6 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>
                 <version>3.3.1</version>
                 <dependencies>
@@ -415,17 +427,17 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>com.mycila.maven-license-plugin</groupId>
-                <artifactId>maven-license-plugin</artifactId>
+                <groupId>com.mycila</groupId>
+                <artifactId>license-maven-plugin</artifactId>
                 <configuration>
+                    <!--
+                      | Parent v49 provides .gitignore, LICENSE, NOTICE,
+                      | docs/**, .idea/**, overlays/**. Local block keeps
+                      | only the FeedbackPortlet-specific webapp asset
+                      | exclude.
+                    +-->
                     <excludes>
-                        <exclude>.gitignore</exclude>
-                        <exclude>LICENSE</exclude>
-                        <exclude>NOTICE</exclude>
-                        <exclude>docs/**</exclude>
                         <exclude>src/main/webapp/date-picker/**</exclude>
-                        <exclude>.idea/**</exclude> <!-- for IntelliJ working folders -->
-                        <exclude>overlays/**</exclude> <!-- for IntelliJ working folders -->
                     </excludes>
                 </configuration>
             </plugin>
