@@ -24,7 +24,7 @@
     <parent>
         <groupId>org.jasig.portlet</groupId>
         <artifactId>uportal-portlet-parent</artifactId>
-        <version>51</version>
+        <version>52</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -51,7 +51,7 @@
         <javax.servlet>2.5</javax.servlet>
         <jaxb-api.version>2.3.1</jaxb-api.version>
         <jaxb-impl.version>2.3.9</jaxb-impl.version>
-        <poi.version>4.1.2</poi.version>
+        <poi.version>5.5.1</poi.version>
         <resource-server.version>1.5.3</resource-server.version>
         <slf4jVersion>2.0.16</slf4jVersion>
         <spring.version>3.2.18.RELEASE</spring.version>
@@ -102,6 +102,12 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>jul-to-slf4j</artifactId>
+        </dependency>
+        <!-- Apache POI 5+ logs through the Log4j2 API; route it to SLF4J/logback.
+             Version is managed by uportal-portlet-parent. -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-to-slf4j</artifactId>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
