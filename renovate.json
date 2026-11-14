@@ -60,6 +60,11 @@
       "matchPackagePrefixes": ["com.liferay.portletmvc4spring:"],
       "allowedVersions": "< 6.0",
       "description": "Currently on portletmvc4spring 5.2.0 (Spring 4.3.x line). The 6.0.0-M1 milestone exists in Liferay's git but has not been published to Maven Central, and the upgrade requires Spring 6 + Jakarta EE + Java 17 — three migrations this portlet is not doing yet."
+    },
+    {
+      "matchPackageNames": ["org.apache.poi:poi"],
+      "allowedVersions": "< 6.0",
+      "description": "POI 6 is compiled for Java 17 (class version 61). This portlet targets Java 11; stay on POI 5.x until it moves to Java 17."
     }
   ]
 }
